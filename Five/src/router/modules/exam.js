@@ -14,19 +14,19 @@ const ExamRouter = {
   children: [
     {
       path: 'addquest',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/addquest/addtest/addtest.vue'),
       name: 'Addquest',
       meta: { title: 'addquest', noCache: true }
     },
     {
       path: 'questtype',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/addquest/testtype/testtype.vue'),
       name: 'Questtype',
       meta: { title: 'questtype', noCache: true }
     },
     {
       path: 'lookquest',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/addquest/looktest/looktest.vue'),
       name: 'Lookquest',
       meta: { title: 'lookquest', noCache: true }
     }

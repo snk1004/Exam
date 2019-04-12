@@ -48,6 +48,7 @@ import classRouter from './modules/class'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // componentsRouter,
   ExamRouter,
   userRouter,
   Examinations,
