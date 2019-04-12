@@ -62,10 +62,23 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
+    textquest: '试题管理',
+    addquest: '添加试题',
+    questtype: '试题分类',
+    lookquest: '查看试题',
+    examination: '考试管理',
+    addexamination: '添加考试',
+    examinationlist: '试卷列表',
+    markingmanagement: '阅卷管理',
+    awaitingclass: '待批班级',
+    awaitingclasstwo: '待批班级2',
     user: '用户管理',
     Adduser: '添加用户',
-    UserShow: '用户展示'
-
+    UserShow: '用户展示',
+    classManage: '班级管理',
+    Manage: '班级管理',
+    classRoom: '教室管理',
+    Student: '学生管理'
   },
   navbar: {
     logOut: '退出登录',
