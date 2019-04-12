@@ -61,7 +61,11 @@ export default {
     theme: '换肤',
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
-    externalLink: '外链'
+    externalLink: '外链',
+    classManage: '班级管理',
+    Manage: '班级管理',
+    classRoom: '教室管理',
+    Student: '学生管理'
   },
   navbar: {
     logOut: '退出登录',

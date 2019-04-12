@@ -7,7 +7,8 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import Element from 'element-ui'
 import './styles/element-variables.scss'
 
-import '@/styles/index.scss' // global css 
+import '@/styles/index.scss' // global css
+
 import App from './App'
 import store from './store'
 import router from './router'
