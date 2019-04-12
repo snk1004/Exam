@@ -61,7 +61,16 @@ export default {
     theme: '换肤',
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
-    externalLink: '外链'
+    externalLink: '外链',
+    textquest: '试题管理',
+    addquest: '添加试题',
+    questtype: '试题分类',
+    lookquest: '查看试题',
+    examination: '考试管理',
+    addexamination: '添加考试',
+    examinationlist: '试卷列表',
+    markingmanagement: '阅卷管理',
+    awaitingclass: '待批班级'
   },
   navbar: {
     logOut: '退出登录',
