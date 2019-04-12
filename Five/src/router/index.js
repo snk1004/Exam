@@ -8,7 +8,7 @@ import Layout from '@/layout'
 
 /* Router Modules */
 // import componentsRouter from './modules/components'
-import userRouter from './modules/exam'
+import userRouter from './modules/user'
 
 // import chartsRouter from './modules/charts'
 // import tableRouter from './modules/table'
