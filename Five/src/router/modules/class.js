@@ -14,19 +14,19 @@ const exam = {
   children: [
     {
       path: 'manage',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/class/manage'),
       name: 'KeyboardChart',
       meta: { title: 'Manage', noCache: true }
     },
     {
       path: 'classroom',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/class/classroom'),
       name: 'LineChart',
       meta: { title: 'classRoom', noCache: true }
     },
     {
       path: 'student',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/class/student'),
       name: 'MixChart',
       meta: { title: 'Student', noCache: true }
     }
