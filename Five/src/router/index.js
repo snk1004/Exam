@@ -19,6 +19,7 @@ import userRouter from './modules/user'
 // import chartsRouter from './modules/charts'
 // import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
+import classRouter from './modules/class'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -50,6 +51,7 @@ export const constantRoutes = [
   ExamRouter,
   userRouter,
   Examinations,
+  classRouter,
   Markingmanagement,
   {
     path: '/redirect',
@@ -88,7 +90,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/dashboard'),
         name: 'Dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
       }

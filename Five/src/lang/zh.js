@@ -74,8 +74,11 @@ export default {
     awaitingclasstwo: '待批班级2',
     user: '用户管理',
     Adduser: '添加用户',
-    UserShow: '用户展示'
-
+    UserShow: '用户展示',
+    classManage: '班级管理',
+    Manage: '班级管理',
+    classRoom: '教室管理',
+    Student: '学生管理'
   },
   navbar: {
     logOut: '退出登录',

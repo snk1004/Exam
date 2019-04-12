@@ -25,7 +25,7 @@
 
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
-          <span class="svg-container"> 
+          <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
           <el-input
@@ -51,7 +51,7 @@
       </el-button>
 
       <div style="position:relative">
-        <!-- <div class="tips">
+        <div class="tips">
           <span>{{ $t('login.username') }} : admin</span>
           <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
         </div>
@@ -60,9 +60,9 @@
             {{ $t('login.username') }} : editor
           </span>
           <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div> -->
+        </div>
 
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true"> 
+        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
           {{ $t('login.thirdparty') }}
         </el-button>
       </div>
@@ -265,7 +265,7 @@ $light_gray:#eee;
     max-width: 100%;
     padding: 160px 35px 0;
     margin: 0 auto;
-    // overflow: hidden;
+    overflow: hidden;
   }
 
   .tips {
@@ -322,7 +322,7 @@ $light_gray:#eee;
   .thirdparty-button {
     position: absolute;
     right: 0;
-    bottom: -30px;
+    bottom: 6px;
   }
 
   @media only screen and (max-width: 470px) {
