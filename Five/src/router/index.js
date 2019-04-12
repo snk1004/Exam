@@ -14,6 +14,12 @@ import Markingmanagement from './modules/Markingmanagement'
 // import chartsRouter from './modules/charts'
 // import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
+import userRouter from './modules/user'
+
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -42,6 +48,7 @@ import Markingmanagement from './modules/Markingmanagement'
  */
 export const constantRoutes = [
   ExamRouter,
+  userRouter,
   Examinations,
   Markingmanagement,
   {
@@ -54,8 +61,7 @@ export const constantRoutes = [
         component: () => import('@/views/redirect/index')
       }
     ]
-  },
-  {
+  }, {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -94,7 +100,9 @@ export const constantRoutes = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [{ path: '*', redirect: '/404', hidden: true }]
+export const asyncRoutes = [
+  { path: '*', redirect: '/404', hidden: true }
+]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support

@@ -16,6 +16,11 @@ const Markingmanagement = {
       component: () => import('@/views/charts/keyboard'),
       name: 'Awaitingclasst',
       meta: { title: 'awaitingclass', noCache: true }
+    }, {
+      path: 'awaitingclasstwo',
+      component: () => import('@/views/charts/keyboard'),
+      name: 'Awaitingclassttwo',
+      meta: { title: 'awaitingclasstwo', noCache: true }
     }
   ]
 }

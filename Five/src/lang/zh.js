@@ -70,7 +70,12 @@ export default {
     addexamination: '添加考试',
     examinationlist: '试卷列表',
     markingmanagement: '阅卷管理',
-    awaitingclass: '待批班级'
+    awaitingclass: '待批班级',
+    awaitingclasstwo: '待批班级2',
+    user: '用户管理',
+    Adduser: '添加用户',
+    UserShow: '用户展示'
+
   },
   navbar: {
     logOut: '退出登录',

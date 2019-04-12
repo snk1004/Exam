@@ -32,5 +32,5 @@ const ExamRouter = {
     }
   ]
 }
-
 export default ExamRouter
+
