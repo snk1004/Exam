@@ -2,7 +2,7 @@
 
 import Layout from '@/layout'
 
-const exam = {
+const classRoom = {
   path: '/classmanage',
   component: Layout,
   redirect: 'noredirect',
@@ -33,4 +33,4 @@ const exam = {
   ]
 }
 
-export default exam
+export default classRoom

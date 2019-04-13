@@ -6,11 +6,17 @@
         <div class="form-item-children">
           <input type="text" placeholder="输入学生姓名" value="">
         </div>
-        <div class="form-item-room">
-          <span>请选择教室号</span>
+        <div class="form-item-room select-box">
+          <!-- <span>请选择教室号</span> -->
+          <select v-model="roomSelected" name="请选择教室号" @change="getRoomSelected">
+            <option v-for="(item,index) in room" :v-key="index">{{ item }}</option>
+          </select>
         </div>
-        <div class="form-item-class">
-          <span>班级名</span>
+        <div class="form-item-class select-box">
+          <!-- <span>班级名</span> -->
+          <select v-model="classSelected" name="班级名" @change="getClassSelected">
+            <option v-for="(item,index) in classname" :v-key="index">{{ item }}</option>
+          </select>
         </div>
         <div class="form-item-search">
           <button class="student-btn">搜索</button>
@@ -234,7 +240,13 @@
             </tr>
           </tbody>
           <div class="student-pagination">
-            <li><i class="el-icon-arrow-left" /></li>
+            <pagination
+              :total="total"
+              :page.sync="listQuery.page"
+              :limit.sync="listQuery.limit"
+              @pagination="getList"
+            />
+            <!-- <li><i class="el-icon-arrow-left" /></li>
             <li>2</li>
             <li>3</li>
             <li class="none-border"><i class="el-icon-more" /></li>
@@ -243,7 +255,7 @@
             <li class="pad-item">20条/页<i class="el-icon-arrow-down" /></li>
             <li class="none-border">跳至</li>
             <li />
-            <li class="none-border">页</li>
+            <li class="none-border">页</li> -->
           </div>
         </table>
       </div>
@@ -252,9 +264,38 @@
 </template>
 
 <script>
+import Pagination from '@/components/Pagination'
 
 export default {
-
+  components: { Pagination },
+  data() {
+    return {
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 20
+      },
+      room: ['34301', '34302', '34303', '34304', '34305', '34306', '34307', '34308', '34309'],
+      classname: ['1608A', '1608B', '1609A', '1609B', '16010A', '16010B', '1610C', '16011A', '16011B', '1611C']
+    }
+  },
+  created() {
+    this.roomSelected = this.room[0]
+    this.classSelected = this.classname[0]
+  },
+  methods: {
+    getList() {
+      // 获取数据
+    },
+    getRoomSelected() {
+      // 获取选中
+      console.log(this.roomSelected)
+    },
+    getClassSelected() {
+      // 获取选中
+      console.log(this.classSelected)
+    }
+  }
 }
 </script>
 
@@ -292,6 +333,22 @@ export default {
           padding: 4px 11px;
           box-sizing: border-box;
           border: 1px solid #d9d9d9;
+        }
+      }
+      .select-box{
+        font-size: 14px;
+        select{
+          margin-right: 16px;
+          width: 180px;
+          height: 32px;
+          padding: 4px 11px;
+          box-sizing: border-box;
+          border: 1px solid #d9d9d9;
+          option{
+            color: rgba(0, 0, 0, 0.65);
+            height: 32px!important;
+            display: inline-block;
+          }
         }
       }
       .student-btn{
