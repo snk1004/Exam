@@ -60,14 +60,38 @@
       </div>
        <div class='addUser_wrapper'>
         <div class="btn">
-            <button>添加用户</button>
-            <button>更新用户</button>
+            <button>给身份设置pi接口权限</button>
+        </div>
+         <select name="" id="" value=''>
+          <option value="请输入用户id">请输入用户id</option>
+          <option value="管理员">管理员</option>
+          <option value="管理员">出题者</option>
+          <option value="管理员">浏览者</option>
+        </select>
+        <select name="" id="">
+          <option value="请选择api接口权限">请选择api接口权限</option>
+        </select>
+         <div class="btnFotter">
+          <button class='sure'>确认</button>
+          <button class='resets'>重置</button>
         </div>
       </div>
        <div class='addUser_wrapper'>
         <div class="btn">
-            <button>添加用户</button>
-            <button>更新用户</button>
+            <button>给身份设置视图权限</button>
+        </div>
+         <select name="" id="" value=''>
+          <option value="请输入用户id">请输入用户id</option>
+          <option value="管理员">管理员</option>
+          <option value="管理员">出题者</option>
+          <option value="管理员">浏览者</option>
+        </select>
+         <select name="" id="">
+          <option value="请设置视图权限id">请设置视图权限id</option>
+        </select>
+         <div class="btnFotter">
+          <button class='sure'>确认</button>
+          <button class='resets'>重置</button>
         </div>
       </div>
    </div>
@@ -108,6 +132,8 @@ export default {
           border-radius: 5px;
           padding: 10px;
           cursor: pointer;
+          display: flex;
+          flex-direction: column;
           >.btn{
             display: flex;
             >button{
@@ -121,19 +147,18 @@ export default {
            >input{
             width: 199px;
             height: 32px;
-            margin-top:18px;
+            margin-top:20px;
             padding:0 10px;
             border:1px solid #ccc;
           }
           >select{
             width: 150px;
             height: 30px;
-            margin-top: 18px;
+            margin-top: 20px;
           }
           .btnFotter{
              display: flex;
               width: 180px;
-              
               margin-top: 18px;
               >.sure{
                 width: 119px;
@@ -146,13 +171,14 @@ export default {
                 color: #fff;
               }
               >.resets{
-                width: 64px;
+                width: 70px;
                 height: 32px;
                 background: #fff;
                 outline: none;
                 border:1px solid #ccc;;
                 border-radius: 3px;
                 margin-right: 10px;
+                color:#333;
               }
           }
       }
