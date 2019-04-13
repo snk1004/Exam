@@ -1,108 +1,106 @@
 <template>
   <div class="chart-container">
-    <div class='lay-out'>
-        <h2>添加用户</h2>
+    <div class="lay-out">
+      <h2>添加用户</h2>
     </div>
-   <div class='addUser_grid'>
-      <div class='addUser_wrapper'>
+    <div class="addUser_grid">
+      <div class="addUser_wrapper">
         <div class="btn">
-            <button>添加用户</button>
-            <button>更新用户</button>
+          <button>添加用户</button>
+          <button>更新用户</button>
         </div>
         <input type="text" placeholder="请输入用户名">
         <input type="password" placeholder="请输入密码">
-        <select name="" id="" value=''>
+        <select id="" name="" value="">
           <option value="请输入用户id">请输入用户id</option>
           <option value="管理员">管理员</option>
           <option value="管理员">出题者</option>
           <option value="管理员">浏览者</option>
         </select>
         <div class="btnFotter">
-          <button class='sure'>确认</button>
-          <button class='resets'>重置</button>
+          <button class="sure">确认</button>
+          <button class="resets">重置</button>
         </div>
-
 
       </div>
-       <div class='addUser_wrapper'>
+      <div class="addUser_wrapper">
         <div class="btn">
-            <button>添加身份</button>
+          <button>添加身份</button>
         </div>
-         <input type="text" placeholder="请输入身份名称">
+        <input type="text" placeholder="请输入身份名称">
         <div class="btnFotter">
-          <button class='sure'>确认</button>
-          <button class='resets'>重置</button>
+          <button class="sure">确认</button>
+          <button class="resets">重置</button>
         </div>
       </div>
-       <div class='addUser_wrapper'>
+      <div class="addUser_wrapper">
         <div class="btn">
-            <button>添加api接口权限</button>
+          <button>添加api接口权限</button>
         </div>
         <input type="text" placeholder="请输入api接口权限名称">
         <input type="text" placeholder="请输入api接口权限url">
         <input type="text" placeholder="请输入api接口权限方法">
         <div class="btnFotter">
-          <button class='sure'>确认</button>
-          <button class='resets'>重置</button>
+          <button class="sure">确认</button>
+          <button class="resets">重置</button>
         </div>
       </div>
-       <div class='addUser_wrapper'>
+      <div class="addUser_wrapper">
         <div class="btn">
-            <button>添加视图接口权限</button>
+          <button>添加视图接口权限</button>
         </div>
-         <select name="" id="" value=''>
+        <select id="" name="" value="">
           <option value="请输入用户id">请选择已有视图</option>
         </select>
-         <div class="btnFotter">
-          <button class='sure'>确认</button>
-          <button class='resets'>重置</button>
+        <div class="btnFotter">
+          <button class="sure">确认</button>
+          <button class="resets">重置</button>
         </div>
       </div>
-       <div class='addUser_wrapper'>
+      <div class="addUser_wrapper">
         <div class="btn">
-            <button>给身份设置pi接口权限</button>
+          <button>给身份设置pi接口权限</button>
         </div>
-         <select name="" id="" value=''>
+        <select id="" name="" value="">
           <option value="请输入用户id">请输入用户id</option>
           <option value="管理员">管理员</option>
           <option value="管理员">出题者</option>
           <option value="管理员">浏览者</option>
         </select>
-        <select name="" id="">
+        <select id="" name="">
           <option value="请选择api接口权限">请选择api接口权限</option>
         </select>
-         <div class="btnFotter">
-          <button class='sure'>确认</button>
-          <button class='resets'>重置</button>
+        <div class="btnFotter">
+          <button class="sure">确认</button>
+          <button class="resets">重置</button>
         </div>
       </div>
-       <div class='addUser_wrapper'>
+      <div class="addUser_wrapper">
         <div class="btn">
-            <button>给身份设置视图权限</button>
+          <button>给身份设置视图权限</button>
         </div>
-         <select name="" id="" value=''>
+        <select id="" name="" value="">
           <option value="请输入用户id">请输入用户id</option>
           <option value="管理员">管理员</option>
           <option value="管理员">出题者</option>
           <option value="管理员">浏览者</option>
         </select>
-         <select name="" id="">
+        <select id="" name="">
           <option value="请设置视图权限id">请设置视图权限id</option>
         </select>
-         <div class="btnFotter">
-          <button class='sure'>确认</button>
-          <button class='resets'>重置</button>
+        <div class="btnFotter">
+          <button class="sure">确认</button>
+          <button class="resets">重置</button>
         </div>
       </div>
-   </div>
+    </div>
   </div>
 </template>
 
 <script>
 
-
 export default {
- 
+
 }
 </script>
 
@@ -142,7 +140,7 @@ export default {
             height: 32px;
             border:1px solid #ccc;
             outline: none;
-          } 
+          }
           }
            >input{
             width: 199px;
@@ -184,5 +182,4 @@ export default {
       }
 }
 
-  
 </style>

@@ -1,18 +1,18 @@
 <template>
   <div class="usershow">
-        <div class=show-header>
-             <h2>用户展示</h2>
-        </div>
-        <div class="show-list">
-            <span>用户数据</span>
-            <span>身份数据</span>
-            <span>api接口权限</span>
-            <span>身份和api接口关系</span>
-            <span>视图接口权限</span>
-            <span>身份和视图权限关系</span>
-        </div>
-        <h1>用户数据</h1>
-        <tab />
+    <div class="show-header">
+      <h2>用户展示</h2>
+    </div>
+    <div class="show-list">
+      <span>用户数据</span>
+      <span>身份数据</span>
+      <span>api接口权限</span>
+      <span>身份和api接口关系</span>
+      <span>视图接口权限</span>
+      <span>身份和视图权限关系</span>
+    </div>
+    <h1>用户数据</h1>
+    <tab />
   </div>
 </template>
 
@@ -20,8 +20,8 @@
 import Tab from '../tab'
 
 export default {
-  components: { Tab },
- 
+  components: { Tab }
+
 }
 </script>
 
@@ -72,5 +72,5 @@ table{
         background: #fff;
     }
 }
-  
+
 </style>
