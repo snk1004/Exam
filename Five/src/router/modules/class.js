@@ -3,7 +3,7 @@
 import Layout from '@/layout'
 
 const classRoom = {
-  path: '/classmanage',
+  path: 'classmanage',
   component: Layout,
   redirect: 'noredirect',
   name: 'Exam',
