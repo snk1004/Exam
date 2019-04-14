@@ -3,10 +3,10 @@
 import Layout from '@/layout'
 
 const classRoom = {
-  path: 'classmanage',
+  path: '/classmanage',
   component: Layout,
   redirect: 'noredirect',
-  name: 'Exam',
+  name: 'classManage',
   meta: {
     title: 'classManage',
     icon: 'chart'
