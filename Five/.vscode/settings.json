@@ -1,0 +1,15 @@
+{
+    "files.autoSave": "off",
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "vue-html",
+      {
+        "language": "vue",
+        "autoFix": true
+      }
+    ],
+    "eslint.run": "onSave",
+    "eslint.autoFixOnSave": true,
+    "vetur.validation.template": false
+  }

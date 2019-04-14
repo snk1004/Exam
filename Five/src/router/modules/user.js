@@ -1,11 +1,10 @@
 /** When your routing table is too long, you can split it into small modules**/
-
 import Layout from '@/layout'
 
 const userRouter = {
   path: '/user',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: '/user/addUser',
   name: 'User',
   meta: {
     title: 'user',
@@ -14,14 +13,14 @@ const userRouter = {
   children: [
     {
       path: 'addUser',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/adduser/addUser'),
       name: 'Adduser',
       meta: { title: 'Adduser', noCache: true }
     },
     {
       path: 'usershow',
-      component: () => import('@/views/charts/line'),
-      name: 'Questtype',
+      component: () => import('@/views/userShow/userShow'),
+      name: 'userShow',
       meta: { title: 'UserShow', noCache: true }
     }
   ]
