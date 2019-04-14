@@ -6,195 +6,96 @@
       <p>题干</p>
       <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic">
       <p>题目主题</p>
-      <textarea :id="tinymceId" class="tinymce-textarea" />
-      <div class="editor-custom-btn-container"> 
+      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+      <div class="testtype_select">
+        <p>请选择考试类型:</p>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <p>请选择课程类型:</p>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <p>请选择题目类型:</p>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <p>答案信息</p>
         <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+        <p class="class-btn-box"><button class="class-btn" type="text" @click="open">提交</button> </p>
       </div>
     </div>
-    
   </div>
-</template> 
+</template>
 <script>
-import editorImage from './components/editorImage'
-import plugins from './plugins'
-import toolbar from './toolbar'
-
+import editorImage from '../../../components/Tinymce'
 export default {
-  name: 'Tinymce',
-  components: { editorImage },
-  props: {
-    id: {
-      type: String,
-      default: function() {
-        return 'vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '')
-      }
-    },
-    value: {
-      type: String,
-      default: ''
-    },
-    toolbar: {
-      type: Array,
-      required: false,
-      default() {
-        return []
-      }
-    },
-    menubar: {
-      type: String,
-      default: 'file edit insert view format table'
-    },
-    height: {
-      type: Number,
-      required: false,
-      default: 360
-    }
-  },
   data() {
-    return {
-      hasChange: false,
-      hasInit: false,
-      tinymceId: this.id,
-      fullscreen: false,
-      languageTypeList: {
-        'en': 'en',
-        'zh': 'zh_CN'
-      }
-    }
-  },
-  computed: {
-    language() {
-      return this.languageTypeList[this.$store.getters.language]
-    }
-  },
-  watch: {
-    value(val) {
-      if (!this.hasChange && this.hasInit) {
-        this.$nextTick(() =>
-          window.tinymce.get(this.tinymceId).setContent(val || ''))
+      return {
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: ''
       }
     },
-    language() {
-      this.destroyTinymce()
-      this.$nextTick(() => this.initTinymce())
-    }
-  },
-  mounted() {
-    this.initTinymce()
-  },
-  activated() {
-    this.initTinymce()
-  },
-  deactivated() {
-    this.destroyTinymce()
-  },
-  destroyed() {
-    this.destroyTinymce()
-  },
   methods: {
-    initTinymce() {
-      const _this = this
-      window.tinymce.init({
-        language: this.language,
-        selector: `#${this.tinymceId}`,
-        height: this.height,
-        body_class: 'panel-body ',
-        object_resizing: false,
-        toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
-        menubar: this.menubar,
-        plugins: plugins,
-        end_container_on_empty_block: true,
-        powerpaste_word_import: 'clean',
-        code_dialog_height: 450,
-        code_dialog_width: 1000,
-        advlist_bullet_styles: 'square',
-        advlist_number_styles: 'default',
-        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-        default_link_target: '_blank',
-        link_title: false,
-        nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
-        init_instance_callback: editor => {
-          if (_this.value) {
-            editor.setContent(_this.value)
-          }
-          _this.hasInit = true
-          editor.on('NodeChange Change KeyUp SetContent', () => {
-            this.hasChange = true
-            this.$emit('input', editor.getContent())
-          })
-        },
-        setup(editor) {
-          editor.on('FullscreenStateChanged', (e) => {
-            _this.fullscreen = e.state
-          })
-        }
-        // 整合七牛上传
-        // images_dataimg_filter(img) {
-        //   setTimeout(() => {
-        //     const $image = $(img);
-        //     $image.removeAttr('width');
-        //     $image.removeAttr('height');
-        //     if ($image[0].height && $image[0].width) {
-        //       $image.attr('data-wscntype', 'image');
-        //       $image.attr('data-wscnh', $image[0].height);
-        //       $image.attr('data-wscnw', $image[0].width);
-        //       $image.addClass('wscnph');
-        //     }
-        //   }, 0);
-        //   return img
-        // },
-        // images_upload_handler(blobInfo, success, failure, progress) {
-        //   progress(0);
-        //   const token = _this.$store.getters.token;
-        //   getToken(token).then(response => {
-        //     const url = response.data.qiniu_url;
-        //     const formData = new FormData();
-        //     formData.append('token', response.data.qiniu_token);
-        //     formData.append('key', response.data.qiniu_key);
-        //     formData.append('file', blobInfo.blob(), url);
-        //     upload(formData).then(() => {
-        //       success(url);
-        //       progress(100);
-        //     })
-        //   }).catch(err => {
-        //     failure('出现未知问题，刷新页面，或者联系程序员')
-        //     console.log(err);
-        //   });
-        // },
-      })
-    },
-    destroyTinymce() {
-      const tinymce = window.tinymce.get(this.tinymceId)
-      if (this.fullscreen) {
-        tinymce.execCommand('mceFullScreen')
-      }
-
-      if (tinymce) {
-        tinymce.destroy()
-      }
-    },
-    setContent(value) {
-      window.tinymce.get(this.tinymceId).setContent(value)
-    },
-    getContent() {
-      window.tinymce.get(this.tinymceId).getContent()
-    },
-    imageSuccessCBK(arr) {
-      const _this = this
-      arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
-      })
+    open() {
+      this.$confirm('真的要添加吗?', '你确定要添加这道试题吗？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
-  }
+  },
+  components: { editorImage }
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 .tinymce-container {
   position: relative;
   line-height: normal;
 }
-.tinymce-container>>>.mce-fullscreen {
+.tinymce-container>.mce-fullscreen {
   z-index: 10000;
 }
 .tinymce-textarea {
@@ -217,20 +118,46 @@ export default {
 }
 .editor-container{
   background: #eee;
-  padding:5px 40px; 
+  width: 100%;
 }
 .addtest{
-    font-size: 20px;
+  height: 60px; 
+  line-height: 60px;
+  font-size: 20px; 
+  margin: 0;
 }
 .topic{
   width:300px;
-  padding: 10px; 
+  padding: 10px;
   outline: none;
   margin: 10px 0;
-} 
+}
 .contentbox{
   background: #fff;
   padding: 20px;
   border-radius: 20px;
+}
+.testtype_select{
+  >p{
+    height: 40px;
+    line-height:40px;
+  }
+  >select{
+    width:180px;
+    padding: 3px 8px;
+  }
+}
+.class-btn-box{
+  width: 100%;
+  display: flex;
+  margin-bottom: 25px;
+  .class-btn{
+    padding: 10px 30px; 
+    display: block;
+    background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+  }
 }
 </style>

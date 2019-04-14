@@ -3,7 +3,7 @@
     <p class="testtype">试题分类</p>
     <div class="class-content">
       <div class="class-btn-box">
-        <button class="class-btn"><i class="el-icon-plus" /> 添加类型</button>
+        <el-button class="class-btn" type="text" @click="open">添加类型</el-button>
       </div>
       <div class="class-body">
         <table>
@@ -112,8 +112,28 @@
 <script>
 
 export default {
-
-}
+methods: {
+      open() {
+        this.$prompt('', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputValue:'请输入类型名称',
+          title:'创建新类型',
+          center:true
+        }).then(({ value }) => {
+          this.$message({
+            type: 'success',
+            message: '你的类型是: ' + value
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });       
+        });
+      }
+    }
+  } 
 </script>
 
 <style lang='scss'>
