@@ -11,12 +11,14 @@
         </div>
         <input type="text" placeholder="请输入用户名">
         <input type="password" placeholder="请输入密码">
-        <select id="" name="" value="">
-          <option value="请输入用户id">请输入用户id</option>
-          <option value="管理员">管理员</option>
-          <option value="管理员">出题者</option>
-          <option value="管理员">浏览者</option>
-        </select>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <div class="btnFotter">
           <button class="sure">确认</button>
           <button class="resets">重置</button>
@@ -49,9 +51,14 @@
         <div class="btn">
           <button>添加视图接口权限</button>
         </div>
-        <select id="" name="" value="">
-          <option value="请输入用户id">请选择已有视图</option>
-        </select>
+        <el-select v-model="viewvalue" placeholder="请选择">
+          <el-option
+            v-for="item in view"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <div class="btnFotter">
           <button class="sure">确认</button>
           <button class="resets">重置</button>
@@ -61,15 +68,22 @@
         <div class="btn">
           <button>给身份设置pi接口权限</button>
         </div>
-        <select id="" name="" value="">
-          <option value="请输入用户id">请输入用户id</option>
-          <option value="管理员">管理员</option>
-          <option value="管理员">出题者</option>
-          <option value="管理员">浏览者</option>
-        </select>
-        <select id="" name="">
-          <option value="请选择api接口权限">请选择api接口权限</option>
-        </select>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <div class="btnFotter">
           <button class="sure">确认</button>
           <button class="resets">重置</button>
@@ -79,15 +93,22 @@
         <div class="btn">
           <button>给身份设置视图权限</button>
         </div>
-        <select id="" name="" value="">
-          <option value="请输入用户id">请输入用户id</option>
-          <option value="管理员">管理员</option>
-          <option value="管理员">出题者</option>
-          <option value="管理员">浏览者</option>
-        </select>
-        <select id="" name="">
-          <option value="请设置视图权限id">请设置视图权限id</option>
-        </select>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <div class="btnFotter">
           <button class="sure">确认</button>
           <button class="resets">重置</button>
@@ -100,7 +121,76 @@
 <script>
 
 export default {
-
+  data() {
+    return {
+      options: [{
+        value: '选项1',
+        label: '管理者'
+      }, {
+        value: '选项2',
+        label: '出题者'
+      }, {
+        value: '选项3',
+        label: '浏览者'
+      }],
+      value: '请输入身份id',
+      view: [
+        {
+          value: '选项1',
+          label: '登录'
+        }, {
+          value: '选项2',
+          label: '主界面'
+        }, {
+          value: '选项3',
+          label: '添加试题'
+        }, {
+          value: '选项4',
+          label: '试题分类'
+        }, {
+          value: '选项5',
+          label: '查看试题'
+        }, {
+          value: '选项6',
+          label: '编辑试题'
+        }, {
+          value: '选项7',
+          label: '试题详情'
+        }, {
+          value: '选项19',
+          label: '试题详情'
+        }, {
+          value: '选项17',
+          label: '试题详情'
+        }, {
+          value: '选项8',
+          label: '添加用户'
+        }, {
+          value: '选项9',
+          label: '试题详情'
+        }, {
+          value: '选项10',
+          label: '角色管理'
+        }, {
+          value: '选项11',
+          label: '用户展示'
+        }, {
+          value: '选项12',
+          label: '添加考试'
+        }, {
+          value: '选项13',
+          label: '考试管理'
+        }, {
+          value: '选项14',
+          label: '班级管理'
+        }, {
+          value: '选项15',
+          label: '试题详情'
+        }
+      ],
+      viewvalue: '请选择已有视图'
+    }
+  }
 }
 </script>
 
@@ -149,7 +239,7 @@ export default {
             padding:0 10px;
             border:1px solid #ccc;
           }
-          >select{
+          >.el-select{
             width: 150px;
             height: 30px;
             margin-top: 20px;

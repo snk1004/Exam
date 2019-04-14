@@ -148,7 +148,12 @@ export default {
     draft: '草稿',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    yield: '成材率',
+    course: '课程名称',
+    marking: '阅卷状态',
+    classnames: '班级名称',
+    coursenames: '课程名称'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',

@@ -12,8 +12,8 @@ const Markingmanagement = {
   },
   children: [
     {
-      path: 'awaitingclass',
-      component: () => import('@/views/charts/keyboard'),
+      path: '/markingmanagement/awaitingclass',
+      component: () => import('@/views/awaiting/awaiting'),
       name: 'Awaitingclasst',
       meta: { title: 'awaitingclass', noCache: true }
     }, {
