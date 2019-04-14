@@ -4,25 +4,35 @@
     <div class="student-content">
       <from class="student-btn-box">
         <div class="form-item-children">
-          <input type="text" placeholder="输入学生姓名" value="">
+          <el-input v-model="input" placeholder="输入学生姓名" />
         </div>
         <div class="form-item-room select-box">
           <!-- <span>请选择教室号</span> -->
-          <select v-model="roomSelected" name="请选择教室号" @change="getRoomSelected">
-            <option v-for="(item,index) in room" :v-key="index">{{ item }}</option>
-          </select>
+          <el-select v-model="roomValue" placeholder="请选择教室号">
+            <el-option
+              v-for="item in room"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
         </div>
         <div class="form-item-class select-box">
           <!-- <span>班级名</span> -->
-          <select v-model="classSelected" name="班级名" @change="getClassSelected">
-            <option v-for="(item,index) in classname" :v-key="index">{{ item }}</option>
-          </select>
+          <el-select v-model="classValue" placeholder="班级名">
+            <el-option
+              v-for="item in classname"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
         </div>
         <div class="form-item-search">
-          <button class="student-btn">搜索</button>
+          <el-button class="student-btn" type="primary">搜索</el-button>
         </div>
         <div class="form-item-reset">
-          <button class="student-btn">重置</button>
+          <el-button class="student-btn" type="primary">重置</el-button>
         </div>
       </from>
       <div class="student-body">
@@ -275,7 +285,27 @@ export default {
         page: 1,
         limit: 20
       },
-      room: ['34301', '34302', '34303', '34304', '34305', '34306', '34307', '34308', '34309'],
+      // input
+      input: '',
+      // select
+      room: [{
+        value: '34301',
+        label: '黄金糕'
+      }, {
+        value: '34302',
+        label: '双皮奶'
+      }, {
+        value: '34303',
+        label: '蚵仔煎'
+      }, {
+        value: '34304',
+        label: '龙须面'
+      }, {
+        value: '34305',
+        label: '北京烤鸭'
+      }],
+      roomValue: '',
+      classValue: '',
       classname: ['1608A', '1608B', '1609A', '1609B', '16010A', '16010B', '1610C', '16011A', '16011B', '1611C']
     }
   },
@@ -337,28 +367,11 @@ export default {
       }
       .select-box{
         font-size: 14px;
-        select{
-          margin-right: 16px;
-          width: 180px;
-          height: 32px;
-          padding: 4px 11px;
-          box-sizing: border-box;
-          border: 1px solid #d9d9d9;
-          option{
-            color: rgba(0, 0, 0, 0.65);
-            height: 32px!important;
-            display: inline-block;
-          }
-        }
+        margin-right: 16px;
       }
       .student-btn{
         width: 110px;
-        height: 32px;
-        display: block;
-        background: #0139fd;
-        border: none;
-        color: #fff;
-        border-radius: 5px;
+        background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
         margin-right: 16px;
       }
     }

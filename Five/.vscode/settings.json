@@ -10,5 +10,6 @@
       }
     ],
     "eslint.run": "onSave",
-    "eslint.autoFixOnSave": true
+    "eslint.autoFixOnSave": true,
+    "vetur.validation.template": false
   }

@@ -1,5 +1,6 @@
 export default {
   route: {
+    UEM: '摸底考试管理',
     dashboard: '首页',
     documentation: '文档',
     guide: '引导页',

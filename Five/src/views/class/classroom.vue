@@ -3,7 +3,7 @@
     <h2>教室管理</h2>
     <div class="classroom-content">
       <div class="classroom-btn-box">
-        <button class="classroom-btn"><i class="el-icon-plus" /> 添加教室</button>
+        <el-button class="classroom-btn" type="primary" @click="addClassRoom"><i class="el-icon-plus" /> 添加教室</el-button>
       </div>
       <div class="classroom-body">
         <table>
@@ -104,7 +104,26 @@
 <script>
 
 export default {
-
+  methods: {
+    addClassRoom() {
+      this.$prompt('添加教室', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '添加教室成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    }
+  }
 }
 </script>
 
@@ -137,11 +156,7 @@ export default {
       .classroom-btn{
         width: 158px;
         height: 40px;
-        display: block;
-        background: #0139fd;
-        border: none;
-        color: #fff;
-        border-radius: 5px;
+        background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
       }
     }
     .classroom-body{

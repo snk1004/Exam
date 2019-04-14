@@ -3,7 +3,7 @@
     <h2>班级管理</h2>
     <div class="class-content">
       <div class="class-btn-box">
-        <button class="class-btn"><i class="el-icon-plus" /> 添加班级</button>
+        <el-button class="class-btn" type="primary" @click="addClass"><i class="el-icon-plus" /> 添加班级</el-button>
       </div>
       <div class="class-body">
         <table>
@@ -166,7 +166,26 @@
 <script>
 
 export default {
-
+  methods: {
+    addClass() {
+      this.$prompt('添加班级', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        // inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '添加班级成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    }
+  }
 }
 </script>
 
@@ -199,10 +218,6 @@ export default {
       .class-btn{
         width: 158px;
         height: 40px;
-        display: block;
-        border: none;
-        color: #fff;
-        border-radius: 5px;
         background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
       }
     }
