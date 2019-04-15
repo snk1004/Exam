@@ -27,8 +27,13 @@ export default {
   /* 50= navbar  50  */
   min-height: calc(100vh - 50px);
   width: 100%;
+  flex:auto;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #ccc;
+ 
 }
 
 .fixed-header+.app-main {
