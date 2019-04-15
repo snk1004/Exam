@@ -13,13 +13,13 @@ const Examinations = {
   children: [
     {
       path: 'addexamination',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/exam/addexam'),
       name: 'Addexaminationt',
       meta: { title: 'addexamination', noCache: true }
     },
     {
       path: 'examinationlist',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/exam/examlist'),
       name: 'Examinationlist',
       meta: { title: 'examinationlist', noCache: true }
     }
