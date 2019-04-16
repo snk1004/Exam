@@ -4,79 +4,81 @@
         试题列表
       </h3>
       <div class="ant-layout-top">
-          <div class="ant-layout-from">
-              <div class="ant-layout-input">
-                <span>考试类型:</span>
-                <el-select v-model="value" placeholder="请选择">
-                  <el-option
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="考试类型">
+             <el-select v-model="formInline.region" placeholder="考试类型">
+               <el-option
                     v-for="item in options"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="ant-layout-input">
-                <span>课程:</span>
-      
-                <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-              </div> 
-             <el-button type="primary">查询</el-button>
-          </div>
+                    </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="课程">
+            <el-select v-model="formInline.region" placeholder="课程">
+               <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
           
       </div>
       <div class="ant-layout-content">
         <div class="style_container__2hI6B">
           <div class="style_tool__31xLZ">
             <h4>试卷列表</h4>
-              <div class="ant-radio-group ant-radio-group-outline">
+              <!-- <div class="ant-radio-group ant-radio-group-outline">
                 <span>全部</span><span>进行中</span><span>已结束</span>
-              </div>
+              </div> -->
+              <div>
+                <el-radio-group v-model="radio4" >
+                <el-radio-button label="全部" ></el-radio-button>
+                <el-radio-button label="进行中"></el-radio-button>
+                <el-radio-button label="已完成"></el-radio-button>
+              </el-radio-group>
+             </div>
           </div>
         </div>
         <div class="ant-table-body">
-          <table>
-              <thead>
-                <tr>
-                  <th>
-                    试卷信息
-                  </th>
-                   <th>
-                    班级
-                  </th>
-                   <th>
-                    创建人
-                  </th>
-                   <th>
-                    开始时间
-                  </th>
-                   <th>
-                    结束时间
-                  </th>
-                   <th>
-                   操作
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-          </table>
+            <el-table
+              :data="tableData"
+              style="width: 100%">
+              <el-table-column
+                prop="papers"
+                label="试题试卷"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="grade"
+                label="班级"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="creator"
+                label="创建人">
+              </el-table-column>
+              <el-table-column
+                prop="startTime"
+                label="开始时间">
+              </el-table-column>
+              <el-table-column
+                prop="endTime"
+                label="结束时间">
+              </el-table-column>
+               <el-table-column
+                prop="operation"
+                label="操作">
+              </el-table-column>
+          </el-table>
+                  
         </div>
       </div> 
   </div>
@@ -85,13 +87,31 @@
 let options= [{
           value: '选项1',
           label: 'vues'
-        }]
+        }];
+let tableData=[{
+    papers: 'vue',
+    grade: '1610c',
+    creator: 'w916peach',
+    startTime:"2016-02-05",
+    endTime:"2016-08-01",
+    operation:"详情"
+  }]
 export default {
   data(){
     return {
-      options,
-      value:''
+     formInline: {
+          user: '',
+          region: ''
+        },
+        options,
+        radio4:'',
+        tableData
     }
+  },
+  methods:{
+     onSubmit() {
+        console.log('submit!');
+      }
   }
 }
 </script>
@@ -118,35 +138,6 @@ export default {
       background: #fff;
       border-radius: 8px;
       margin: 0 2.5%;
-      .ant-layout-from{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        
-        .ant-layout-input{
-          width: 35%;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          select{
-            flex:1;
-            height: 30px;
-            outline: none;
-            margin: 5px;
-          }
-        }
-        .ant-layout-btn{
-            outline: none;
-            width: 15%;
-            height: 30px;
-            background: #0027d6;
-            border:0;
-            color: #fff;
-            margin-left: 15px;
-            border-radius: 3px;
-        }
-      }
     }
     .ant-layout-content{
       width: 95%;
@@ -167,23 +158,6 @@ export default {
           display: flex;
            align-items: center;
           justify-content: space-between;
-          .ant-radio-group{
-            display: flex;
-            span{
-              display: inline-block;
-              padding: 5px 8px;
-              border:1px solid #ccc;
-              color: #1890ff;
-            }
-          }
-        }
-      }
-      .ant-table-body{
-        width: 100%;
-        flex: 1;
-        table{
-          width: 100%;
-          height: 100%;
         }
       }
     }

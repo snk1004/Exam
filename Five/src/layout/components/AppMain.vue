@@ -33,8 +33,6 @@ export default {
   background: #f0f2f5;
   display: flex;
   flex-direction: column;
-  background: #ccc;
- 
 }
 
 .fixed-header+.app-main {

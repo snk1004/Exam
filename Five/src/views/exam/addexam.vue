@@ -52,6 +52,7 @@
                 type="date"
                 placeholder="开始时间">
                 </el-date-picker>
+                <el-col class="line" :span="2">-</el-col>
                 <el-date-picker
                 v-model="value2"
                 type="date"
@@ -70,14 +71,15 @@
    </div>    
 </template>
 <script>
+import axios from 'axios'
 let options= [{
           value: '选项1',
           label: 'vues'
         }]
 export default {
         data(){
-            return {
-                
+            return { 
+                //时间插件    
                  pickerOptions1: {
                     disabledDate(time) {
                         return time.getTime() > Date.now();
@@ -103,20 +105,33 @@ export default {
                         }
                     }]
                 },
+                //下拉框列表
                 options,
+                //开始时间
                 value1: '',
+                //结束时间
                 value2: '',
-                input1: '',
                 value: '',
+                //考试数量 默认的是 1
                 num8: 1,
+                //考试类型的value
                 value5:'',
+                //选择课程的value
                 value6:'',
+                //是输入框的值
                 input:''
 
                 
             }
         },
+        created(){
+            console.log(11)
+            // axios.post('/exam/exam').then(res=>{
+            //     console.l0g(res)
+            // })
+        },
         methods: {
+            //获取考试数量的value值
             handleChange(value) {
                 console.log(value);
             }
@@ -134,7 +149,6 @@ export default {
 .addexam{
     width: 100%;
     flex:1;
-    background: #ccc;
      padding: 0 0 20px 0;
      display: flex;
      flex-direction: column;
@@ -158,7 +172,11 @@ export default {
             width:45%;
             height: 80px;
             margin:8px 0;
-            
+            .line{
+                height: 100%;
+                line-height:35px;
+                text-align: center;
+            }
             }
     }
     .demonstration{
