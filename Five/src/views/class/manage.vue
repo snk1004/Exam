@@ -30,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="(item,index) in list" :key="index">
               <td>
                 <span>1701B</span>
               </td>
@@ -41,119 +41,7 @@
                 <span>34303</span>
               </td>
               <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
+                <span><li style="padding-right:2px" @click="Reset">修改</li>|<li style="padding-left:2px" @click="Delete">删除</li></span>
               </td>
             </tr>
           </tbody>
@@ -164,11 +52,52 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      dataList: [],
+      list: [0, 0, 0, 0, 0, 0, 0]
+    }
+  },
+  computed: {
+    ...mapState({
+      gradeList: state => state.class.gradeList
+    })
+  },
+  created() {
+    console.log(this.getgrade())
+  },
   methods: {
+    ...mapMutations({
+
+    }),
+    ...mapActions({
+      getgrade: 'class/getgrade'
+    }),
+    // 添加班级
     addClass() {
       this.$prompt('添加班级', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        // inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '添加班级成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    },
+    // 修改
+    Reset() {
+      this.$prompt('班级名', '教室号', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
         // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
@@ -268,6 +197,12 @@ export default {
             text-align: left;
             color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
+            display: flex;
+            list-style: none;
+            color: #000;
+            li{
+              color: #0139FD;
+            }
           }
         }
       }

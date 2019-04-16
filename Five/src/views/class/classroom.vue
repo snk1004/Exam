@@ -102,9 +102,26 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      dataList: []
+    }
+  },
+  computed: {
+    ...mapState({
+      gradeList: state => state.class.gradeList
+    })
+  },
   methods: {
+    ...mapMutations({
+
+    }),
+    ...mapActions({
+      getgrade: 'class/getgrade'
+    }),
     addClassRoom() {
       this.$prompt('添加教室', '提示', {
         confirmButtonText: '确定',
@@ -123,6 +140,10 @@ export default {
         })
       })
     }
+  },
+  onLoad() {
+    console.log(this.gradeList)
+    
   }
 }
 </script>
