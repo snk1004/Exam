@@ -2,7 +2,7 @@
   <div class="student-container">
     <h2>学生管理</h2>
     <div class="student-content">
-      <div class="student-btn-box" >
+      <div class="student-btn-box">
         <div class="form-item-children">
           <el-input v-model="input" placeholder="输入学生姓名" />
         </div>

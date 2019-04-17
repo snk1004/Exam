@@ -1,12 +1,12 @@
 <template>
-  <div :class="{fullscreen:fullscreen}" class="tinymce-container editor-container">
+  <div class="tinymce-container editor-container">
     <p class="addtest">添加试题</p>
     <div class="contentbox">
       <p class="testmesg">题目信息</p>
       <p>题干</p>
       <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic">
       <p>题目主题</p>
-      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+      <editorImage color="#1890ff" class="editor-upload-btn"/>
       <div class="testtype_select">
         <p>请选择考试类型:</p>
         <el-select v-model="value" placeholder="请选择">
@@ -36,7 +36,7 @@
           </el-option>
         </el-select>
         <p>答案信息</p>
-        <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+        <editorImage color="#1890ff" class="editor-upload-btn"/>
         <p class="class-btn-box"><button class="class-btn" type="text" @click="open">提交</button> </p>
       </div>
     </div>
@@ -76,12 +76,12 @@ export default {
       }).then(() => {
         this.$message({
           type: 'success',
-          message: '删除成功!'
+          message: '添加成功!'
         });
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消删除'
+          message: '已取消添加'
         });
       });
     }
