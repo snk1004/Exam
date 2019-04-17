@@ -1,31 +1,42 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 <template>
   <div class="class-container">
     <h2>班级管理</h2>
     <div class="class-content">
       <div class="class-btn-box">
+        <!-- 添加班级 -->
         <el-button class="class-btn" type="primary" @click="dialogFormVisible = true">
           <i class="el-icon-plus" /> 添加班级
         </el-button>
+        <!-- 添加班级弹窗 -->
         <el-dialog title="添加班级" :visible.sync="dialogFormVisible">
-          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
+          <el-form ref="ruleForm" :model="ruleForm" class="demo-ruleForm">
             <el-form-item label="班级名:" prop="name">
               <el-input v-model="ruleForm.name" />
             </el-form-item>
             <el-form-item label="教室号:" prop="region">
-              <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:100%">
-                <el-option label="区域一" value="shanghai" />
-                <el-option label="区域二" value="beijing" />
+              <el-select v-model="ruleForm.roomRegion" placeholder="请选择教室号" style="width:100%">
+                <el-option
+                  v-for="(item,index) in roomList"
+                  :key="index"
+                  :label="item.room_text"
+                  :value="item.room_id"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="课程名:" prop="region">
-              <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:100%">
-                <el-option label="区域一" value="shanghai" />
-                <el-option label="区域二" value="beijing" />
+              <el-select v-model="ruleForm.proRegion" placeholder="课程名" style="width:100%">
+                <el-option
+                  v-for="(item,index) in proList"
+                  :key="index"
+                  :label="item.subject_text"
+                  :value="item.subject_id"
+                />
               </el-select>
             </el-form-item>
             <el-form-item>
               <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+              <el-button type="primary" @click="addRoomConfirm">确 定</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -56,21 +67,53 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item,index) in list" :key="index">
+            <tr v-for="(item,index) in dataList" :key="index">
               <td>
-                <span>1701B</span>
+                <span>{{ item.grade_name }}</span>
               </td>
               <td>
-                <span>node基础</span>
+                <span>{{ item.subject_text }}</span>
               </td>
               <td>
-                <span>34303</span>
+                <span>{{ item.room_text }}</span>
               </td>
               <td>
                 <span>
-                  <li style="padding-right:2px" @click="Reset">修改</li>|
-                  <li style="padding-left:2px" @click="Delete">删除</li>
+                  <li style="padding-right:2px" @click="Reset(item.grade_id)">修改</li>|
+                  <li style="padding-left:2px" @click="Delete(item.room_id)">删除</li>
                 </span>
+                <!-- 修改班级弹窗 -->
+                <el-dialog title="修改班级" :visible.sync="dialogFormReset">
+                  <el-form ref="ruleForm" :model="ruleForm" class="demo-ruleForm">
+                    <el-form-item label="班级名:" prop="name">
+                      <el-input v-model="ruleForm.name" label="班级名" :disabled="true" :placeholder="ruleForm.name" />
+                    </el-form-item>
+                    <el-form-item label="教室号:" prop="region">
+                      <el-select v-model="ruleForm.roomRegion" placeholder="请选择教室号" style="width:100%">
+                        <el-option
+                          v-for="(it,ind) in roomList"
+                          :key="ind"
+                          :label="it.room_text"
+                          :value="it.room_id"
+                        />
+                      </el-select>
+                    </el-form-item>
+                    <el-form-item label="课程名:" prop="region">
+                      <el-select v-model="ruleForm.proRegion" placeholder="课程名" style="width:100%">
+                        <el-option
+                          v-for="(it,ind) in proList"
+                          :key="ind"
+                          :label="it.subject_text"
+                          :value="it.subject_id"
+                        />
+                      </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button @click="dialogFormVisible = false">取 消</el-button>
+                      <el-button type="primary" @click="resetRoomConfirm">确 定</el-button>
+                    </el-form-item>
+                  </el-form>
+                </el-dialog>
               </td>
             </tr>
           </tbody>
@@ -82,14 +125,27 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { log } from 'util'
 
 export default {
   data() {
     return {
+      // 表格数据
       dataList: [],
-      list: [0, 0, 0, 0, 0, 0, 0],
+      // 教室
+      roomList: [],
+      // 课程
+      proList: [],
+      // 提交信息 开关
+      mesFlag: false,
+      // 班级id
+      gradeID: '',
+      // 删除id
+      delInd: '',
       // form表单 弹框
+      // <<-------
       dialogFormVisible: false,
+      dialogFormReset: false,
       form: {
         name: '',
         region: '',
@@ -102,7 +158,8 @@ export default {
       },
       ruleForm: {
         name: '',
-        region: '',
+        roomRegion: '',
+        proRegion: '',
         date1: '',
         date2: '',
         delivery: false,
@@ -119,48 +176,131 @@ export default {
           { required: true, message: '请选择活动区域', trigger: 'change' }
         ]
       }
+      // ------->>
     }
   },
   computed: {
-    ...mapState({
-      // gradeList: state => state.class.gradeList
-    })
+    ...mapState({})
   },
   created() {
-    // console.log(this.getgrade())
+
+  },
+  mounted() {
+    this.getData()
   },
   methods: {
     ...mapMutations({}),
     ...mapActions({
-      // getgrade: 'class/getgrade'
+      getgrade: 'class/getgrade',
+      getroom: 'class/getroom',
+      getpro: 'class/getsubject',
+      addroom: 'class/addroom',
+      // 更新信息
+      gradeUpdata: 'class/gradeUpdata',
+      // 删除教室
+      gradeDelete: 'class/gradeDelete'
     }),
     // 添加班级
-    addClass() {
-
+    addRoomConfirm() {
+      this.dataList.forEach(item => {
+        // console.log(this.ruleForm.roomRegion, this.ruleForm.proRegion, this.ruleForm.name)
+        if (this.ruleForm.roomRegion === '' || this.ruleForm.proRegion === '' || this.ruleForm.name === '') {
+          this.$message.error('请输入信息')
+        } else if (this.ruleForm.name === item.grade_name) {
+          this.$message.error('已有此班级,请重新输入')
+        } else {
+          this.mesFlag = true
+        }
+      })
+      if (this.mesFlag) {
+        this.addroom({
+          'grade_name': this.ruleForm.name,
+          'room_id': this.ruleForm.roomRegion,
+          'subject_id': this.ruleForm.proRegion
+        })
+        this.getgrade().then(res => {
+          if (res.code === 1) {
+            this.dataList = res.data
+          }
+        })
+        this.getgrade().then(res => {
+          if (res.code === 1) {
+            this.dataList = res.data
+          }
+        })
+        this.ruleForm.roomRegion = ''
+        this.ruleForm.proRegion = ''
+        this.ruleForm.name = ''
+        this.dialogFormVisible = false
+      }
     },
     // 修改
-    Reset() {
-      this.$prompt('班级名', '教室号', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        // inputErrorMessage: '邮箱格式不正确'
+    Reset(gradeId) {
+      this.gradeID = gradeId
+      this.dialogFormReset = true
+      this.dataList.forEach(item => {
+        if (item.grade_id === this.gradeID) {
+          this.ruleForm.name = item.grade_name
+        }
       })
-        .then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: '添加班级成功'
-          })
+    },
+    // 更新
+    resetRoomConfirm() {
+      this.dataList.forEach(item => {
+        if (this.ruleForm.roomRegion === '' || this.ruleForm.proRegion === '') {
+          this.$message.error('请输入信息')
+        } else {
+          this.mesFlag = true
+        }
+      })
+      if (this.mesFlag) {
+        this.gradeUpdata({
+          'grade_id': this.gradeID,
+          'grade_name': this.ruleForm.name,
+          'subject_id': this.ruleForm.proRegion,
+          'room_id': this.ruleForm.roomRegion
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          })
+        this.getgrade().then(res => {
+          if (res.code === 1) {
+            this.dataList = res.data
+          }
         })
+        this.ruleForm.roomRegion = ''
+        this.ruleForm.proRegion = ''
+        this.ruleForm.name = ''
+        this.dialogFormVisible = false
+      }
+      this.dialogFormReset = false
     },
     // 删除
-    Delete() {}
+    Delete(ind) {
+      this.delInd = ind
+      this.gradeDelete({
+        'room_id': this.delInd
+      })
+      this.getgrade().then(res => {
+        if (res.code === 1) {
+          this.dataList = res.data
+        }
+      })
+    },
+    getData() {
+      this.getgrade().then(res => {
+        if (res.code === 1) {
+          this.dataList = res.data
+        }
+      })
+      this.getroom().then(res => {
+        if (res.code === 1) {
+          this.roomList = res.data
+        }
+      })
+      this.getpro().then(res => {
+        if (res.code === 1) {
+          this.proList = res.data
+        }
+      })
+    }
   }
 }
 </script>
