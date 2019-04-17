@@ -6,7 +6,7 @@ const classRoom = {
   path: '/classmanage',
   component: Layout,
   redirect: 'noredirect',
-  name: 'Exam',
+  name: 'classManage',
   meta: {
     title: 'classManage',
     icon: 'chart'

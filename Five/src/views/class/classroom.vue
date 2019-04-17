@@ -3,8 +3,19 @@
     <h2>教室管理</h2>
     <div class="classroom-content">
       <div class="classroom-btn-box">
-        <el-button class="classroom-btn" type="primary" @click="addClassRoom"><i class="el-icon-plus" /> 添加教室</el-button>
+        <el-button class="classroom-btn" type="primary" @click="dialogFormVisible = true"><i class="el-icon-plus" /> 添加教室</el-button>
       </div>
+      <el-dialog title="添加教室" :visible.sync="dialogFormVisible">
+        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
+          <el-form-item label="班级号:" prop="name">
+            <el-input v-model="ruleForm.name" />
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
       <div class="classroom-body">
         <table>
           <colgroup>
@@ -102,27 +113,60 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
-  methods: {
-    addClassRoom() {
-      this.$prompt('添加教室', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
-        this.$message({
-          type: 'success',
-          message: '添加教室成功'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
-      })
+  data() {
+    return {
+      dataList: [],
+      // form表单 弹框
+      dialogFormVisible: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: true,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      ruleForm: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        region: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ]
+      }
     }
+  },
+  computed: {
+    ...mapState({
+
+    })
+  },
+  methods: {
+    ...mapMutations({
+
+    }),
+    ...mapActions({
+
+    })
+  },
+  onLoad() {
+
   }
 }
 </script>

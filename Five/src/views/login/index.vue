@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
 import {mapActions} from 'vuex'
@@ -133,6 +132,7 @@ export default {
      handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
+          console.log(this.loginForm)
           this.loading = true
          let res = await this.login(this.loginForm)
         if(res.code ===1 ){
