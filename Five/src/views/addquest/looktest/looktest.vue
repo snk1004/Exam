@@ -129,7 +129,6 @@ export default {
   position: relative;
   width: 100%;
   height: calc(100vh - 84px);
-  background: #eee;
   padding: 10px 20px;
   overflow: auto;
 }

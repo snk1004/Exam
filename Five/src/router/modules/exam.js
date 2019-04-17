@@ -3,7 +3,7 @@ import Layout from '@/layout'
 const ExamRouter = {
   path: '/exam',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: 'exam/addquest',
   name: 'Exam',
   meta: {
     title: 'textquest',

@@ -116,9 +116,9 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    ...mapActions({////新增内容
+    ...mapActions({
       login:'user/login',
-      generateRoutes: 'permission/generateRoutes'
+      generarateRoutes:'permission/generateRoutes'
     }),
     showPwd() {
       if (this.passwordType === 'password') {
@@ -130,17 +130,16 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
+     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.loading = true;
-          let res=await this.login(this.loginForm);////新增内容
-          console.log('login-----',res)
-          if(res.code===1){
-            await this.generateRoutes([])
-             this.$router.push({ path: this.redirect || '/' })
-          }
-          this.loading = false
+          this.loading = true
+         let res = await this.login(this.loginForm)
+        if(res.code ===1 ){
+          await this.generarateRoutes([])
+          this.$router.push({ path: this.redirect || '/' })
+        }
+        this.loading = false
         } else {
           console.log('error submit!!')
           return false

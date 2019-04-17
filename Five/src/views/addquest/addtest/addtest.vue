@@ -117,7 +117,6 @@ export default {
   display: inline-block;
 }
 .editor-container{
-  background: #eee;
   width: 100%;
 }
 .addtest{
