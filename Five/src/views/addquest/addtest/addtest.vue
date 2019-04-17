@@ -125,6 +125,7 @@ export default {
   line-height: 60px;
   font-size: 20px; 
   margin: 0;
+  padding:0 20px;
 }
 .topic{
   width:300px;
@@ -136,6 +137,7 @@ export default {
   background: #fff;
   padding: 20px;
   border-radius: 20px;
+  margin: 0 20px;
 }
 .testtype_select{
   >p{
