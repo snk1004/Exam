@@ -71,13 +71,11 @@ export default {
           if(this.user_pwd&&this.user_name){
             this.addSubmit({
               'user_name':this.user_name,
-              'user_pwd':this.user_pwd,
-              // 'user_identity':this.value
+              'user_pwd':this.user_pwd
             }).then(res=>{
-              // if(res.code==1){
-                this.delaog=true
-                this.count=res.msg
-              // }
+                console.log(this.delaog,11)
+                // this.delaog=true
+                // this.count=res.msg
             })
 
         }
@@ -87,7 +85,8 @@ export default {
                 if(this.user_name||this.user_pwd||this.value!='请选择身份id'){
                    this.getreneval({
                     'user_id':item.user_id,
-                    'user_identity':this.value
+                    'user_name':this.user_name==''?item.user_name:this.user_name,
+                    'user_pwd':this.user_pwd==''?item.user_pwd:this.user_pwd
                  })
                 }
                }

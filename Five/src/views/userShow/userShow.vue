@@ -11,7 +11,7 @@
     :data="dataList"
     style="width: 100%">
     <el-table-column  
-      v-for='(item,i) in lists[listsInd].title' :key='i' lable='item.tit' :prop="item.render">
+      v-for='(item,i) in lists[listsInd].title' :key='i' :label='item.tit' :prop="item.render" >
     </el-table-column>
    
   </el-table>
