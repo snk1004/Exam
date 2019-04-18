@@ -7,35 +7,27 @@
       <div class="testtype_top">
         <span>课程类型:</span> 
         <ul class="testtype_ullist">
-          <li>All</li>
-          <li>javaScript上</li>
-          <li>javaScript下</li>
-          <li>模块化开发</li>
-          <li>移动端开发</li>
-          <li>组件化开发(vue)</li>
-          <li>渐进式开发(react)</li>
-          <li>项目实战</li>
-          <li>javaScript高级</li>
-          <li>node高级</li>
+          <li>all</li>
+          <li v-for="item in list" :key="item.subject_id">{{item.subject_text}}</li>
         </ul>
       </div>
       <div class="testtype_select">
         <span>考试类型:</span>
         <el-select v-model="value" placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in testtypes"
+            :key="item.exam_id"
+            :label="item.exam_name"
+            :value="item.exam_id">
           </el-option>
         </el-select>
         <span>题目类型:</span>
-        <el-select v-model="value" placeholder="请选择">
+        <el-select v-model="value2" placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in titletypes"
+            :key="item.questions_type_id"
+            :label="item.questions_type_text"
+            :value="item.questions_type_id">
           </el-option>
         </el-select>
         <button>查询</button>
@@ -43,82 +35,70 @@
     </div>
     <div class="content_box">
         <ul>
-          <li>
-            <p>机器人归位</p>
+          <li v-for="(item,index) in contentdata" :key="index">
+            <p>{{item.title}}</p>
             <div>
               <p>
-                <span>代码补全</span>
-                <span>javaScript上</span>
-                <span>周考1</span>
+                <span>{{item.questions_type_text}}</span>
+                <span>{{item.subject_text}}</span>
+                <span>{{item.exam_name}}</span>
               </p>
               <span>编辑</span>
             </div> 
-            <p>dingshaoshan发布</p>
-          </li>
-          <li>
-            <p>机器人归位</p>
-            <div>
-              <p>
-                <span>代码补全</span>
-                <span>javaScript上</span>
-                <span>周考1</span>
-              </p>
-              <span>编辑</span>
-            </div> 
-            <p>dingshaoshan发布</p>
-          </li>
-          <li>
-            <p>机器人归位</p>
-            <div>
-              <p>
-                <span>代码补全</span>
-                <span>javaScript上</span>
-                <span>周考1</span>
-              </p>
-              <span>编辑</span>
-            </div> 
-            <p>dingshaoshan发布</p>
-          </li>
-          <li>
-            <p>机器人归位</p>
-            <div>
-              <p>
-                <span>代码补全</span>
-                <span>javaScript上</span>
-                <span>周考1</span>
-              </p>
-              <span>编辑</span>
-            </div> 
-            <p>dingshaoshan发布</p>
+            <p>{{item.user_name}}发布</p>
           </li>
         </ul>
     </div>
   </div>
 </template>
 <script>
+import {mapActions} from "vuex";
 export default {
   data() {
       return {
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: ''
+        value: '',
+        value2:'',
+        list:[],
+        testtypes:[],
+        titletypes:[],
+        contentdata:[]
       }
+    },
+    mounted() {
+      this.getlist()
+    },
+    methods: {
+    ...mapActions({
+      subject:"questionManagement/subject",//js上下
+      testtype:"questionManagement/examType",//周考月考
+      titletype:"questionManagement/getQuestionsType",//题的类型---简单题
+      condition:"questionManagement/condition"
+    }),
+    getlist(){
+      this.subject().then(res=>{
+        if(res.code===1){
+          this.list=res.data
+        }
+      }),
+      this.testtype().then(res=>{
+        if(res.code===1){
+          this.testtypes=res.data
+        }
+      }),
+      this.titletype().then(res=>{
+        if(res.code===1){
+          this.titletypes=res.data 
+        }
+      }),
+      this.condition().then(res=>{
+        if(res.code===1){
+          this.contentdata=res.data
+        }
+      })
     }
-}
+  }
+  };
+  
 </script>
 
 <style scoped lang='scss'>
@@ -188,28 +168,32 @@ export default {
     list-style: none;
     padding:10px 0;
     border-bottom: 1px solid #ccc;
-    >p{
-      height: 40px;
-      line-height: 40px;
+    >p:nth-child(1){ 
+      padding: 10px 0;
       font-size: 14px;
+      line-height: 25px;
       margin: 0;
     }
     >p:nth-child(3){
+      padding: 10px 0;
       color: #0139fd;
+      margin: 0;
     }
     >div{
-      p{
+      height: 50px;
+      line-height: 50px;
+      >p{
         display: inline-block; 
         margin: 0;
         height: 16px;
         line-height: 16px;
         >span{
-        display: inline-block;
-        border:1px solid #ccc;
-        background: pink;
-        font-size: 12px;
-        padding: 3px 6px;
-        margin-right:5px; 
+          display: inline-block;
+          border:1px solid #ccc;
+          background: pink;
+          font-size: 12px;
+          padding: 3px 6px;
+          margin-right:5px; 
         }
       }
       >span{
