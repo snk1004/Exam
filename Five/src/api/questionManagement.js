@@ -13,10 +13,7 @@ export const addquestions = params => { //  添加试题
   return request.post('/exam/questions', params)
 }
 export const insertQuestionsType = params => { //  添加试题类型
-  return request.get('/exam/insertQuestionsType', {
-    test: params.test,
-    srot: params.srot
-  })
+  return request.get(`/exam/insertQuestionsType?test=${params.text}&sort=${params.sort}`, params)
 }
 export const condition = params => { //  获取所有试题
   return request.get('/exam/questions/condition', params)

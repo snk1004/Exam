@@ -25,9 +25,9 @@ const actions = {
     })
   },
   insertQuestionsType({ commit }, payload) { //  添加考试类型
+    console.log(payload)
     return new Promise(async(resolve, reject) => {
       const data = await insertQuestionsType(payload)
-      console.log(data)
       resolve(data)
     })
   },
