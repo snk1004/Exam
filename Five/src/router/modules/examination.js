@@ -26,9 +26,9 @@ const Examinations = {
             meta: { title: 'examinationlist', noCache: true }
         },
         {
-            path: 'edit',
+            path: 'add',
             component: () =>
-                import ('@/views/exam/edit')
+                import ('@/views/exam/add')
         }
     ]
 }

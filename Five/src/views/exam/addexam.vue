@@ -154,8 +154,9 @@ export default {
                       date1:start_time,
                       date2:end_time
                    }
-               let res = await this.createExam(ruleForm)
-              this.$router.push({ path: "/examination/edit" })
+               let res = await this.createExam(ruleForm);
+              
+              this.$router.push({ path: "/examination/add" })
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -233,7 +234,11 @@ export default {
                 }
             }
             .line{
+               
                 text-align: center;
+            }
+            .line/deep/.el-form-item__content{
+                width: 100%;
             }
         }
         .el-button{

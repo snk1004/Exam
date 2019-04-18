@@ -10,7 +10,11 @@ const actions = {
     async createExam({ commit }, examList) {
         const { TypeExamId, courseExamId, date1, date2, name, num } = examList;
         var res = await create({ subject_id: courseExamId, exam_id: TypeExamId, title: name, number: num, start_time: date1, end_time: date2 });
-        console.log(res)
+        console.log(res);
+        if (res.code == 1) {
+            localStorage.setItem('exam', JSON.stringify(res.data))
+        }
+
         return res
     },
 
