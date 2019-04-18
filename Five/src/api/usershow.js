@@ -24,3 +24,33 @@ export function getIdentity(data) {
     data
   })
 }
+export function getApi(data) {
+  return request({
+    url: '/user/api_authority',
+    method: 'get',
+    data
+  })
+}
+
+export function getRelation(data) {
+  return request({
+    url: '/user/identity_api_authority_relation',
+    method: 'get',
+    data
+  })
+}
+export function getView(data) {
+  return request({
+    url: '/user/view_authority',
+    method: 'get',
+    data
+  })
+}
+
+export function getViewIdentity(data) {
+  return request({
+    url: '/user/identity_view_authority_relation',
+    method: 'get',
+    data
+  })
+}

@@ -57,16 +57,13 @@ export default {
       },
       handleSubmit(){
         if(this.user_pwd&&this.user_name){
-          let reg = /[A-z]{1,}[a-z]{3,}\d{1,}/
-          console.log(reg.test(this.user_pwd))
-          if(reg.test(this.user_pwd)){
+         
             this.addSubmit({
               'user_name':this.user_name,
               'user_pwd':this.user_pwd,
               'user_identity':this.value
             })
             
-          }
         }
       }
  },
