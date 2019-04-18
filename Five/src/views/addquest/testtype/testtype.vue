@@ -70,7 +70,7 @@ import {mapActions} from "vuex";
         this.$prompt('', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputValue:'请输入类型名称',
+          inputPlaceholder:'请输入类型名称',
           title:'创建新类型',
           center:true
         }).then(({ value }) => {
@@ -78,7 +78,12 @@ import {mapActions} from "vuex";
             this.insertQuestionsType({
               text:value,
               sort:this.list.length+1
-            })
+            }),
+            this.getQuestionsType().then(res=>{
+              if(res.code===1){
+                this.list=res.data
+            }
+        })
           }
           this.$message({
             type: 'success',
