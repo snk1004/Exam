@@ -9,7 +9,6 @@ export function show(data) {
 }
 
 export function adduser(data) {
-  console.log(data)
   return request({
     url: '/user',
     method: 'post',
@@ -51,6 +50,13 @@ export function getViewIdentity(data) {
   return request({
     url: '/user/identity_view_authority_relation',
     method: 'get',
+    data
+  })
+}
+export function getReneval(data) {
+  return request({
+    url: '/user/user',
+    method: 'put',
     data
   })
 }

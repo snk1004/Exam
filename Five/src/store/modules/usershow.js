@@ -1,4 +1,4 @@
-import { show, adduser, getIdentity, getApi, getRelation, getView, getViewIdentity } from '@/api/usershow'
+import { show, adduser, getIdentity, getApi, getRelation, getView, getViewIdentity, getReneval} from '@/api/usershow'
 
 const actions = {
   show({ commit }, payload) {
@@ -40,6 +40,12 @@ const actions = {
   getViewIdentity({ commit }, payload) {
     return new Promise(async(resolve, reject) => {
       const data = await getViewIdentity(payload)
+      resolve(data)
+    })
+  },
+  getReneval({ commit }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const data = await getReneval(payload)
       resolve(data)
     })
   }

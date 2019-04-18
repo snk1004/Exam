@@ -3,12 +3,12 @@
         <div class="btn">
           <button v-for='(item,i) in userState' :class="stateInd==i?'active':''" @click='handleState(i)'    :key='item.id'>{{item.states}}</button>
         </div>
-        <el-select v-model="value" placeholder="请选择" v-if='stateInd'>
+        <el-select v-model="values" placeholder="请选择" v-if='stateInd'>
           <el-option
-            v-for="item in options"
-            :key="item.value"
+            v-for="item in list"
+            :key="item.user_name"
             :label="item.label"
-            :value="item.value"
+            :value="item.user_name"
           />
         </el-select>
         <input type="text" placeholder="请输入用户名" v-model="user_name">
@@ -25,7 +25,12 @@
           <button class="sure" @click='handleSubmit'>确认</button>
           <button class="resets">重置</button>
         </div>
-
+        <div v-if='delaog'>
+            <div class="deloag" >
+              <span>{{count}}</span>
+            </div>
+        </div>
+        
       </div>
 </template>
 <script>
@@ -41,36 +46,62 @@ export default {
           states:'更新用户'
         }],
         options: [],
-      value: '请输入身份id',
+      value: '请选择身份id',
       user_name:'',
       user_pwd:'',
-      stateInd:0
+      stateInd:0,
+      values:'请选择身份id',
+      list:[],
+      delaog:false,
+      count:''
     }
   },
   methods:{
     ...mapActions({
         getid:'usershow/getIdentity',
-        addSubmit:'usershow/adduser'
+        addSubmit:'usershow/adduser',
+        getList: "usershow/show",
+        getreneval: 'usershow/getReneval'
       }),
       handleState(i){
         this.stateInd=i;
       },
       handleSubmit(){
-        if(this.user_pwd&&this.user_name){
-         
+        if(this.stateInd==0){
+          if(this.user_pwd&&this.user_name){
             this.addSubmit({
               'user_name':this.user_name,
               'user_pwd':this.user_pwd,
-              'user_identity':this.value
+              // 'user_identity':this.value
+            }).then(res=>{
+              // if(res.code==1){
+                this.delaog=true
+                this.count=res.msg
+              // }
             })
-            
+
+        }
+        }else if(this.stateInd==1){       
+             this.list.find(item=>{
+               if(item.user_name==this.values){
+                if(this.user_name||this.user_pwd||this.value!='请选择身份id'){
+                   this.getreneval({
+                    'user_id':item.user_id,
+                    'user_identity':this.value
+                 })
+                }
+               }
+             })
+
         }
       }
  },
  created(){
-   console.log(this.getid())
    this.getid().then(res=>{
      this.options=res.data
+   })
+   this.getList().then(res=>{
+     this.list = res.data
    })
  }
 }
@@ -146,6 +177,17 @@ export default {
               }
           }
       }
+}
+.deloag{
+  position: absolute;
+  width: 150px;
+  height: 40px;
+  background: #fff;
+  left:50%;
+  top:-40px;
+  border:1px solid red;
+  color: rgba(0, 0, 0, 0.65);
+  z-index:1005;
 }
 
 </style>
