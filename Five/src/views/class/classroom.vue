@@ -40,7 +40,7 @@
                 <span>{{ item.room_text }}</span>
               </td>
               <td>
-                <span class="btn-take" @click="DeleteRoom">删除</span>
+                <span class="btn-take" @click="DeleteRooms(item.room_id)">删除</span>
               </td>
             </tr>
           </tbody>
@@ -58,6 +58,7 @@ export default {
     return {
       dataList: [],
       // form表单 弹框
+      delFlag: false,
       dialogFormVisible: false,
       flag: false,
       form: {
@@ -131,24 +132,25 @@ export default {
       this.dialogFormVisible = false
     },
     // 删除弹框
-    async DeleteRoom() {
-      this.$confirm('确定要删除此教室吗？', '提示', {
+    DeleteRooms(roomId) {
+      this.$confirm('确定要删除此教室吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
+      }).then((res) => {
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
-      }).catch(() => {
+        this.DeleteRoom({
+          'room_id': roomId
+        })
+      }).catch((res) => {
         this.$message({
           type: 'info',
           message: '已取消删除'
         })
       })
-
-      await console.log(this.$message.type)
     }
   }
 }
