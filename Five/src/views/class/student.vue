@@ -85,7 +85,10 @@
                 <span>Pm626521@</span>
               </td>
               <td>
-                <span>修改/删除</span>
+                <span>
+                  <li class="btn-take">修改 </li> <b class="stri">|</b>
+                  <li class="btn-take"> 删除</li>
+                </span>
               </td>
             </tr>
             <tr>
@@ -330,6 +333,9 @@ export default {
 </script>
 
 <style lang='scss'>
+.btn-take{
+  cursor: pointer;
+}
 .app-main{
   background: #f0f2f5;
 }
@@ -452,10 +458,16 @@ export default {
           padding: 16px 16px;
           flex: 1;
           border-bottom: 1px solid #e8e8e8;
-          span{
+          color: rgba(0, 0, 0, 0.65);
+          span {
             text-align: left;
-            color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
+            display: flex;
+            list-style: none;
+            color: rgba(0, 0, 0, 0.65);
+            li {
+              color: #0139fd;
+            }
           }
         }
       }

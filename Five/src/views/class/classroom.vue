@@ -38,7 +38,7 @@
                 <span>34303</span>
               </td>
               <td>
-                <span>删除</span>
+                <span class="btn-take">删除</span>
               </td>
             </tr>
             <tr>
@@ -172,6 +172,9 @@ export default {
 </script>
 
 <style lang='scss'>
+.btn-take{
+  cursor: pointer;
+}
 .app-main{
   background: #f0f2f5;
 }
@@ -245,6 +248,7 @@ export default {
           line-height: 26px;
           padding: 16px 16px;
           flex: 1;
+          color: rgba(0, 0, 0, 0.65);
           border-bottom: 1px solid #e8e8e8;
           span{
             text-align: left;

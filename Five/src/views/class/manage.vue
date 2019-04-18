@@ -79,8 +79,8 @@
               </td>
               <td>
                 <span>
-                  <li style="padding-right:2px" @click="Reset(item.grade_id)">修改</li>|
-                  <li style="padding-left:2px" @click="Delete(item.grade_id)">删除</li>
+                  <li class="btn-take" tyle="padding-right:2px" @click="Reset(item.grade_id)">修改 </li> <b class="stri">|</b>
+                  <li class="btn-take" tyle="padding-left:2px" @click="Delete(item.grade_id)"> 删除</li>
                 </span>
                 <!-- 修改班级弹窗 -->
                 <el-dialog title="修改班级" :visible.sync="dialogFormReset">
@@ -125,7 +125,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { log } from 'util'
+// import { log } from 'util'
 
 export default {
   data() {
@@ -309,6 +309,13 @@ export default {
 .app-main {
   background: #f0f2f5;
 }
+.btn-take{
+  cursor: pointer;
+}
+.stri{
+  font-weight: normal;
+  margin: 0 2px;
+}
 .class-container {
   width: 100%;
   height: 100%;
@@ -382,11 +389,10 @@ export default {
           border-bottom: 1px solid #e8e8e8;
           span {
             text-align: left;
-            color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
             display: flex;
             list-style: none;
-            color: #000;
+            color: rgba(0, 0, 0, 0.65);
             li {
               color: #0139fd;
             }
