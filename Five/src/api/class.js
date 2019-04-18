@@ -40,9 +40,13 @@ export const DeleteRoom = params => {
 /* ---student---------------------------------------------------------------- */
 // 获取所有学生信息
 export const getAllstudent = params => {
-  return request.get('/manger/student', { data: params })
+  return request.get('/manger/student', params)
 }
 // 更新学生信息
 export const resetStudent = params => {
   return request.put('/manger/student/edit', { data: params })
+}
+// 删除学生接口
+export const deleteStudent = params => {
+  return request.delete('/manger/student/' + params.id, params)
 }

@@ -15,7 +15,9 @@ import {
   // 获取所有学生
   getAllstudent,
   // 修改学生信息
-  resetStudent
+  resetStudent,
+  // 删除学生
+  deleteStudent
 } from '@/api/class'
 
 const actions = {
@@ -91,7 +93,14 @@ const actions = {
   // 修改学生信息
   resetStudent({ state }, payload) {
     return new Promise(async(resolve, reject) => {
-      const Data = await getAllstudent(payload)
+      const Data = await resetStudent(payload)
+      resolve(Data)
+    })
+  },
+  // 删除学生
+  deleteStudent({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const Data = await deleteStudent(payload)
       resolve(Data)
     })
   }

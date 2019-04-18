@@ -70,7 +70,7 @@
           <tbody>
             <tr v-for="item in dataList" :key="item.student_id">
               <td>
-                <span>{{ item.grade_name }}</span>
+                <span>{{ item.student_name }}</span>
               </td>
               <td>
                 <span>{{ item.subject_text }}</span>
@@ -86,8 +86,7 @@
               </td>
               <td>
                 <span>
-                  <li class="btn-take">修改 </li> <b class="stri">|</b>
-                  <li class="btn-take"> 删除</li>
+                  <li class="btn-take" @click="DeleteStu(item)"> 删除</li>
                 </span>
               </td>
             </tr>
@@ -129,18 +128,12 @@ export default {
       classname: []
     }
   },
-  created() {
-    this.roomSelected = this.room[0]
-    this.classSelected = this.classname[0]
-  },
   mounted() {
     this.getAlldata().then(res => {
       if (res.code === 1) {
         this.dataList = res.data
       }
     })
-    console.log(this.getgrade())
-
     this.getAllRoom().then(res => {
       if (res.code === 1) {
         this.room = res.data
@@ -156,7 +149,11 @@ export default {
     ...mapActions({
       getAlldata: 'class/getAllstudent',
       getAllRoom: 'class/getAllRoom',
-      getgrade: 'class/getgrade'
+      getgrade: 'class/getgrade',
+      // 更新学生信息
+      resetStudent: 'class/resetStudent',
+      // 删除学生
+      deleteStudent: 'class/deleteStudent'
     }),
     getList() {
       // 获取数据
@@ -166,13 +163,24 @@ export default {
         }
       })
     },
-    getRoomSelected() {
+    /* getRoomSelected() {
       // 获取选中
       console.log(this.roomSelected)
     },
     getClassSelected() {
       // 获取选中
       console.log(this.classSelected)
+    } */
+    // 删除学生
+    DeleteStu(data) {
+      this.deleteStudent({
+        'id': data.student_id
+      })
+      this.getAlldata().then(res => {
+        if (res.code === 1) {
+          this.dataList = res.data
+        }
+      })
     }
   }
 }
@@ -314,9 +322,6 @@ export default {
             display: flex;
             list-style: none;
             color: rgba(0, 0, 0, 0.65);
-            li {
-              color: #0139fd;
-            }
           }
         }
       }
