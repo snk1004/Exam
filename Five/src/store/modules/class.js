@@ -2,12 +2,16 @@ import {
   getgrade,
   getroom,
   getsubject,
-  addroom,
+  addgrade,
   gradeUpdata,
   // 删除
   gradeDelete,
-  // 获取所有教师
-  getAllRoom
+  // 获取所有教室
+  getAllRoom,
+  // 添加教室
+  addRoom,
+  // 删除教室
+  DeleteRoom
 } from '@/api/class'
 
 const actions = {
@@ -31,10 +35,10 @@ const actions = {
       resolve(data)
     })
   },
-  // 添加教室
-  addroom({ state }, payload) {
+  // 添加班级
+  addgrade({ state }, payload) {
     return new Promise(async(resolve, reject) => {
-      const listData = await addroom(payload)
+      const listData = await addgrade(payload)
       resolve(listData)
     })
   },
@@ -56,6 +60,20 @@ const actions = {
   getAllRoom({ state }, payload) {
     return new Promise(async(resolve, reject) => {
       const deleteData = await getAllRoom(payload)
+      resolve(deleteData)
+    })
+  },
+  // 添加教室
+  addRoom({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const deleteData = await addRoom(payload)
+      resolve(deleteData)
+    })
+  },
+  // 删除教室
+  DeleteRoom({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const deleteData = await DeleteRoom(payload)
       resolve(deleteData)
     })
   }

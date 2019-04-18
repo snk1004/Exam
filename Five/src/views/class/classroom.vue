@@ -41,18 +41,6 @@
               </td>
               <td>
                 <span class="btn-take" @click="DeleteRoom">删除</span>
-                <el-dialog
-                  title="提示"
-                  :visible.sync="dialogVisible"
-                  width="30%"
-                  :before-close="handleClose"
-                >
-                  <span>确定要删除此教室吗？</span>
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-                  </span>
-                </el-dialog>
               </td>
             </tr>
           </tbody>
@@ -71,8 +59,7 @@ export default {
       dataList: [],
       // form表单 弹框
       dialogFormVisible: false,
-      // 删除弹框
-      dialogVisible: false,
+      flag: false,
       form: {
         name: '',
         region: '',
@@ -117,21 +104,51 @@ export default {
   },
   methods: {
     ...mapActions({
-      getAllRoom: 'class/getAllRoom'
+      getAllRoom: 'class/getAllRoom',
+      addRoom: 'class/addRoom',
+      DeleteRoom: 'class/DeleteRoom'
     }),
     addConfirm() {
-      console.log(this.ruleForm.name)
-    },
-    DeleteRoom() {
-      this.dialogVisible = true
+      this.dataList.forEach(item => {
+        if (item.room_text === this.ruleForm.name) {
+          this.$message.error('已有此教室,请重新输入')
+          return
+        } else {
+          this.flag = true
+        }
+      })
+      if (this.flag) {
+        this.addRoom({
+          room_text: this.ruleForm.name
+        })
+      }
+      this.getAllRoom().then(res => {
+        if (res.code === 1) {
+          this.dataList = res.data
+        }
+      })
+      this.ruleForm.name = ''
+      this.dialogFormVisible = false
     },
     // 删除弹框
-    handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
+    async DeleteRoom() {
+      this.$confirm('确定要删除此教室吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
         })
-        .catch(_ => {})
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+
+      await console.log(this.$message.type)
     }
   }
 }

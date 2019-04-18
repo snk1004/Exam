@@ -194,7 +194,7 @@ export default {
       getgrade: 'class/getgrade',
       getroom: 'class/getroom',
       getpro: 'class/getsubject',
-      addroom: 'class/addroom',
+      addgrade: 'class/addgrade',
       // 更新信息
       gradeUpdata: 'class/gradeUpdata',
       // 删除教室
@@ -213,15 +213,10 @@ export default {
         }
       })
       if (this.mesFlag) {
-        this.addroom({
+        this.addgrade({
           'grade_name': this.ruleForm.name,
           'room_id': this.ruleForm.roomRegion,
           'subject_id': this.ruleForm.proRegion
-        })
-        this.getgrade().then(res => {
-          if (res.code === 1) {
-            this.dataList = res.data
-          }
         })
         this.getgrade().then(res => {
           if (res.code === 1) {
