@@ -4,23 +4,78 @@
       <h2>用户展示</h2>
     </div>
     <div class="show-list">
-      <span>用户数据</span>
-      <span>身份数据</span>
-      <span>api接口权限</span>
-      <span>身份和api接口关系</span>
-      <span>视图接口权限</span>
-      <span>身份和视图权限关系</span>
+      <span v-for="(item, i) in lists" :key='item.id' :class="listsInd==i?'active':''"  @click='handleChange(i)'>{{item.names}}</span>
     </div>
     <h1>用户数据</h1>
-    <tab />
+    <tab :dataList='dataList'/>
   </div>
 </template>
 
 <script>
 import Tab from '../tab'
-
+import {mapActions} from 'vuex'
 export default {
-  components: { Tab }
+  data(){
+    return {
+      dataList: [],
+      listsInd:0,
+      lists:[
+        {
+          names:'用户数据',
+          id:'1'
+        },
+         {
+          names:'身份数据',
+          id:'2'
+        }, {
+          names:'api接口权限',
+          id:'3'
+        }, {
+          names:'身份和api接口关系',
+          id:'4'
+        },
+        {
+          names:'身视图接口权限',
+          id:'5'
+        },{
+          names:'身份和视图权限关系',
+          id:'6'
+        }
+      ]
+    }
+  },
+ methods:{
+    ...mapActions({
+      getList: "usershow/show",
+      getid:'usershow/getIdentity',
+
+    }),
+    handleChange(i){
+      this.listsInd=i;
+      if(this.listsInd==0){
+         this.getList().then(res=>{
+        if(res.code==1){
+          this.dataList=res.data;
+        }
+      })
+      }else if(this.listsInd==1){
+         this.getid().then(res=>{
+        if(res.code==1){
+          this.dataList=res.data;
+        }
+      })
+      }
+    }
+ },
+  components: { Tab },
+  created(){
+     this.getList().then(res=>{
+        if(res.code==1){
+          this.dataList=res.data;
+        }
+      })
+     
+  }
 
 }
 </script>
@@ -71,6 +126,10 @@ table{
         height: 50px;
         background: #fff;
     }
+}
+span.active{
+  border:1px solid #0139FD;
+  color: #0139FD;
 }
 
 </style>
