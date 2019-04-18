@@ -145,6 +145,11 @@ export default {
         this.DeleteRoom({
           'room_id': roomId
         })
+        this.getAllRoom().then(res => {
+          if (res.code === 1) {
+            this.dataList = res.data
+          }
+        })
       }).catch((res) => {
         this.$message({
           type: 'info',
@@ -221,6 +226,9 @@ export default {
             font-weight: 500;
           }
         }
+      }
+      tbody tr:hover{
+        background: #e6efff!important;
       }
       tbody tr {
         transition: all 0.3s, height 0s;

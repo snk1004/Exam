@@ -11,7 +11,11 @@ import {
   // 添加教室
   addRoom,
   // 删除教室
-  DeleteRoom
+  DeleteRoom,
+  // 获取所有学生
+  getAllstudent,
+  // 修改学生信息
+  resetStudent
 } from '@/api/class'
 
 const actions = {
@@ -59,15 +63,15 @@ const actions = {
   // 获取所有教室
   getAllRoom({ state }, payload) {
     return new Promise(async(resolve, reject) => {
-      const deleteData = await getAllRoom(payload)
-      resolve(deleteData)
+      const Data = await getAllRoom(payload)
+      resolve(Data)
     })
   },
   // 添加教室
   addRoom({ state }, payload) {
     return new Promise(async(resolve, reject) => {
-      const deleteData = await addRoom(payload)
-      resolve(deleteData)
+      const Data = await addRoom(payload)
+      resolve(Data)
     })
   },
   // 删除教室
@@ -75,6 +79,20 @@ const actions = {
     return new Promise(async(resolve, reject) => {
       const deleteData = await DeleteRoom(payload)
       resolve(deleteData)
+    })
+  },
+  // 获取所有学生
+  getAllstudent({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const Data = await getAllstudent(payload)
+      resolve(Data)
+    })
+  },
+  // 修改学生信息
+  resetStudent({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const Data = await getAllstudent(payload)
+      resolve(Data)
     })
   }
 }

@@ -37,3 +37,12 @@ export const addRoom = params => {
 export const DeleteRoom = params => {
   return request.delete('/manger/room/delete', { data: params })
 }
+/* ---student---------------------------------------------------------------- */
+// 获取所有学生信息
+export const getAllstudent = params => {
+  return request.get('/manger/student', { data: params })
+}
+// 更新学生信息
+export const resetStudent = params => {
+  return request.put('/manger/student/edit', { data: params })
+}

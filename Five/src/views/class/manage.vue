@@ -372,6 +372,9 @@ export default {
           }
         }
       }
+      tbody tr:hover{
+        background: #e6efff!important;
+      }
       tbody tr {
         transition: all 0.3s, height 0s;
         width: 100%;
