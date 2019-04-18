@@ -2,7 +2,6 @@
     <div class="addexam">
         <h3>添加考试</h3>
         <div class='ant'>
-        
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item
                  
@@ -48,7 +47,6 @@
                         <b>*</b>数量:
                     </span>
                     <el-input-number v-model="ruleForm.num" controls-position="right"
-                        @change="handleChange" 
                         :min="3" :max="100"></el-input-number>
                     </el-form-item>
 
@@ -72,132 +70,130 @@
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
                 </el-form-item>
-                </el-form>
-    </div>  
+            </el-form>
+        </div>  
    </div>    
 </template>
 <script>
 import {mapActions,mapState,mapMutations} from 'vuex';
 import moment from 'moment';
 export default {
-        data(){
-            return {
-                //考试类型下拉框列表
-                examTypes:[], 
-                //科目下拉框
-                course:[],
-                ruleForm: {
-                    //名称
-                    name: '222',
-                    //考试类型
-                    TypeExamId: '',
-                    //考试课程
-                    courseExamId:'',
-                    //考试数量
-                    num:1,
-                    //开始时间
-                    date1: '',
-                    //结束时间
-                    date2: ''
-                    },
-          
-                rules: {
-                    //名称的规则
-                    name: [
-                        { required: true, message: '请输入活动名称', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                    ],
-                    //考试类型的规则
-                    courseExamId: [
-                        { required: true, message: '请选择考试类型', trigger: 'change' }
-                    ],
-                    //考试课程的规则
-                    TypeExamId: [
-                        { required: true, message: '请选择考试科目', trigger: 'change' }
-                    ],
-                    //考试数量的规则
-                    num: [
-                        { required: true, message: '请选择数量', trigger: 'change' },
-                        
-                    ],
-                    //开始时间
-                    date1: [
-                        { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                    ],
-                    //结束时间
-                    date2: [
-                        { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                    ],
-                }
+    data(){
+        return {
+            //考试类型下拉框列表
+            examTypes:[], 
+            //科目下拉框
+            course:[],
+            ruleForm: {
+                //名称
+                name: '222',
+                //考试类型
+                TypeExamId: '',
+                //考试课程
+                courseExamId:'',
+                //考试数量
+                num:1,
+                //开始时间
+                date1: '',
+                //结束时间
+                date2: ''
+                },
+        
+            rules: {
+                //名称的规则
+                name: [
+                    { required: true, message: '请输入活动名称', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                //考试类型的规则
+                courseExamId: [
+                    { required: true, message: '请选择考试类型', trigger: 'change' }
+                ],
+                //考试课程的规则
+                TypeExamId: [
+                    { required: true, message: '请选择考试科目', trigger: 'change' }
+                ],
+                //考试数量的规则
+                num: [
+                    { required: true, message: '请选择数量', trigger: 'change' },       
+                ],
+                //开始时间
+                date1: [
+                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                ],
+                //结束时间
+                date2: [
+                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                ],
             }
-        },
-        created(){
-        },
-        mounted(){
-            this.getList()
-        },
-        methods: {
-            //获取下拉列表
-              ...mapActions({
-                    subject:"examList/subject",
-                    examType:"examList/examType",
-                    createExam:'examList/createExam'
-                    }),
-            //点击提交
-            submitForm(ruleForm) {         
-               this.$refs.ruleForm.validate(async valid => {
-                if (valid) {
-                   let start_time =moment(this.ruleForm.date1).unix();
-                   let end_time =moment(this.ruleForm.date2).unix();
-                   let ruleForm ={
-                      ...this.ruleForm,
-                      date1:start_time,
-                      date2:end_time
-                   }
-               let res = await this.createExam(ruleForm);
-              
-              this.$router.push({ path: "/examination/add" })
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-                });
-            },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
-            },
-
-
-            
-            
-            //获取考试数量的value值
-            handleChange(value) {
-                console.log(value);
-            },
-            //获取课程和类型列表
-            getList(){
-                this.examType().then(res=>{
-                    if(res.code==1){
-                        this.examTypes=res.data;
-                    }
-                })
-                this.subject().then(res=>{
-                    if(res.code==1){
-                        this.course=res.data;
-                    }
-                })
-            }
-           
         }
+    },
+    created(){
+    },
+    mounted(){
+        //调用获取课程和类型列表函数
+        this.getList()
+    },
+    methods: {
+        //获取下拉列表
+            ...mapActions({
+                subject:"examList/subject",
+                examType:"examList/examType",
+                createExam:'examList/createExam'
+                }),
+        //点击提交
+        submitForm(ruleForm) {         
+            this.$refs.ruleForm.validate(async valid => {
+            if (valid) {
+                //将时间对象转为时间戳
+                let start_time =moment(this.ruleForm.date1).unix();
+                let end_time =moment(this.ruleForm.date2).unix();
+                //将时间戳放入ruleForm数组
+                let ruleForm ={
+                    ...this.ruleForm,
+                    date1:start_time,
+                    date2:end_time
+                }
+                //将ruleForm传入
+            let res = await this.createExam(ruleForm);
+            //跳转页面
+            this.$router.push({ path: "/examination/add" })
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+            });
+        },
+        //条件不成立弹出提示
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+
+        //获取课程和类型列表
+        getList(){
+            this.examType().then(res=>{
+                if(res.code==1){
+                    this.examTypes=res.data;
+                }
+            })
+            this.subject().then(res=>{
+                if(res.code==1){
+                    this.course=res.data;
+                }
+            })
+        }
+        
+    }
  
 }
 </script>
 
  <style lang="scss" scoped>
     *{
-    padding: 0;
-    margin: 0;
-    list-style: none;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        box-sizing: border-box;
     }
     .addexam{
         width: 95%;
@@ -207,12 +203,12 @@ export default {
         display: flex;
         flex-direction: column;
         h3{
-            width: 100%;
+             width: 100%;
             height: 50px;
+            color: rgba(0, 0, 0, 0.85);
+            font-weight: 500;
+            font-size: 1.5em;
             display: flex;
-            align-items: center;
-            font-weight:500;
-            font-size: 18px;
         }
         .ant{
             width:100%;

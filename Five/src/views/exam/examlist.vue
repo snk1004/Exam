@@ -164,6 +164,12 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
 .examlist{
   width: 95%;
   margin:0 2.5%;
@@ -172,11 +178,12 @@ export default {
   flex-direction: column;
   h3{
       width: 100%;
-      height: 50px;
+      padding: 20px 0px;
+      margin-top: 10px;
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 500;
+      font-size: 1.5em;
       display: flex;
-      // align-items: center;
-      font-weight:500;
-      font-size: 18px;
     }
     .ant-layout-top{
       width: 100%;

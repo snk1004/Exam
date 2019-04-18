@@ -11,12 +11,20 @@ export const examType = parmas => {
 export const examList = parmas => {
         return request.get('/exam/exam', parmas)
     }
-    //创建
+    //创建考试
 export function create(data) {
-    console.log(data, 'data...')
     return request({
         url: '/exam/exam',
         method: 'post',
+        data
+    })
+}
+//创建试题
+export function PutCreate(data) {
+    console.log(data)
+    return request({
+        url: `/exam/exam/`,
+        method: 'put',
         data
     })
 }

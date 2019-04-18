@@ -1,4 +1,4 @@
-import { subject, examType, create, examList } from '@/api/examList';
+import { subject, examType, create, examList, PutCreate } from '@/api/examList';
 const state = {
     courseList: []
 }
@@ -38,7 +38,19 @@ const actions = {
             const typeData = await examType(payload)
             resolve(typeData)
         })
-    }
+    },
+    //创建试题
+    async PutCreate({ commit }, examList) {
+        console.log(examList)
+            // const { TypeExamId, courseExamId, date1, date2, name, num } = examList;
+            // var res = await create({});
+            // console.log(res);
+            // if (res.code == 1) {
+            //     localStorage.setItem('exam', JSON.stringify(res.data))
+            // }
+
+        // return res
+    },
 }
 export default {
     namespaced: true,
