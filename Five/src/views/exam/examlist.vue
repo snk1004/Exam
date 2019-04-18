@@ -4,26 +4,26 @@
         试题列表
       </h3>
       <div class="ant-layout-top">
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true"  class="demo-form-inline">
           <el-form-item label="考试类型">
-             <el-select v-model="formInline.region" placeholder="考试类型">
-               <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+             <el-select v-model="type" placeholder="请选择">
+                    <el-option
+                    v-for="item in examTypes"
+                    :key="item.exam_name"
+                    :label="item.exam_name"
+                    :value="item.exam_name">
                     </el-option>
-            </el-select>
+                </el-select>
           </el-form-item>
           <el-form-item label="课程">
-            <el-select v-model="formInline.region" placeholder="课程">
-               <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+            <el-select v-model="course"  placeholder="请选择">
+                    <el-option
+                    v-for="item in courses"
+                    :key="item.subject_text"
+                    :label="item.subject_text"
+                    :value="item.subject_text">
                     </el-option>
-            </el-select>
+                </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -35,9 +35,6 @@
         <div class="style_container__2hI6B">
           <div class="style_tool__31xLZ">
             <h4>试卷列表</h4>
-              <!-- <div class="ant-radio-group ant-radio-group-outline">
-                <span>全部</span><span>进行中</span><span>已结束</span>
-              </div> -->
               <div>
                 <el-radio-group v-model="radio4" >
                 <el-radio-button label="全部" ></el-radio-button>
@@ -47,102 +44,152 @@
              </div>
           </div>
         </div>
-        <div class="ant-table-body">
-            <el-table
-              :data="tableData"
-              style="width: 100%">
-              <el-table-column
-                prop="papers"
-                label="试题试卷"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="grade"
-                label="班级"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="creator"
-                label="创建人">
-              </el-table-column>
-              <el-table-column
-                prop="startTime"
-                label="开始时间">
-              </el-table-column>
-              <el-table-column
-                prop="endTime"
-                label="结束时间">
-              </el-table-column>
-               <el-table-column
-                prop="operation"
-                label="操作">
-              </el-table-column>
-          </el-table>
-                  
+        <div class="ant-table-body">    
+       <el-table
+          :data="examLists"
+          style="width: 100%">
+          <el-table-column
+            label="试卷信息"
+            style="textAlign:center"
+            width="260"
+            >
+            <template slot-scope="scope">
+              <p class="examName"> 
+                  <span style="margin-left: 10px">{{scope.row.title}}</span>
+              </p>
+              <p class="examMass">
+                <span>考试时间:{{scope.row.number}}</span>
+                <span>{{scope.row.number}}道题</span>
+                <span>作弊{{scope.row.status}}</span>
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="班级"
+            width="280">
+            <template slot-scope="scope">
+                <div slot="reference" class="name-wrapper">
+                  <p>考试班级</p>
+                <p>
+                  <span v-for=" (item,index) in scope.row.grade_name" :key="index">{{ item }}</span>
+                </p>
+                </div>
+            
+            </template>
+          </el-table-column>
+          <el-table-column label="创始人"
+          width="150">
+            <template slot-scope="scope">
+              <p>
+               {{scope.row.user_name}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column label="开始时间">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px"> </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="结束时间">
+            <template slot-scope="scope">
+            
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+            </template>
+          </el-table-column>
+        </el-table>  
         </div>
       </div> 
   </div>
 </template>
 <script>
-let options= [{
-          value: '选项1',
-          label: 'vues'
-        }];
-let tableData=[{
-    papers: 'vue',
-    grade: '1610c',
-    creator: 'w916peach',
-    startTime:"2016-02-05",
-    endTime:"2016-08-01",
-    operation:"详情"
-  }]
+  import {mapActions} from 'vuex'
 export default {
   data(){
     return {
-     formInline: {
-          user: '',
-          region: ''
-        },
-        options,
+        courses:[],
+        course:'',
+        examTypes:[],
+        examLists:[],
+        type:"",
         radio4:'',
-        tableData
+        
     }
   },
+  created(){
+  
+  },
+  mounted(){
+      this.getList()
+      
+  },
   methods:{
-     onSubmit() {
-        console.log('submit!');
+    ...mapActions({
+      subject:"examList/subject",
+      examType:"examList/examType",
+      examList:"examList/examList"
+    }),
+    getList(){
+      this.examType().then(res=>{
+          if(res.code==1){        
+              this.examTypes=res.data;
+          }
+      })
+      this.subject().then(res=>{
+          if(res.code==1){
+              this.courses=res.data;
+          }
+
+      })
+      this.examList().then(res=>{
+          if(res.code==1){
+              this.examLists=res.exam;
+          }
+
+      })
+     
+    },
+    onSubmit() {
+      console.log('submit!');
+    },
+    handleEdit() {
+         
       }
   }
 }
 </script>
 <style scoped lang="scss">
 .examlist{
-  width: 100%;
+  width: 95%;
+  margin:0 2.5%;
   flex: 1;
   display: flex;
   flex-direction: column;
   h3{
-      width: 90%;
-      margin:0 5%;
+      width: 100%;
       height: 50px;
       display: flex;
-      align-items: center;
+      // align-items: center;
       font-weight:500;
       font-size: 18px;
     }
     .ant-layout-top{
-      width: 95%;
+      width: 100%;
       height:100px;
       box-sizing: border-box;
       padding: 20px;
       background: #fff;
       border-radius: 8px;
-      margin: 0 2.5%;
     }
     .ant-layout-content{
-      width: 95%;
+      width: 100%;
       flex: 1;
-      margin:15px 2.5%;
+      margin:15px 0;
       background: #fff;
       border-radius: 8px;
       padding:15px;
@@ -160,8 +207,24 @@ export default {
           justify-content: space-between;
         }
       }
-    }
+     .name-wrapper{
+       font-size: 14px;
+       p{
+         width: 100%;
+         text-align: center;
+       }
+       span{
+         display: inline-block;
+         padding: 3px 5px;
+         font-size: 12px;
+       
+       }
+
+     }
+  }
+
 }
+
 
 </style>
 

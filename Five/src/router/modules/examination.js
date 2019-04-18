@@ -2,28 +2,35 @@
 
 import Layout from '@/layout'
 const Examinations = {
-  path: '/examination',
-  component: Layout,
-  redirect: 'noredirect',
-  name: 'Examination',
-  meta: {
-    title: 'examination',
-    icon: 'tab'
-  },
-  children: [
-    {
-      path: 'addexamination',
-      component: () => import('@/views/exam/addexam'),
-      name: 'Addexaminationt',
-      meta: { title: 'addexamination', noCache: true }
+    path: '/examination',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'Examination',
+    meta: {
+        title: 'examination',
+        icon: 'tab'
     },
-    {
-      path: 'examinationlist',
-      component: () => import('@/views/exam/examlist'),
-      name: 'Examinationlist',
-      meta: { title: 'examinationlist', noCache: true }
-    }
-  ]
+    children: [{
+            //跳转考试管理
+            path: 'addexamination',
+            component: () =>
+                import ('@/views/exam/addexam'),
+            name: 'Addexaminationt',
+            meta: { title: 'addexamination', noCache: true }
+        },
+        {
+            path: 'examinationlist',
+            component: () =>
+                import ('@/views/exam/examlist'),
+            name: 'Examinationlist',
+            meta: { title: 'examinationlist', noCache: true }
+        },
+        {
+            path: 'edit',
+            component: () =>
+                import ('@/views/exam/edit')
+        }
+    ]
 }
 
 export default Examinations
