@@ -21,5 +21,5 @@ export const gradeUpdata = params => {
 }
 // 删除教室
 export const gradeDelete = params => {
-  return request.delete('/manger/room/delete', { data: params })
+  return request.delete('/manger/grade/delete', { data: params })
 }

@@ -80,7 +80,7 @@
               <td>
                 <span>
                   <li style="padding-right:2px" @click="Reset(item.grade_id)">修改</li>|
-                  <li style="padding-left:2px" @click="Delete(item.room_id)">删除</li>
+                  <li style="padding-left:2px" @click="Delete(item.grade_id)">删除</li>
                 </span>
                 <!-- 修改班级弹窗 -->
                 <el-dialog title="修改班级" :visible.sync="dialogFormReset">
@@ -276,7 +276,7 @@ export default {
     Delete(ind) {
       this.delInd = ind
       this.gradeDelete({
-        'room_id': this.delInd
+        'grade_id': this.delInd
       })
       this.getgrade().then(res => {
         if (res.code === 1) {
