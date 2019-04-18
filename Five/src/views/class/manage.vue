@@ -79,7 +79,7 @@
               </td>
               <td>
                 <span>
-                  <li class="btn-take" tyle="padding-right:2px" @click="Reset(item.grade_id)">修改 </li> <b class="stri">|</b>
+                  <li class="btn-take" tyle="padding-right:2px" @click="Reset(item.grade_id,item.room_text,item.subject_text)">修改 </li> <b class="stri">|</b>
                   <li class="btn-take" tyle="padding-left:2px" @click="Delete(item.grade_id)"> 删除</li>
                 </span>
                 <!-- 修改班级弹窗 -->
@@ -235,7 +235,9 @@ export default {
       }
     },
     // 修改
-    Reset(gradeId) {
+    Reset(gradeId, room, sub) {
+      this.ruleForm.roomRegion = room
+      this.ruleForm.proRegion = sub
       this.gradeID = gradeId
       this.dialogFormReset = true
       this.dataList.forEach(item => {

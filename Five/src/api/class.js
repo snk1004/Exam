@@ -23,3 +23,7 @@ export const gradeUpdata = params => {
 export const gradeDelete = params => {
   return request.delete('/manger/grade/delete', { data: params })
 }
+// 获取 所有教室
+export const getAllRoom = params => {
+  return request.get('/manger/room', params)
+}

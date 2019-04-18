@@ -3,16 +3,18 @@
     <h2>教室管理</h2>
     <div class="classroom-content">
       <div class="classroom-btn-box">
-        <el-button class="classroom-btn" type="primary" @click="dialogFormVisible = true"><i class="el-icon-plus" /> 添加教室</el-button>
+        <el-button class="classroom-btn" type="primary" @click="dialogFormVisible = true">
+          <i class="el-icon-plus" /> 添加教室
+        </el-button>
       </div>
       <el-dialog title="添加教室" :visible.sync="dialogFormVisible">
         <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
-          <el-form-item label="班级号:" prop="name">
+          <el-form-item label="教室号:" prop="name">
             <el-input v-model="ruleForm.name" />
           </el-form-item>
           <el-form-item>
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button type="primary" @click="addConfirm">确 定</el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -33,76 +35,24 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="item in dataList" :key="item.room_id">
               <td>
-                <span>34303</span>
+                <span>{{ item.room_text }}</span>
               </td>
               <td>
-                <span class="btn-take">删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>删除</span>
+                <span class="btn-take" @click="DeleteRoom">删除</span>
+                <el-dialog
+                  title="提示"
+                  :visible.sync="dialogVisible"
+                  width="30%"
+                  :before-close="handleClose"
+                >
+                  <span>确定要删除此教室吗？</span>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                  </span>
+                </el-dialog>
               </td>
             </tr>
           </tbody>
@@ -113,7 +63,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -121,6 +71,8 @@ export default {
       dataList: [],
       // form表单 弹框
       dialogFormVisible: false,
+      // 删除弹框
+      dialogVisible: false,
       form: {
         name: '',
         region: '',
@@ -143,114 +95,128 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请输入教室号', trigger: 'blur' },
+          { min: 5, max: 5, message: '长度在必须是 5 个字符', trigger: 'blur' }
         ]
+        // region: [
+        //   { required: true, message: '请选择活动区域', trigger: 'change' }
+        // ]
       }
     }
   },
   computed: {
-    ...mapState({
+    ...mapState({})
+  },
 
+  mounted() {
+    this.getAllRoom().then(res => {
+      if (res.code === 1) {
+        this.dataList = res.data
+      }
     })
   },
   methods: {
-    ...mapMutations({
-
-    }),
     ...mapActions({
-
-    })
-  },
-  onLoad() {
-
+      getAllRoom: 'class/getAllRoom'
+    }),
+    addConfirm() {
+      console.log(this.ruleForm.name)
+    },
+    DeleteRoom() {
+      this.dialogVisible = true
+    },
+    // 删除弹框
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    }
   }
 }
 </script>
 
 <style lang='scss'>
-.btn-take{
+.btn-take {
   cursor: pointer;
 }
-.app-main{
+.app-main {
   background: #f0f2f5;
 }
-.classroom-container{
+.classroom-container {
   width: 100%;
   height: 100%;
   padding: 0px 24px 24px;
   box-sizing: border-box;
-  h2{
+  h2 {
     padding: 20px 0px;
     margin-top: 10px;
     font-weight: normal;
     font-size: 1.5em;
   }
-  .classroom-content{
+  .classroom-content {
     width: 100%;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
     background: #fff;
     padding: 24px;
-    .classroom-btn-box{
+    .classroom-btn-box {
       width: 100%;
       display: flex;
       margin-bottom: 25px;
-      .classroom-btn{
+      .classroom-btn {
         width: 158px;
         height: 40px;
-        background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+        background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
       }
     }
-    .classroom-body{
+    .classroom-body {
       width: 100%;
       height: 100%;
       display: flex;
       font-size: 14px;
-      table{
+      table {
         width: 100%;
       }
-      thead{
+      thead {
         width: 100%;
         background: #f4f7f9;
       }
-      thead tr{
+      thead tr {
         transition: all 0.3s, height 0s;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        th{
+        th {
           height: 52px;
           line-height: 26px;
           padding: 16px 16px;
           flex: 1;
           border-bottom: 1px solid #e8e8e8;
-          div{
+          div {
             text-align: left;
             color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
           }
         }
       }
-      tbody tr{
+      tbody tr {
         transition: all 0.3s, height 0s;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        td{
+        td {
           height: 52px;
           line-height: 26px;
           padding: 16px 16px;
           flex: 1;
           color: rgba(0, 0, 0, 0.65);
           border-bottom: 1px solid #e8e8e8;
-          span{
+          span {
             text-align: left;
             color: rgba(0, 0, 0, 0.85);
             font-weight: 500;

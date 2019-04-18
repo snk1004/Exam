@@ -5,7 +5,9 @@ import {
   addroom,
   gradeUpdata,
   // 删除
-  gradeDelete
+  gradeDelete,
+  // 获取所有教师
+  getAllRoom
 } from '@/api/class'
 
 const actions = {
@@ -43,10 +45,17 @@ const actions = {
       resolve(listData)
     })
   },
-  // 删除教室
+  // 删除班级
   gradeDelete({ state }, payload) {
     return new Promise(async(resolve, reject) => {
       const deleteData = await gradeDelete(payload)
+      resolve(deleteData)
+    })
+  },
+  // 获取所有教室
+  getAllRoom({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const deleteData = await getAllRoom(payload)
       resolve(deleteData)
     })
   }
