@@ -32,10 +32,7 @@ export function PutCreate(data) {
 }
 
 //跳转详情
-// export const detailExam = parmas => {
-//     console.log(parmas)
-//     return request.get(`/exam/exam/${parmas}`)
-// }
+
 export function detailExam(data) {
     return request({
         url: `/exam/exam/${data}`,

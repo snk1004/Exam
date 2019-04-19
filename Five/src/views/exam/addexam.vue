@@ -160,8 +160,11 @@ export default {
             this.$refs.ruleForm.validate(async valid => {
             if (valid) {
                 //将时间对象转为时间戳
-                let start_time =moment(this.ruleForm.date1).unix();
-                let end_time =moment(this.ruleForm.date2).unix();
+                let start_time =moment(this.ruleForm.date1).unix()*1000;
+                console.log(start_time)
+            //    let start=moment(start_time*1).format('YYYY-MM-DD HH:MM:SS')
+            //     console.log(start)
+                let end_time =moment(this.ruleForm.date2).unix()*1000;
                 //将时间戳放入ruleForm数组
                 let ruleForm ={
                     ...this.ruleForm,

@@ -26,7 +26,7 @@
                 </el-select>
           </el-form-item>
           <el-form-item size='medium' >
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
         </el-form-item>
         </el-form>
           
@@ -50,8 +50,8 @@
           style="width: 100%">
           <el-table-column
             label="试卷信息"
-            style="textAlign:center"
-            width="260"
+            style="width: 2.0em"
+            
             >
             <template slot-scope="scope">
               <p class="examName"> 
@@ -66,7 +66,8 @@
           </el-table-column>
           <el-table-column
             label="班级"
-            width="280">
+           style="width:3em"
+            >
             <template slot-scope="scope">
                 <div slot="reference" class="name-wrapper">
                   <p>考试班级</p>
@@ -78,7 +79,8 @@
             </template>
           </el-table-column>
           <el-table-column label="创始人"
-          width="150">
+          style="width: 1.5em"
+          >
             <template slot-scope="scope">
               <p>
                {{scope.row.user_name}}
@@ -87,12 +89,12 @@
           </el-table-column>
           <el-table-column label="开始时间">
             <template slot-scope="scope">
-                <span style="margin-left: 10px"> {{scope.row.start_time}}</span>
+                <span> {{scope.row.start_time}}</span>
             </template>
           </el-table-column>
           <el-table-column label="结束时间">
             <template slot-scope="scope">
-            
+              <span> {{scope.row.start_time}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -156,12 +158,20 @@ export default {
       //获取的列表
       this.examList().then(res=>{
           if(res.code==1){  
+            console.log(res.exam)
+            // end_time=[]
+            res.exam.map(item=>{
+              item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
+              item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
+            })
+            console.log(res.exam)
               this.examLists=res.exam;
           }
 
       })
-    
+    //  console.log(this.examLists)
     },
+   
     onSubmit() {
       console.log('submit!');
     },
@@ -197,7 +207,7 @@ export default {
       }
       .ant-layout-top{
         width: 100%;
-        height:100px;
+        height:10em;
         box-sizing: border-box;
         padding: 20px;
         background: #fff;
@@ -242,6 +252,7 @@ export default {
     .el-button  {
       width: 100px;
       height: 30px;
+      text-align: center;
     }
 
   }
