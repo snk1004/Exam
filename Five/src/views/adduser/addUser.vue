@@ -6,19 +6,8 @@
     <div class="addUser_grid">
       <addUserDel />
       <addIdentity />
-      
-      <div class="addUser_wrapper">
-        <div class="btn">
-          <button>添加api接口权限</button>
-        </div>
-        <input type="text" placeholder="请输入api接口权限名称">
-        <input type="text" placeholder="请输入api接口权限url">
-        <input type="text" placeholder="请输入api接口权限方法">
-        <div class="btnFotter">
-          <button class="sure">确认</button>
-          <button class="resets">重置</button>
-        </div>
-      </div>
+      <addApi />
+     
       <div class="addUser_wrapper">
         <div class="btn">
           <button>添加视图接口权限</button>
@@ -93,9 +82,12 @@
 <script>
 import addUserDel from './components/addUserDel'
 import addIdentity from './components/addIdentity'
+import addApi from './components/addApi'
+
+
 
 export default {
-  components:{addUserDel,addIdentity},
+  components:{addUserDel,addIdentity,addApi},
   data() {
     return {
       options: [{

@@ -68,3 +68,11 @@ export function setIdentity(data) {
     params: data
   })
 }
+
+export function addApi(data) {
+  return request({
+    url: '/user/authorityApi/edit',
+    method: 'get',
+    params: data
+  })
+}
