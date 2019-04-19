@@ -15,6 +15,12 @@ export function getInfo() {
   })
 }
 
+export function getViewAuthority() {
+  return request({
+    url: '/user/view_authority',
+    method: 'get'
+  })
+}
 export function logout() {
   return request({
     url: '/user/logout',
