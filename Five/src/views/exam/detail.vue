@@ -88,6 +88,8 @@ export default {
   flex-direction: column;
   background: #f0f2f5;
   min-height: 0;
+  flex: 1;
+
 }
 h4{
   font-weight: 400;
@@ -109,6 +111,11 @@ h2 {
   width: 95%;
   margin: 10px 2.5%;
   display: flex;
+}
+.cont{
+  width: 95%;
+  flex: 1;
+  background: blue;
 }
 .left-content{
   width: 65%;
