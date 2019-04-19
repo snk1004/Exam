@@ -1,4 +1,17 @@
-import { show, adduser, getIdentity, getApi, getRelation, getView, getViewIdentity, getReneval, setIdentity, addApi } from '@/api/usershow'
+import { show, adduser, getIdentity, getApi, getRelation, getView, getViewIdentity, getReneval, setIdentity, addApi, setApiEnter, addViewApi } from '@/api/usershow'
+
+var state = {
+  code: '',
+  msg: ''
+}
+const mutations = {
+  Tips(state, result) {
+    if (result) {
+      state.code = result.code
+      state.msg = result.msg
+    }
+  }
+}
 
 const actions = {
   show({ commit }, payload) {
@@ -60,10 +73,23 @@ const actions = {
       const data = await addApi(payload)
       resolve(data)
     })
+  },
+  setApiEnter({ commit }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const data = await setApiEnter(payload)
+      resolve(data)
+    })
+  },
+  async  addViewApi({ commit }, payload) {
+    const data = await addViewApi(payload)
+    commit('Tips', data)
+    return data
   }
 }
 
 export default {
   namespaced: true,
-  actions
+  actions,
+  mutations,
+  state
 }

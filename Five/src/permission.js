@@ -43,7 +43,6 @@ router.beforeEach(async(to, from, next) => {
 
           // 2.通过身份获取权限
           const viewAuthority = await store.dispatch('user/getViewAuthority')
-          console.log(viewAuthority)
           // 3.通过权限生成路由
           await store.dispatch('permission/generateRoutes', viewAuthority)
           //   // hack method to ensure that addRoutes is complete
