@@ -57,13 +57,25 @@
                     </span>
                     <el-col :span="11">
                     <el-form-item prop="date1">
-                        <el-date-picker type="date" placeholder="选择开始时间" v-model="ruleForm.date1" style="width: 150px"></el-date-picker>
+                        <div class="block">
+                            <el-date-picker
+                            v-model="ruleForm.date1"
+                            type="date"
+                            placeholder="选择日期时间">
+                            </el-date-picker>
+                        </div>
                     </el-form-item>
                     </el-col>
                     <el-col class="line" :span="2">-</el-col>
                     <el-col :span="11">
-                    <el-form-item prop="date1">
-                        <el-date-picker type="date" placeholder="选择结束时间" v-model="ruleForm.date2" style="width: 150px"></el-date-picker>
+                    <el-form-item prop="date2">
+                        <div class="block">
+                            <el-date-picker
+                            v-model="ruleForm.date2"
+                            type="date"
+                            placeholder="选择日期时间">
+                            </el-date-picker>
+                        </div>
                     </el-form-item>
                     </el-col>
                 </el-form-item>
@@ -203,12 +215,12 @@ export default {
         display: flex;
         flex-direction: column;
         h3{
-             width: 100%;
-            height: 50px;
+            padding: 20px 0px;
+            margin-top: 10px;
+            margin-bottom: 0.5em;
             color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
             font-size: 1.5em;
-            display: flex;
         }
         .ant{
             width:100%;
