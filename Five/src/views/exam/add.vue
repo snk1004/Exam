@@ -42,17 +42,19 @@ export default {
     return {
       title:'',
       flag: false,
-      questionList:[]
+      questionList:[],
+      src:''
     };
   },
   created() {
-     console.log(this.PutCreate())
+    
     //从本地存储取出来 渲染页面
     let data = JSON.parse(window.localStorage.getItem("exam"));
-    console.log(data)
+    this.src=data.exam_exam_id;
+   
     this.title=data.title;
     this.questionList = data.questions;
-  console.log(this.questionList)
+   
   },
   methods: {
     ...mapActions({
@@ -68,15 +70,16 @@ export default {
         this.flag = !this.flag;
     },
     hendleCreate(){
-     console.log(this.questionList);
      let ids=this.questionList.map(item=>{
        return item.questions_id
      });
      let res={
+        src:this.src,
         question_ids:JSON.stringify(ids)
      };
-     console.log(res)
      this.PutCreate(res)
+    
+     this.$router.push({ path: "/examination/examinationlist" })
     },
     //点击删除的弹出框
     delmask(index) {

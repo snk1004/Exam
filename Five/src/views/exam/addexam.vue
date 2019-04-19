@@ -59,8 +59,9 @@
                     <el-form-item prop="date1">
                         <div class="block">
                             <el-date-picker
+                             size='small'
                             v-model="ruleForm.date1"
-                            type="date"
+                            type="datetime"
                             placeholder="选择日期时间">
                             </el-date-picker>
                         </div>
@@ -71,8 +72,9 @@
                     <el-form-item prop="date2">
                         <div class="block">
                             <el-date-picker
+                           
                             v-model="ruleForm.date2"
-                            type="date"
+                            type="datetime"
                             placeholder="选择日期时间">
                             </el-date-picker>
                         </div>
@@ -98,7 +100,7 @@ export default {
             course:[],
             ruleForm: {
                 //名称
-                name: '222',
+                name: '',
                 //考试类型
                 TypeExamId: '',
                 //考试课程
@@ -115,7 +117,7 @@ export default {
                 //名称的规则
                 name: [
                     { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                   
                 ],
                 //考试类型的规则
                 courseExamId: [
@@ -253,7 +255,8 @@ export default {
             width: 80%;
             height: 40px;
         }
-        
+
+       
     }
 </style>
 
