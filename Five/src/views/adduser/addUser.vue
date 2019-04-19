@@ -4,37 +4,9 @@
       <h2>添加用户</h2>
     </div>
     <div class="addUser_grid">
-      <div class="addUser_wrapper">
-        <div class="btn">
-          <button>添加用户</button>
-          <button>更新用户</button>
-        </div>
-        <input type="text" placeholder="请输入用户名">
-        <input type="password" placeholder="请输入密码">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-        <div class="btnFotter">
-          <button class="sure">确认</button>
-          <button class="resets">重置</button>
-        </div>
-
-      </div>
-      <div class="addUser_wrapper">
-        <div class="btn">
-          <button>添加身份</button>
-        </div>
-        <input type="text" placeholder="请输入身份名称">
-        <div class="btnFotter">
-          <button class="sure">确认</button>
-          <button class="resets">重置</button>
-        </div>
-      </div>
+      <addUserDel />
+      <addIdentity />
+      
       <div class="addUser_wrapper">
         <div class="btn">
           <button>添加api接口权限</button>
@@ -119,8 +91,11 @@
 </template>
 
 <script>
+import addUserDel from './components/addUserDel'
+import addIdentity from './components/addIdentity'
 
 export default {
+  components:{addUserDel,addIdentity},
   data() {
     return {
       options: [{
@@ -214,7 +189,7 @@ export default {
     border-top: 1px solid #ccc;
     .addUser_wrapper{
           width: 33.3%;
-          height: 281px;
+          height: 300px;
           border-right: 1px solid #ccc;
           border-bottom: 1px solid #ccc;
           border-radius: 5px;

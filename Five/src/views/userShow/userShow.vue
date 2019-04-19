@@ -4,28 +4,179 @@
       <h2>用户展示</h2>
     </div>
     <div class="show-list">
-      <span>用户数据</span>
-      <span>身份数据</span>
-      <span>api接口权限</span>
-      <span>身份和api接口关系</span>
-      <span>视图接口权限</span>
-      <span>身份和视图权限关系</span>
+      <span v-for="(item, i) in lists" :key='item.id' :class="listsInd==i?'active':''"  @click='handleChange(i)'>{{item.names}}</span>
     </div>
     <h1>用户数据</h1>
-    <tab />
+     <el-table
+    :data="dataList"
+    style="width: 100%">
+    <el-table-column  
+      v-for='(item,i) in lists[listsInd].title' :key='i' :label='item.tit' :prop="item.render" >
+    </el-table-column>
+   
+  </el-table>
   </div>
 </template>
 
 <script>
 import Tab from '../tab'
-
+import {mapActions} from 'vuex'
 export default {
-  components: { Tab }
+  data(){
+    return {
+      dataList: [],
+      listsInd:0,
+      lists:[
+        {
+          names:'用户数据',
+          id:'1',
+          title:[{
+            'tit':'用户名',
+            'render':'user_name'
+            },
+            {
+              'tit':'密码',
+              'render':'user_pwd'
+            },
+            {
+              'tit':'身份',
+              'render':'identity_text'
+            }]
+        },
+         {
+          names:'身份数据',
+          id:'2',
+          title:[ {
+              'tit':'身份名称',
+              'render':'identity_text'
+            }]
+        }, {
+          names:'api接口权限',
+          id:'3',
+          title:[{
+          'tit':'api权限名称',
+          'render':'api_authority_text'
+          }, {
+          'tit':'api权限url',
+          'render':'api_authority_url'
+          },{
+          'tit':'api权限方法',
+          'render':'api_authority_method'
+          }]
+
+        }, {
+          names:'身份和api接口关系',
+          id:'4',
+          title:[{
+          'tit':'身份名称',
+          'render':'identity_text'
+            },{
+          'tit':'api权限名称',
+          'render':'api_authority_text'
+          },{
+          'tit':'api权限url',
+          'render':'api_authority_url'
+            },{
+          'tit':'api权限方法',
+          'render':'api_authority_method'
+            }]
+        },
+        {
+          names:'身份视图接口权限',
+          id:'5',
+          title:[{
+          'tit':'视图权限名称',
+          'render':'view_authority_text'
+          },{
+          'tit':'视图id',
+          'render':'view_id'
+          }]
+        },{
+          names:'身份和视图权限关系',
+          id:'6',
+          title:[{
+          'tit':'身份',
+          'render':'identity_text'
+          },{
+          'tit':'视图名称',
+          'render':'view_authority_text'
+          },{
+          'tit':'视图id',
+          'render':'view_id'
+          }]
+        }
+      ],
+    }
+  },
+ methods:{
+    ...mapActions({
+      getList: "usershow/show",
+      getid:'usershow/getIdentity',
+      getapi:'usershow/getApi',
+      getrelation:'usershow/getRelation',
+      getview:'usershow/getView',
+      getviewidentity:'usershow/getViewIdentity'
+    }),
+    handleChange(i){
+      this.listsInd=i;
+      if(this.listsInd==0){
+         this.getList().then(res=>{
+          if(res.code==1){
+            this.dataList=res.data;
+          }
+      })
+      }else if(this.listsInd==1){
+         this.getid().then(res=>{
+        if(res.code==1){
+          this.dataList=res.data;
+        }
+      })
+      }else if(this.listsInd==2){
+        this.getapi().then(res=>{
+          if(res.code==1){
+            this.dataList=res.data
+          }
+        })
+      }else if(this.listsInd==3){
+         this.getrelation().then(res=>{
+          if(res.code==1){
+            this.dataList=res.data
+          }
+        })
+      }else if(this.listsInd==4){
+         this.getview().then(res=>{
+          if(res.code==1){
+            this.dataList=res.data
+          }
+        })
+      }else if(this.listsInd==5){
+        console.log(this.getviewidentity())
+         this.getviewidentity().then(res=>{
+            console.log(res)
+          if(res.code==1){
+            this.dataList=res.data
+          }
+        })
+      }
+    }
+ },
+  components: { Tab },
+  created(){
+     this.getList().then(res=>{
+        if(res.code==1){
+          this.dataList=res.data;
+        }
+      })
+     
+  }
 
 }
 </script>
 
 <style scoped lang='scss'>
+.usershow{
+  padding-left: 24px;
+}
 .show-header{
       display: flex;
       flex-direction: column;
@@ -42,7 +193,6 @@ export default {
       display: flex;
       flex: auto;
       min-height: 0;
-      padding-left: 24px;
       >span{
         padding:7px 15px;
         border:1px solid #ccc;
@@ -56,21 +206,14 @@ export default {
       }
 }
 h1{
-    margin-left: 24px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.9);
 
 }
-table{
-    display: flex;
-    flex-direction: column;
-    flex: auto;
-    margin-left: 24px;
-    >thead{
-        width: 90%;
-        height: 50px;
-        background: #fff;
-    }
+span.active{
+  border:1px solid #0139FD;
+  color: #0139FD;
 }
+
 
 </style>

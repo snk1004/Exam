@@ -1,28 +1,13 @@
 <template>
-  <el-table  border fit highlight-current-row style="width: 100%">
-    <el-table-column
-      v-loading="loading"
-      align="center"
-      label="用户名"
-      width="65"
-      element-loading-text="请给我点时间！"
-    >
-      <template slot-scope="scope">
-        <span>{{ scope.row.id }}</span>
-      </template>
-    </el-table-column>
-
-    <el-table-column min-width="300px" label="密码">
+  <el-table :data='dataList' border fit highlight-current-row style="width: 100%">
+    <el-table-column min-width="300px" v-for='(item,i) in title' :key='i' :lable='item.tit'>
       <template slot-scope="{row}">
-        <span>{{ row.title }}</span>
+        <span></span>
+        <span>{{row[item.render]}}</span>
       </template>
     </el-table-column>
 
-    <el-table-column width="110px" align="center" label="身份">
-      <template slot-scope="scope">
-        <span>{{ scope.row.author }}</span>
-      </template>
-    </el-table-column>
+   
   </el-table>
 </template>
 
@@ -30,6 +15,7 @@
 import { fetchList } from '@/api/article'
 
 export default {
+  props:['dataList','title'],
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -53,12 +39,7 @@ export default {
       loading: false
     }
   },
-  created() {
-    
-  },
-  methods: {
-   
-  }
+  
 }
 </script>
 

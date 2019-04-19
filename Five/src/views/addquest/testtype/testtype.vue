@@ -26,81 +26,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="item in list" :key="item.questions_type_id">
               <td>
-                <span>1701B</span>
+                <span>{{item.questions_type_id}}</span>
               </td>
               <td>
-                <span>node基础</span>
+                <span>{{item.questions_type_text}}</span>
               </td>
               <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
+                <span></span>
               </td>
             </tr> 
           </tbody>
@@ -110,17 +44,47 @@
   </div>
 </template> 
 <script>
-
-export default {
-methods: {
+import {mapActions} from "vuex";
+  export default {
+    data(){
+      return{
+        list:[]
+      }
+    },
+    mounted() {
+        this.getlist()
+      },
+    methods: {
+      ...mapActions({
+        getQuestionsType:"questionManagement/getQuestionsType",
+        insertQuestionsType:"questionManagement/insertQuestionsType"
+      }),
+      getlist(){
+        this.getQuestionsType().then(res=>{
+          if(res.code===1){
+            this.list=res.data
+          }
+        })
+      },
       open() {
         this.$prompt('', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputValue:'请输入类型名称',
+          inputPlaceholder:'请输入类型名称',
           title:'创建新类型',
           center:true
         }).then(({ value }) => {
+          if(value){
+            this.insertQuestionsType({
+              text:value,
+              sort:this.list.length+1
+            }),
+            this.getQuestionsType().then(res=>{
+              if(res.code===1){
+                this.list=res.data
+            }
+        })
+          }
           this.$message({
             type: 'success',
             message: '你的类型是: ' + value

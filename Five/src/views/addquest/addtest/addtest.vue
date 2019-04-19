@@ -4,89 +4,139 @@
     <div class="contentbox">
       <p class="testmesg">题目信息</p>
       <p>题干</p>
-      <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic">
+      <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic" @input="change($event)">
       <p>题目主题</p>
-      <editorImage color="#1890ff" class="editor-upload-btn"/>
+      <editorImage color="#1890ff" class="editor-upload-btn" />
+	  <textarea id='areaOne' rows="19" @input="titleTheme($event)"></textarea>
       <div class="testtype_select">
         <p>请选择考试类型:</p>
         <el-select v-model="value" placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in testtype"
+            :key="item.exam_id"
+            :label="item.exam_name"
+            :value="item.exam_id">
           </el-option>
         </el-select>
-        <p>请选择课程类型:</p>
-        <el-select v-model="value" placeholder="请选择">
+         <p>请选择课程类型:</p>
+        <el-select v-model="value2" placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in subjecttype"
+            :key="item.subject_id"
+            :label="item.subject_text"
+            :value="item.subject_id">
           </el-option>
         </el-select>
         <p>请选择题目类型:</p>
-        <el-select v-model="value" placeholder="请选择">
+        <el-select v-model="value3" placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in questionTypes"
+            :key="item.questions_type_id"
+            :label="item.questions_type_text"
+            :value="item.questions_type_id">
           </el-option>
         </el-select>
         <p>答案信息</p>
-        <editorImage color="#1890ff" class="editor-upload-btn"/>
+        <editorImage color="#1890ff" class="editor-upload-btn">
+		</editorImage>
+		<textarea id='areaTwo' rows="19" @input="answermesg($event)"></textarea>
         <p class="class-btn-box"><button class="class-btn" type="text" @click="open">提交</button> </p>
       </div>
     </div>
   </div>
 </template>
 <script>
-import editorImage from '../../../components/Tinymce'
+import editorImage from '../../../components/Tinymce';
+import {mapActions} from "vuex";
 export default {
-  data() {
-      return {
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: ''
-      }
-    },
-  methods: {
-    open() {
-      this.$confirm('真的要添加吗?', '你确定要添加这道试题吗？', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        center: true
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '添加成功!'
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消添加'
-        });
-      });
-    }
-  },
-  components: { editorImage }
+	data() {
+		return {
+			value: '',
+			value2:'',
+			value3:'',
+			queststem:'',//获取题干
+			theme:'',//题目主题
+			answer:'',//答案
+			testtype:[],//考试类型-周考-月考
+			subjecttype:[],//考试课程
+			questionTypes:[]
+		}
+	},
+    mounted() {
+      	this.gettesttype()
+	},
+    methods: {
+		...mapActions({
+			list:"questionManagement/examType",
+			subject:"questionManagement/subject",
+			getQuestionsType:"questionManagement/getQuestionsType",
+			addquestions:"questionManagement/addquestions"
+		}),
+		change(e){//获取题干
+            this.queststem=e.target.value
+		},
+		titleTheme(e){//获取题目主题
+      		this.theme=e.target.value
+		},
+		answermesg(e){//获取答案
+			this.answer=e.target.value
+		},
+		gettesttype(){
+			this.list().then(res=>{
+				if(res.code===1){
+					this.testtype=res.data;
+				}
+        	}),
+			this.subject().then(res=>{
+				if(res.code===1){
+					this.subjecttype=res.data;
+				}
+			}),
+			this.getQuestionsType().then(res=>{
+				if(res.code===1){
+					this.questionTypes=res.data;
+				}
+			})
+		},
+		open() {
+			if(this.queststem!==''&&this.answer!==''&&this.theme!==''){
+				this.$confirm('真的要添加吗?', '你确定要添加这道试题吗？', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning',
+					center: true
+				}).then(() => {
+					this.addquestions({
+						"questions_type_id":this.value3,
+						"questions_stem":this.queststem,
+						"subject_id":this.value2,
+						"exam_id":this.value,
+						"user_id":"w6l6n-cbvl6s",
+						"questions_answer":this.answer,
+						"title":this.theme
+					})
+					this.$message({
+						type: 'success',
+						message: '添加成功!'
+					});
+					this.value3='';
+					this.queststem='';
+					this.value2='';
+					this.value='';
+					this.answer='';
+					this.theme='';
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消添加'
+					});
+				});
+			}else{
+				alert("参数丢失")
+			}
+		}
+  	},
+  	components: { editorImage }
 }
 </script>
 
@@ -102,6 +152,24 @@ export default {
   visibility: hidden;
   margin: 0 20px;
   z-index: -1;
+}
+#areaOne{
+	position: absolute;
+	width: 96%;
+	left: 22px;
+    top: 330px;
+	border: 0;
+	outline: none;
+	resize:none;
+}
+#areaTwo{ 
+    position: absolute;
+	width: 96%;
+	left: 22px;
+    top: 1225px;
+	border: 0;
+	outline: none;
+	resize:none;
 }
 .editor-custom-btn-container {
   position: absolute;
@@ -137,6 +205,7 @@ export default {
   padding: 20px;
   border-radius: 20px;
   margin: 0 20px;
+  position: relative;
 }
 .testtype_select{
   >p{

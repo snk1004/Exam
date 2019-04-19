@@ -1,11 +1,11 @@
 <template>
   <div class="tab-container">
     <el-tabs v-model="activeName" style="margin-top:15px;" type="border-card">
-      <el-tab-pane v-for="item in tabMapOptions" :key="item.key" :label="item.label" :name="item.key">
         <keep-alive>
-          <tab-pane v-if="activeName==item.key" :type="item.key" @create="showCreatedTimes" />
+          <div v-if='dataList'>
+              <tab-pane  :dataList='dataList' :title='title' class="tables"/>
+          </div>
         </keep-alive>
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -15,6 +15,7 @@ import tabPane from './components/tabPane'
 
 export default {
   name: 'Tab',
+  props:['dataList','title'],
   components: { tabPane },
   data() {
     return {
@@ -32,7 +33,12 @@ export default {
     showCreatedTimes() {
       this.createdTimes = this.createdTimes + 1
     }
+  },
+  created(){
+    // console.log(this.title)
   }
+ 
+ 
 }
 </script>
 
@@ -40,4 +46,8 @@ export default {
   .tab-container {
     margin: 30px;
   }
+  .tables /deep/  .el-table--border td{
+    border:0;
+  }
+
 </style>

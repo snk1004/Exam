@@ -40,7 +40,8 @@
           </span>
         </el-form-item>
       </el-tooltip>
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+       @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
     </el-form>
@@ -116,8 +117,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/login',
-      generarateRoutes:'permission/generateRoutes'
+      login:'user/login'
     }),
     showPwd() {
       if (this.passwordType === 'password') {
@@ -132,16 +132,13 @@ export default {
      handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          console.log(this.loginForm)
           this.loading = true
          let res = await this.login(this.loginForm)
         if(res.code ===1 ){
-          await this.generarateRoutes([])
           this.$router.push({ path: this.redirect || '/' })
         }
         this.loading = false
         } else {
-          console.log('error submit!!')
           return false
         }
       })
