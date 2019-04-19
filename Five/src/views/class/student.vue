@@ -29,7 +29,7 @@
           </el-select>
         </div>
         <div class="form-item-search">
-          <el-button class="student-btn" type="primary">搜索</el-button>
+          <el-button class="student-btn" type="primary" @click="Search">搜索</el-button>
         </div>
         <div class="form-item-reset">
           <el-button class="student-btn" type="primary">重置</el-button>
@@ -179,6 +179,34 @@ export default {
       this.getAlldata().then(res => {
         if (res.code === 1) {
           this.dataList = res.data
+        }
+      })
+    },
+    Search() {
+      // 姓名 this.input
+      this.dataList.forEach(item => {
+        if (item.student_name === this.input) {
+          this.dataList = ''
+          const newList = []
+          /* grade_name: "1609B"
+            room_id: "ipb57j-9uyebp-6xgdp-ud3i6"
+            room_text: "34401"
+            student_id: "18382100162"
+            student_name: "" */
+          newList.push(item)
+          this.dataList = newList
+          console.log(this.dataList)
+          
+        } /* else if (this.dataList.length <= 1) {
+          this.getAlldata().then(res => {
+            if (res.code === 1) {
+              this.dataList = res.data
+            }
+          })
+        }*/ else if (this.roomValue === item.room_text) {
+          this.dataList = ''
+          const newList = []
+          newList.push(item)
         }
       })
     }
