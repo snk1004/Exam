@@ -32,7 +32,7 @@
           <el-button class="student-btn" type="primary" @click="Search">搜索</el-button>
         </div>
         <div class="form-item-reset">
-          <el-button class="student-btn" type="primary">重置</el-button>
+          <el-button class="student-btn" type="primary" @click="Reset">重置</el-button>
         </div>
       </div>
       <div class="student-body">
@@ -187,25 +187,31 @@ export default {
         }
       })
     },
+    // 筛选
     Search() {
       const roomList = []
+      const classList = []
       this.newData.forEach(item => {
         // 筛选 姓名
         if (item.student_name === this.input && this.input !== '') {
           this.newList.push(item)
         } else if (this.roomValue === item.room_id) { // 筛选 教室号
-          console.log(item)
           roomList.push(item)
           this.newList = roomList
-        } else if (this.input === '' && this.roomValue === '') { // 对空判断
-          this.getAlldata().then(res => {
-            if (res.code === 1) {
-              this.dataList = res.data
-            }
-          })
+        } else if (this.classValue === item.grade_id) {
+          classList.push(item)
+          this.newList = classList
+        } else if (this.input === '' && this.roomValue === '' && this.classValue === '') { // 对空判断
+          this.newList = this.newData
         }
       })
       this.dataList = this.newList
+    },
+    // 重置
+    Reset() {
+      this.input = ''
+      this.roomValue = ''
+      this.classValue = ''
     }
   }
 }
