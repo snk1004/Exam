@@ -13,16 +13,20 @@
     <el-table-column  
       v-for='(item,i) in lists[listsInd].title' :key='i' :label='item.tit' :prop="item.render" >
     </el-table-column>
-   
   </el-table>
-  <el-pagination
+ <div class="pagetion">
+    <el-pagination
   background
   layout="prev, pager, next"
-  :total="dataList.length" :page-size='8'  @current-change="handleCurrentChange">
+  :total="dataList.length" 
+  :page-size='8' 
+  @current-change="handleCurrentChange" 
+  :current-page.sync="dftPage"
+>
 </el-pagination>
+ </div>
   </div>
 </template>
-
 <script>
 import Tab from '../tab'
 import {mapActions} from 'vuex'
@@ -112,7 +116,8 @@ export default {
         }
       ],
       limit:8,
-      newList:[]
+      newList:[],
+      dftPage:1
     }
   },
  methods:{
@@ -126,6 +131,7 @@ export default {
     }),
     handleChange(i){
       this.listsInd=i;
+      this.dftPage=1
       if(this.listsInd==0){
          this.getList().then(res=>{
           if(res.code==1){
@@ -190,6 +196,15 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+.pagetion{
+   margin: 20px auto;
+    width:95%;
+    height:60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
 .usershow{
   padding-left: 24px;
 }
