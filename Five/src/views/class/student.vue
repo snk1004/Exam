@@ -86,7 +86,7 @@
               </td>
               <td>
                 <span>
-                  <li class="btn-take" @click="DeleteStu(item)"> 删除</li>
+                  <li class="btn-take" @click="DeleteStu(item)">删除</li>
                 </span>
               </td>
             </tr>
@@ -125,13 +125,18 @@ export default {
       roomValue: '',
       classValue: '',
       // 所有班级
-      classname: []
+      classname: [],
+      // 存放筛选数据
+      newList: [],
+      // 新的数据
+      newData: ''
     }
   },
   mounted() {
     this.getAlldata().then(res => {
       if (res.code === 1) {
         this.dataList = res.data
+        this.newData = res.data
       }
     })
     this.getAllRoom().then(res => {
@@ -174,7 +179,7 @@ export default {
     // 删除学生
     DeleteStu(data) {
       this.deleteStudent({
-        'id': data.student_id
+        id: data.student_id
       })
       this.getAlldata().then(res => {
         if (res.code === 1) {
@@ -183,68 +188,60 @@ export default {
       })
     },
     Search() {
-      // 姓名 this.input
-      this.dataList.forEach(item => {
-        if (item.student_name === this.input) {
-          this.dataList = ''
-          const newList = []
-          /* grade_name: "1609B"
-            room_id: "ipb57j-9uyebp-6xgdp-ud3i6"
-            room_text: "34401"
-            student_id: "18382100162"
-            student_name: "" */
-          newList.push(item)
-          this.dataList = newList
-          console.log(this.dataList)
-          
-        } /* else if (this.dataList.length <= 1) {
+      const roomList = []
+      this.newData.forEach(item => {
+        // 筛选 姓名
+        if (item.student_name === this.input && this.input !== '') {
+          this.newList.push(item)
+        } else if (this.roomValue === item.room_id) { // 筛选 教室号
+          console.log(item)
+          roomList.push(item)
+          this.newList = roomList
+        } else if (this.input === '' && this.roomValue === '') { // 对空判断
           this.getAlldata().then(res => {
             if (res.code === 1) {
               this.dataList = res.data
             }
           })
-        }*/ else if (this.roomValue === item.room_text) {
-          this.dataList = ''
-          const newList = []
-          newList.push(item)
         }
       })
+      this.dataList = this.newList
     }
   }
 }
 </script>
 
 <style lang='scss'>
-.btn-take{
+.btn-take {
   cursor: pointer;
 }
-.app-main{
+.app-main {
   background: #f0f2f5;
 }
-.student-container{
+.student-container {
   width: 100%;
   height: 100%;
   padding: 0px 24px 24px;
   box-sizing: border-box;
-  h2{
+  h2 {
     padding: 20px 0px;
     margin-top: 10px;
     font-weight: normal;
   }
-  .student-content{
+  .student-content {
     width: 100%;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
     background: #fff;
     padding: 24px;
-    .student-btn-box{
+    .student-btn-box {
       width: 100%;
       display: flex;
       align-items: center;
       margin-bottom: 25px;
-      .form-item-children{
-        input{
+      .form-item-children {
+        input {
           margin-right: 16px;
           width: 180px;
           height: 32px;
@@ -253,24 +250,24 @@ export default {
           border: 1px solid #d9d9d9;
         }
       }
-      .select-box{
+      .select-box {
         font-size: 14px;
         margin-right: 16px;
       }
-      .student-btn{
+      .student-btn {
         width: 110px;
-        background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+        background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
         margin-right: 16px;
       }
     }
-    .student-body{
+    .student-body {
       width: 100%;
       height: 100%;
       display: flex;
       font-size: 14px;
-      table{
+      table {
         width: 100%;
-        .student-pagination{
+        .student-pagination {
           width: 60%;
           padding-left: 20%;
           height: 32px;
@@ -280,7 +277,7 @@ export default {
           align-items: center;
           justify-content: space-between;
           list-style: none;
-          li{
+          li {
             cursor: pointer;
             border-radius: 2px;
             user-select: none;
@@ -297,47 +294,47 @@ export default {
             font-family: Arial;
             outline: 0;
           }
-          .none-border{
-            border: none!important;
+          .none-border {
+            border: none !important;
           }
-          .pad-item{
+          .pad-item {
             padding: 0 8px;
           }
         }
       }
-      thead{
+      thead {
         width: 100%;
         background: #f4f7f9;
       }
-      thead tr{
+      thead tr {
         transition: all 0.3s, height 0s;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        th{
+        th {
           height: 52px;
           line-height: 26px;
           padding: 16px 16px;
           flex: 1;
           border-bottom: 1px solid #e8e8e8;
-          div{
+          div {
             text-align: left;
             color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
           }
         }
       }
-      tbody tr:hover{
-        background: #e6efff!important;
+      tbody tr:hover {
+        background: #e6efff !important;
       }
-      tbody tr{
+      tbody tr {
         transition: all 0.3s, height 0s;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        td{
+        td {
           height: 52px;
           line-height: 26px;
           padding: 16px 16px;
