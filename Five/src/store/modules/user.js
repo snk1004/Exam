@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -8,7 +8,8 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  userInfo: {}
+  userInfo: {},
+  authoritys: []
 }
 
 const mutations = {
@@ -29,6 +30,9 @@ const mutations = {
   },
   SET_USERINFO: (state, userInfo) => {
     state.userInfo = userInfo
+  },
+  SET_AUTHORITY: (state, authority) => {
+    state.authoritys = authority
   }
 }
 
@@ -44,7 +48,6 @@ const actions = {
   // get user info
   async getInfo({ commit, state }) {
     const data = await getInfo()
-    console.log('data......', data)
     commit('SET_USERINFO', data.data)
     return data.data
   },
@@ -63,7 +66,15 @@ const actions = {
       })
     })
   },
-
+  // viewAuthrity
+  async getViewAuthority({ commit }, authority) {
+    const viewAuthrity = await getViewAuthority()
+    if (viewAuthrity.code === 1) {
+      commit('SET_AUTHORITY', viewAuthrity.data)
+      return viewAuthrity.data
+    }
+    return []
+  },
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {

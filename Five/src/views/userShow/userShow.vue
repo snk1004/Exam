@@ -8,13 +8,18 @@
     </div>
     <h1>用户数据</h1>
      <el-table
-    :data="dataList"
+    :data="newList"
     style="width: 100%">
     <el-table-column  
       v-for='(item,i) in lists[listsInd].title' :key='i' :label='item.tit' :prop="item.render" >
     </el-table-column>
    
   </el-table>
+  <el-pagination
+  background
+  layout="prev, pager, next"
+  :total="dataList.length" :page-size='8'  @current-change="handleCurrentChange">
+</el-pagination>
   </div>
 </template>
 
@@ -106,6 +111,8 @@ export default {
           }]
         }
       ],
+      limit:8,
+      newList:[]
     }
   },
  methods:{
@@ -123,41 +130,49 @@ export default {
          this.getList().then(res=>{
           if(res.code==1){
             this.dataList=res.data;
+            this.newList= this.dataList.slice(0,this.limit)
           }
       })
       }else if(this.listsInd==1){
          this.getid().then(res=>{
         if(res.code==1){
           this.dataList=res.data;
+          this.newList= this.dataList.slice(0,this.limit)
         }
       })
       }else if(this.listsInd==2){
         this.getapi().then(res=>{
           if(res.code==1){
-            this.dataList=res.data
+            this.dataList=res.data;
+            this.newList= this.dataList.slice(0,this.limit)
           }
         })
       }else if(this.listsInd==3){
          this.getrelation().then(res=>{
           if(res.code==1){
-            this.dataList=res.data
+            this.dataList=res.data;
+            this.newList= this.dataList.slice(0,this.limit)
           }
         })
       }else if(this.listsInd==4){
          this.getview().then(res=>{
           if(res.code==1){
-            this.dataList=res.data
+            this.dataList=res.data;
+            this.newList= this.dataList.slice(0,this.limit)
           }
         })
       }else if(this.listsInd==5){
-        console.log(this.getviewidentity())
          this.getviewidentity().then(res=>{
-            console.log(res)
           if(res.code==1){
-            this.dataList=res.data
+            this.dataList=res.data;
+            this.newList= this.dataList.slice(0,this.limit)
           }
         })
       }
+    },
+    handleCurrentChange(val){
+      console.log((this.limit-1)*(val-1))
+      this.newList = this.dataList.slice((this.limit)*(val-1),this.limit*(val))
     }
  },
   components: { Tab },
@@ -165,6 +180,7 @@ export default {
      this.getList().then(res=>{
         if(res.code==1){
           this.dataList=res.data;
+          this.newList= this.dataList.slice(0,this.limit)
         }
       })
      
