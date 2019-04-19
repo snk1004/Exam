@@ -198,7 +198,10 @@ export default {
         } else if (this.roomValue === item.room_id) { // 筛选 教室号
           roomList.push(item)
           this.newList = roomList
-        } else if (this.classValue === item.grade_id) {
+          if (this.newList === []) { // 若无数据
+            console.log('暂无数据')
+          }
+        } else if (this.classValue === item.grade_id) { // 筛选 班级
           classList.push(item)
           this.newList = classList
         } else if (this.input === '' && this.roomValue === '' && this.classValue === '') { // 对空判断
