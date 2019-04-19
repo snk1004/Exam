@@ -4,10 +4,10 @@
     <div class="contentbox">
       <p class="testmesg">题目信息</p>
       <p>题干</p>
-      <input type="text" placeholder="请输入题目要求，不超过20个字" ref="questionStem" class="topic" @input="change($event)">
+      <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic" @input="change($event)">
       <p>题目主题</p>
       <editorImage color="#1890ff" class="editor-upload-btn" />
-	  <textarea id='areaOne' rows="19" @input="titleTheme($event)" ref="subject"></textarea>
+	  <textarea id='areaOne' rows="19" @input="titleTheme($event)"></textarea>
       <div class="testtype_select">
         <p>请选择考试类型:</p>
         <el-select v-model="value" placeholder="请选择">
@@ -39,7 +39,7 @@
         <p>答案信息</p>
         <editorImage color="#1890ff" class="editor-upload-btn">
 		</editorImage>
-		<textarea id='areaTwo' rows="19" @input="answermesg($event)" ref="answer"></textarea>
+		<textarea id='areaTwo' rows="19" @input="answermesg($event)"></textarea>
         <p class="class-btn-box"><button class="class-btn" type="text" @click="open">提交</button> </p>
       </div>
     </div>
@@ -59,30 +59,24 @@ export default {
 			answer:'',//答案
 			testtype:[],//考试类型-周考-月考
 			subjecttype:[],//考试课程
-			questionTypes:[],
-			alldata:[]
+			questionTypes:[]
 		}
 	},
     mounted() {
-				this.gettesttype()
-		},
-		created() {
-				this.gettesttype()
-		},
+      	this.gettesttype()
+	},
     methods: {
 		...mapActions({
 			list:"questionManagement/examType",
 			subject:"questionManagement/subject",
 			getQuestionsType:"questionManagement/getQuestionsType",
-			addquestions:"questionManagement/addquestions",
-			condition:"questionManagement/condition",//所有的数据
-			update:"questionManagement/update"
+			addquestions:"questionManagement/addquestions"
 		}),
 		change(e){//获取题干
-      this.queststem=e.target.value
+            this.queststem=e.target.value
 		},
 		titleTheme(e){//获取题目主题
-      this.theme=e.target.value
+      		this.theme=e.target.value
 		},
 		answermesg(e){//获取答案
 			this.answer=e.target.value
@@ -102,24 +96,10 @@ export default {
 				if(res.code===1){
 					this.questionTypes=res.data;
 				}
-			}),
-			this.condition().then(res=>{
-				if(res.code===1){
-					this.alldata=res.data
-					if(this.$route.query.id){
-						let datas=(this.alldata.filter(item=>item.questions_id===this.$route.query.id))[0]
-						this.$refs.questionStem.value=datas.title;//题干
-						this.$refs.subject.value=datas.questions_stem;//题目主题
-						this.$refs.answer.value=datas.questions_answer//答案
-						this.value=datas.exam_name;
-						this.value2=datas.subject_text;
-						this.value3=datas.questions_type_text;
-					}
-				}
 			})
 		},
 		open() {
-			if(this.queststem!==''&&this.answer!==''&&this.theme!==''&&this.$route.query.id===undefined){
+			if(this.queststem!==''&&this.answer!==''&&this.theme!==''){
 				this.$confirm('真的要添加吗?', '你确定要添加这道试题吗？', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
@@ -139,38 +119,20 @@ export default {
 						type: 'success',
 						message: '添加成功!'
 					});
+					this.value3='';
+					this.queststem='';
+					this.value2='';
+					this.value='';
+					this.answer='';
+					this.theme='';
 				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消添加'
 					});
 				});
-			}else if(this.$route.query.id){
-				this.$confirm('真的要修改吗?', '你确定要修改这道试题吗？', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning',
-					center: true
-				}).then(() => {
-					this.update({
-						"questions_id":this.$route.query.id,
-						"questions_type_id":this.value3,
-						"questions_stem":this.$refs.subject.value,
-						"subject_id":this.value2,
-						"exam_id":this.value,
-						"questions_answer":this.$refs.answer.value,
-						"title":this.$refs.questionStem
-					})
-					this.$message({
-						type: 'success',
-						message: '修改成功!'
-					});
-					}).catch(() => {
-						this.$message({
-							type: 'info',
-							message: '已取消修改'
-						});
-				}); 
+			}else{
+				alert("参数丢失")
 			}
 		}
   	},

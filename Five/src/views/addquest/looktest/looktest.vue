@@ -176,7 +176,7 @@ li.active{
   align-items: center;
   padding: 0 5px;
   >li{
-    padding:5px 20px;
+    padding:5px 10px;
     list-style:none;
     font-weight: normal;
     color: #333;
