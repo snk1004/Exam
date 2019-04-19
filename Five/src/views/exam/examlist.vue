@@ -25,9 +25,9 @@
                     </el-option>
                 </el-select>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
+          <el-form-item size='medium' >
+            <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
+        </el-form-item>
         </el-form>
           
       </div>
@@ -50,8 +50,8 @@
           style="width: 100%">
           <el-table-column
             label="试卷信息"
-            style="textAlign:center"
-            width="260"
+            style="width: 2.0em"
+            
             >
             <template slot-scope="scope">
               <p class="examName"> 
@@ -66,7 +66,8 @@
           </el-table-column>
           <el-table-column
             label="班级"
-            width="280">
+           style="width:3em"
+            >
             <template slot-scope="scope">
                 <div slot="reference" class="name-wrapper">
                   <p>考试班级</p>
@@ -78,7 +79,8 @@
             </template>
           </el-table-column>
           <el-table-column label="创始人"
-          width="150">
+          style="width: 1.5em"
+          >
             <template slot-scope="scope">
               <p>
                {{scope.row.user_name}}
@@ -87,19 +89,19 @@
           </el-table-column>
           <el-table-column label="开始时间">
             <template slot-scope="scope">
-                <span style="margin-left: 10px"> </span>
+                <span> {{scope.row.start_time}}</span>
             </template>
           </el-table-column>
           <el-table-column label="结束时间">
             <template slot-scope="scope">
-            
+              <span> {{scope.row.start_time}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+                @click="handleEdit(scope.$index, scope.row.exam_exam_id)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>  
@@ -108,7 +110,8 @@
   </div>
 </template>
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions} from 'vuex';
+  import moment from 'moment'
 export default {
   data(){
     return {
@@ -118,6 +121,7 @@ export default {
         examLists:[],
         type:"",
         radio4:'',
+        start_time:[]
         
     }
   },
@@ -125,112 +129,133 @@ export default {
   
   },
   mounted(){
-      this.getList()
+      this.getList();
+        
       
   },
   methods:{
     ...mapActions({
       subject:"examList/subject",
       examType:"examList/examType",
-      examList:"examList/examList"
+      examList:"examList/examList",
+      detailExam:'examList/detailExam'
     }),
     getList(){
+
+      //考试类型
       this.examType().then(res=>{
           if(res.code==1){        
               this.examTypes=res.data;
           }
       })
+      //考试科目
       this.subject().then(res=>{
           if(res.code==1){
               this.courses=res.data;
           }
 
       })
+      //获取的列表
       this.examList().then(res=>{
-          if(res.code==1){
+          if(res.code==1){  
+            console.log(res.exam)
+            // end_time=[]
+            res.exam.map(item=>{
+              item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
+              item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
+            })
+            console.log(res.exam)
               this.examLists=res.exam;
           }
 
       })
-     
+    //  console.log(this.examLists)
     },
+   
     onSubmit() {
       console.log('submit!');
     },
-    handleEdit() {
-         
+    handleEdit(index,id) {
+      console.log(this.detailExam())
+        // this.detailExam(id)
+         this.$router.push({ path: "/examination/detail",query:{id:id} })
       }
   }
 }
 </script>
 <style scoped lang="scss">
-*{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  box-sizing: border-box;
-}
-.examlist{
-  width: 95%;
-  margin:0 2.5%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  h3{
-      width: 100%;
-      padding: 20px 0px;
-      margin-top: 10px;
-      color: rgba(0, 0, 0, 0.85);
-      font-weight: 500;
-      font-size: 1.5em;
-      display: flex;
-    }
-    .ant-layout-top{
-      width: 100%;
-      height:100px;
-      box-sizing: border-box;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-    }
-    .ant-layout-content{
-      width: 100%;
-      flex: 1;
-      margin:15px 0;
-      background: #fff;
-      border-radius: 8px;
-      padding:15px;
-      .style_container__2hI6B{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        flex: 1;
-        .style_tool__31xLZ{
-          width: 100%;
-          height: 50px;
-          display: flex;
-           align-items: center;
-          justify-content: space-between;
-        }
-      }
-     .name-wrapper{
-       font-size: 14px;
-       p{
-         width: 100%;
-         text-align: center;
-       }
-       span{
-         display: inline-block;
-         padding: 3px 5px;
-         font-size: 12px;
-       
-       }
-
-     }
+  *{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
   }
+  .examlist{
+    width: 95%;
+    margin:0 2.5%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    h3{
+        width: 100%;
+        padding: 20px 0px;
+        margin-top: 10px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 500;
+        font-size: 1.5em;
+        display: flex;
+      }
+      .ant-layout-top{
+        width: 100%;
+        height:10em;
+        box-sizing: border-box;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+      }
+      .ant-layout-content{
+        width: 100%;
+        flex: 1;
+        margin:15px 0;
+        background: #fff;
+        border-radius: 8px;
+        padding:15px;
+        .style_container__2hI6B{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          flex: 1;
+          .style_tool__31xLZ{
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+      .name-wrapper{
+        font-size: 14px;
+        p{
+          width: 100%;
+          text-align: center;
+        }
+        span{
+          display: inline-block;
+          padding: 3px 5px;
+          font-size: 12px;
+        
+        }
 
-}
+      }
+    }
+    .el-button  {
+      width: 100px;
+      height: 30px;
+      text-align: center;
+    }
+
+  }
 
 
 </style>
