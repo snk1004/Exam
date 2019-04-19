@@ -1,4 +1,5 @@
-import { subject, examType, create, examList, PutCreate } from '@/api/examList';
+import { subject, examType, create, examList, PutCreate, detailExam } from '@/api/examList';
+import moment from 'moment';
 const state = {
     courseList: []
 }
@@ -10,7 +11,6 @@ const actions = {
     async createExam({ commit }, examList) {
         const { TypeExamId, courseExamId, date1, date2, name, num } = examList;
         var res = await create({ subject_id: courseExamId, exam_id: TypeExamId, title: name, number: num, start_time: date1, end_time: date2 });
-        console.log(res);
         if (res.code == 1) {
             localStorage.setItem('exam', JSON.stringify(res.data))
         }
@@ -40,16 +40,19 @@ const actions = {
         })
     },
     //创建试题
-    async PutCreate({ commit }, examList) {
-        console.log(examList)
-            // const { TypeExamId, courseExamId, date1, date2, name, num } = examList;
-            // var res = await create({});
-            // console.log(res);
-            // if (res.code == 1) {
-            //     localStorage.setItem('exam', JSON.stringify(res.data))
-            // }
+    async PutCreate({ commit }, payload) {
+        const { src, question_ids } = payload;
+        console.log(src, question_ids)
+        var res = await PutCreate({ src: src, question_ids: question_ids })
+        return res
+    },
 
-        // return res
+    //考试列表 跳详情
+    detailExam({ commit }, payload) {
+        return new Promise(async(resolve, reject) => {
+            const typeData = await detailExam(payload)
+            resolve(typeData)
+        })
     },
 }
 export default {
