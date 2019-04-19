@@ -10,8 +10,8 @@
           <!-- <span>请选择教室号</span> -->
           <el-select v-model="roomValue" placeholder="请选择教室号">
             <el-option
-              v-for="item in room"
-              :key="item.room_id"
+              v-for="(item,index) in room"
+              :key="index"
               :label="item.room_text"
               :value="item.room_id"
             />
@@ -71,7 +71,7 @@
             <span>暂无数据</span>
           </div>
           <tbody>
-            <tr v-for="item in dataList" :key="item.student_id">
+            <tr v-for="(item,index) in dataList.slice((currpage - 1) * pagesize, currpage * pagesize)" :key="index">
               <td>
                 <span>{{ item.student_name }}</span>
               </td>
@@ -96,12 +96,19 @@
           </tbody>
         </table>
         <div class="student-pagination">
-          <pagination
-            :total="total"
-            :page.sync="listQuery.page"
-            :limit.sync="listQuery.limit"
-            @pagination="getList"
+          <el-pagination
+            background
+            :total="dataList.length"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
           />
+          <!--:page-sizes="[100, 200, 300, 400]"
+              :page-size="100"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="400"> -->
         </div>
       </div>
     </div>
@@ -109,18 +116,14 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
 import { mapActions } from 'vuex'
 export default {
-  components: { Pagination },
   data() {
     return {
       dataList: [],
-      total: 0,
-      listQuery: {
-        page: 1,
-        limit: 20
-      },
+      total: 24,
+      pagesize: 10,
+      currpage: 1,
       // input
       input: '',
       // 所有教室
@@ -142,7 +145,10 @@ export default {
       if (res.code === 1) {
         this.dataList = res.data
         this.newData = res.data
+        const num = this.dataList.length / this.pagesize
+        this.total = Math.ceil(num)
       }
+      console.log(this.dataList)
     })
     this.getAllRoom().then(res => {
       if (res.code === 1) {
@@ -232,7 +238,14 @@ export default {
       this.input = ''
       this.roomValue = ''
       this.classValue = ''
+    },
+    handleCurrentChange(cpage) {
+      this.currpage = cpage
+    },
+    handleSizeChange(psize) {
+      this.pagesize = psize
     }
+
   }
 }
 </script>
@@ -304,40 +317,17 @@ export default {
       font-size: 14px;
       table {
         width: 100%;
-        .student-pagination {
-          width: 60%;
-          padding-left: 20%;
-          height: 32px;
-          margin: 16px 10px;
-          box-sizing: border-box;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          list-style: none;
-          li {
-            cursor: pointer;
-            border-radius: 2px;
-            user-select: none;
-            min-width: 32px;
-            height: 32px;
-            line-height: 30px;
-            text-align: center;
-            list-style: none;
-            display: inline-block;
-            vertical-align: middle;
-            border: 1px solid #d9d9d9;
-            background-color: #fff;
-            margin-right: 8px;
-            font-family: Arial;
-            outline: 0;
-          }
-          .none-border {
-            border: none !important;
-          }
-          .pad-item {
-            padding: 0 8px;
-          }
-        }
+      }
+      .student-pagination {
+        display: flex;
+        width: 100%;
+        height: 50px;
+        margin: 16px 10px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        list-style: none;
       }
       thead {
         width: 100%;

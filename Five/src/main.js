@@ -5,7 +5,9 @@ import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 // 引入elemnt-ui
 import Element from 'element-ui'
+import ElementUI from 'element-ui'
 import './styles/element-variables.scss'
+import 'element-ui/lib/theme-chalk/index.css'
 
 // 引入全局样式
 import '@/styles/index.scss' // global css
@@ -37,7 +39,7 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
-
+Vue.use(ElementUI)
 // 注册全局过滤器
 // register global utility filters.
 Object.keys(filters).forEach(key => {
