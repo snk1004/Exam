@@ -11,9 +11,9 @@
           <el-select v-model="roomValue" placeholder="请选择教室号">
             <el-option
               v-for="item in room"
-              :key="item.value"
-              :label="item.value"
-              :value="item.value"
+              :key="item.room_id"
+              :label="item.room_text"
+              :value="item.room_id"
             />
           </el-select>
         </div>
@@ -22,9 +22,9 @@
           <el-select v-model="classValue" placeholder="班级名">
             <el-option
               v-for="item in classname"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.grade_id"
+              :label="item.grade_name"
+              :value="item.grade_id"
             />
           </el-select>
         </div>
@@ -68,184 +68,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="item in dataList" :key="item.student_id">
               <td>
-                <span>1701B</span>
+                <span>{{ item.student_name }}</span>
               </td>
               <td>
-                <span>node基础</span>
+                <span>{{ item.subject_text }}</span>
               </td>
               <td>
-                <span>34303</span>
+                <span>{{ item.grade_name }}</span>
               </td>
               <td>
-                <span>34311</span>
+                <span>{{ item.room_text }}</span>
               </td>
               <td>
-                <span>Pm626521@</span>
+                <span>{{ item.student_pwd }}</span>
               </td>
               <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>1701B</span>
-              </td>
-              <td>
-                <span>node基础</span>
-              </td>
-              <td>
-                <span>34303</span>
-              </td>
-              <td>
-                <span>34311</span>
-              </td>
-              <td>
-                <span>Pm626521@</span>
-              </td>
-              <td>
-                <span>修改/删除</span>
+                <span>
+                  <li class="btn-take" @click="DeleteStu(item)"> 删除</li>
+                </span>
               </td>
             </tr>
           </tbody>
@@ -256,16 +98,6 @@
               :limit.sync="listQuery.limit"
               @pagination="getList"
             />
-            <!-- <li><i class="el-icon-arrow-left" /></li>
-            <li>2</li>
-            <li>3</li>
-            <li class="none-border"><i class="el-icon-more" /></li>
-            <li>20</li>
-            <li><i class="el-icon-arrow-right" /></li>
-            <li class="pad-item">20条/页<i class="el-icon-arrow-down" /></li>
-            <li class="none-border">跳至</li>
-            <li />
-            <li class="none-border">页</li> -->
           </div>
         </table>
       </div>
@@ -275,11 +107,12 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-
+import { mapActions } from 'vuex'
 export default {
   components: { Pagination },
   data() {
     return {
+      dataList: [],
       total: 0,
       listQuery: {
         page: 1,
@@ -287,49 +120,76 @@ export default {
       },
       // input
       input: '',
-      // select
-      room: [{
-        value: '34301',
-        label: '黄金糕'
-      }, {
-        value: '34302',
-        label: '双皮奶'
-      }, {
-        value: '34303',
-        label: '蚵仔煎'
-      }, {
-        value: '34304',
-        label: '龙须面'
-      }, {
-        value: '34305',
-        label: '北京烤鸭'
-      }],
+      // 所有教室
+      room: [],
       roomValue: '',
       classValue: '',
-      classname: ['1608A', '1608B', '1609A', '1609B', '16010A', '16010B', '1610C', '16011A', '16011B', '1611C']
+      // 所有班级
+      classname: []
     }
   },
-  created() {
-    this.roomSelected = this.room[0]
-    this.classSelected = this.classname[0]
+  mounted() {
+    this.getAlldata().then(res => {
+      if (res.code === 1) {
+        this.dataList = res.data
+      }
+    })
+    this.getAllRoom().then(res => {
+      if (res.code === 1) {
+        this.room = res.data
+      }
+    })
+    this.getgrade().then(res => {
+      if (res.code === 1) {
+        this.classname = res.data
+      }
+    })
   },
   methods: {
+    ...mapActions({
+      getAlldata: 'class/getAllstudent',
+      getAllRoom: 'class/getAllRoom',
+      getgrade: 'class/getgrade',
+      // 更新学生信息
+      resetStudent: 'class/resetStudent',
+      // 删除学生
+      deleteStudent: 'class/deleteStudent'
+    }),
     getList() {
       // 获取数据
+      this.getAlldata().then(res => {
+        if (res.code === 1) {
+          this.room = res.data
+        }
+      })
     },
-    getRoomSelected() {
+    /* getRoomSelected() {
       // 获取选中
       console.log(this.roomSelected)
     },
     getClassSelected() {
       // 获取选中
       console.log(this.classSelected)
+    } */
+    // 删除学生
+    DeleteStu(data) {
+      this.deleteStudent({
+        'id': data.student_id
+      })
+      this.getAlldata().then(res => {
+        if (res.code === 1) {
+          this.dataList = res.data
+        }
+      })
     }
   }
 }
 </script>
 
 <style lang='scss'>
+.btn-take{
+  cursor: pointer;
+}
 .app-main{
   background: #f0f2f5;
 }
@@ -440,6 +300,9 @@ export default {
           }
         }
       }
+      tbody tr:hover{
+        background: #e6efff!important;
+      }
       tbody tr{
         transition: all 0.3s, height 0s;
         width: 100%;
@@ -452,10 +315,13 @@ export default {
           padding: 16px 16px;
           flex: 1;
           border-bottom: 1px solid #e8e8e8;
-          span{
+          color: rgba(0, 0, 0, 0.65);
+          span {
             text-align: left;
-            color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
+            display: flex;
+            list-style: none;
+            color: rgba(0, 0, 0, 0.65);
           }
         }
       }

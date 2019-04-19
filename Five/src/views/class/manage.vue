@@ -79,8 +79,8 @@
               </td>
               <td>
                 <span>
-                  <li style="padding-right:2px" @click="Reset(item.grade_id)">修改</li>|
-                  <li style="padding-left:2px" @click="Delete(item.room_id)">删除</li>
+                  <li class="btn-take" tyle="padding-right:2px" @click="Reset(item.grade_id,item.room_text,item.subject_text)">修改 </li> <b class="stri">|</b>
+                  <li class="btn-take" tyle="padding-left:2px" @click="Delete(item.grade_id)"> 删除</li>
                 </span>
                 <!-- 修改班级弹窗 -->
                 <el-dialog title="修改班级" :visible.sync="dialogFormReset">
@@ -125,7 +125,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { log } from 'util'
+// import { log } from 'util'
 
 export default {
   data() {
@@ -194,7 +194,7 @@ export default {
       getgrade: 'class/getgrade',
       getroom: 'class/getroom',
       getpro: 'class/getsubject',
-      addroom: 'class/addroom',
+      addgrade: 'class/addgrade',
       // 更新信息
       gradeUpdata: 'class/gradeUpdata',
       // 删除教室
@@ -213,15 +213,10 @@ export default {
         }
       })
       if (this.mesFlag) {
-        this.addroom({
+        this.addgrade({
           'grade_name': this.ruleForm.name,
           'room_id': this.ruleForm.roomRegion,
           'subject_id': this.ruleForm.proRegion
-        })
-        this.getgrade().then(res => {
-          if (res.code === 1) {
-            this.dataList = res.data
-          }
         })
         this.getgrade().then(res => {
           if (res.code === 1) {
@@ -235,7 +230,9 @@ export default {
       }
     },
     // 修改
-    Reset(gradeId) {
+    Reset(gradeId, room, sub) {
+      this.ruleForm.roomRegion = room
+      this.ruleForm.proRegion = sub
       this.gradeID = gradeId
       this.dialogFormReset = true
       this.dataList.forEach(item => {
@@ -276,7 +273,7 @@ export default {
     Delete(ind) {
       this.delInd = ind
       this.gradeDelete({
-        'room_id': this.delInd
+        'grade_id': this.delInd
       })
       this.getgrade().then(res => {
         if (res.code === 1) {
@@ -308,6 +305,13 @@ export default {
 <style lang='scss'>
 .app-main {
   background: #f0f2f5;
+}
+.btn-take{
+  cursor: pointer;
+}
+.stri{
+  font-weight: normal;
+  margin: 0 2px;
 }
 .class-container {
   width: 100%;
@@ -368,6 +372,9 @@ export default {
           }
         }
       }
+      tbody tr:hover{
+        background: #e6efff!important;
+      }
       tbody tr {
         transition: all 0.3s, height 0s;
         width: 100%;
@@ -382,11 +389,10 @@ export default {
           border-bottom: 1px solid #e8e8e8;
           span {
             text-align: left;
-            color: rgba(0, 0, 0, 0.85);
             font-weight: 500;
             display: flex;
             list-style: none;
-            color: #000;
+            color: rgba(0, 0, 0, 0.65);
             li {
               color: #0139fd;
             }
