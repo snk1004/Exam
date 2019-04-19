@@ -67,6 +67,9 @@
               </th>
             </tr>
           </thead>
+          <div v-if="showNodata" class="noData">
+            <span>暂无数据</span>
+          </div>
           <tbody>
             <tr v-for="item in dataList" :key="item.student_id">
               <td>
@@ -91,15 +94,15 @@
               </td>
             </tr>
           </tbody>
-          <div class="student-pagination">
-            <pagination
-              :total="total"
-              :page.sync="listQuery.page"
-              :limit.sync="listQuery.limit"
-              @pagination="getList"
-            />
-          </div>
         </table>
+        <div class="student-pagination">
+          <pagination
+            :total="total"
+            :page.sync="listQuery.page"
+            :limit.sync="listQuery.limit"
+            @pagination="getList"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -129,7 +132,9 @@ export default {
       // 存放筛选数据
       newList: [],
       // 新的数据
-      newData: ''
+      newData: '',
+      // 显示隐藏 暂无数据
+      showNodata: ''
     }
   },
   mounted() {
@@ -160,6 +165,14 @@ export default {
       // 删除学生
       deleteStudent: 'class/deleteStudent'
     }),
+    // 获取 渲染数据
+    getRender() {
+      this.getAlldata().then(res => {
+        if (res.code === 1) {
+          this.dataList = res.data
+        }
+      })
+    },
     getList() {
       // 获取数据
       this.getAlldata().then(res => {
@@ -168,14 +181,6 @@ export default {
         }
       })
     },
-    /* getRoomSelected() {
-      // 获取选中
-      console.log(this.roomSelected)
-    },
-    getClassSelected() {
-      // 获取选中
-      console.log(this.classSelected)
-    } */
     // 删除学生
     DeleteStu(data) {
       this.deleteStudent({
@@ -189,26 +194,38 @@ export default {
     },
     // 筛选
     Search() {
-      const roomList = []
-      const classList = []
+      const nameList = [] // 姓名暂存数组
+      const roomList = [] // 教室号暂存数组
+      const classList = [] // 班级暂存数组
       this.newData.forEach(item => {
-        // 筛选 姓名
-        if (item.student_name === this.input && this.input !== '') {
-          this.newList.push(item)
-        } else if (this.roomValue === item.room_id) { // 筛选 教室号
-          roomList.push(item)
-          this.newList = roomList
-          if (this.newList === []) { // 若无数据
-            console.log('暂无数据')
-          }
-        } else if (this.classValue === item.grade_id) { // 筛选 班级
-          classList.push(item)
-          this.newList = classList
-        } else if (this.input === '' && this.roomValue === '' && this.classValue === '') { // 对空判断
+        // 对空判断
+        if (this.input === '' && this.roomValue === '' && this.classValue === '') {
           this.newList = this.newData
+        } else {
+          this.showNodata = false
+          // 筛选 姓名
+          if (this.input !== '') {
+            if (this.input === '') {
+              this.newList = this.newData
+            }
+          } else if (item.student_name === this.input) {
+            nameList.push(item)
+            this.newList = nameList
+          }
+          // 筛选 教室号
+          if (this.roomValue === item.room_id) {
+            roomList.push(item)
+            this.newList = roomList
+          }
+          // 筛选 班级
+          if (this.classValue === item.grade_id) {
+            classList.push(item)
+            this.newList = classList
+          }
         }
       })
       this.dataList = this.newList
+      this.newList = []
     },
     // 重置
     Reset() {
@@ -226,6 +243,16 @@ export default {
 }
 .app-main {
   background: #f0f2f5;
+}
+//暂无数据
+.noData {
+  width: 100%;
+  height: 150px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #eee;
 }
 .student-container {
   width: 100%;
@@ -273,6 +300,7 @@ export default {
       width: 100%;
       height: 100%;
       display: flex;
+      flex-direction: column;
       font-size: 14px;
       table {
         width: 100%;
