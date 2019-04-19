@@ -22,14 +22,10 @@
           />
         </el-select>
         <div class="btnFotter">
-          <button class="sure" @click='handleSubmit'>确认</button>
-          <button class="resets">重置</button>
+           <el-button :plain="true"  @click='handleSubmit'>确认</el-button>
+          <button class="resets" @click='resets'>重置</button>
         </div>
-        <div v-if='delaog'>
-            <div class="deloag" >
-              <span>{{count}}</span>
-            </div>
-        </div>
+       
         
       </div>
 </template>
@@ -52,8 +48,6 @@ export default {
       stateInd:0,
       values:'请选择身份id',
       list:[],
-      delaog:false,
-      count:''
     }
   },
   methods:{
@@ -73,9 +67,7 @@ export default {
               'user_name':this.user_name,
               'user_pwd':this.user_pwd
             }).then(res=>{
-                console.log(this.delaog,11)
-                // this.delaog=true
-                // this.count=res.msg
+               this.$message(res.msg);
             })
 
         }
@@ -87,12 +79,20 @@ export default {
                     'user_id':item.user_id,
                     'user_name':this.user_name==''?item.user_name:this.user_name,
                     'user_pwd':this.user_pwd==''?item.user_pwd:this.user_pwd
+                 }).then(res=>{
+                     this.$message(res.msg);
                  })
                 }
                }
              })
 
         }
+      },
+      resets(){
+          this.value='请选择身份id'
+          this.user_name=''
+          this.user_pwd=''
+          this.values='请选择身份id'
       }
  },
  created(){
@@ -154,7 +154,7 @@ export default {
              display: flex;
               width: 180px;
               margin-top: 18px;
-              >.sure{
+              >.el-button{
                 width: 119px;
                 height: 32px;
                 background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;

@@ -60,3 +60,11 @@ export function getReneval(data) {
     data
   })
 }
+
+export function setIdentity(data) {
+  return request({
+    url: '/user/identity/edit',
+    method: 'get',
+    params: data
+  })
+}

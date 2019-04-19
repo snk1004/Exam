@@ -5,17 +5,8 @@
     </div>
     <div class="addUser_grid">
       <addUserDel />
-
-      <div class="addUser_wrapper">
-        <div class="btn">
-          <button>添加身份</button>
-        </div>
-        <input type="text" placeholder="请输入身份名称">
-        <div class="btnFotter">
-          <button class="sure">确认</button>
-          <button class="resets">重置</button>
-        </div>
-      </div>
+      <addIdentity />
+      
       <div class="addUser_wrapper">
         <div class="btn">
           <button>添加api接口权限</button>
@@ -101,8 +92,10 @@
 
 <script>
 import addUserDel from './components/addUserDel'
+import addIdentity from './components/addIdentity'
+
 export default {
-  components:{addUserDel},
+  components:{addUserDel,addIdentity},
   data() {
     return {
       options: [{

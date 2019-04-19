@@ -121,9 +121,9 @@ export default {
       this.listsInd=i;
       if(this.listsInd==0){
          this.getList().then(res=>{
-        if(res.code==1){
-          this.dataList=res.data;
-        }
+          if(res.code==1){
+            this.dataList=res.data;
+          }
       })
       }else if(this.listsInd==1){
          this.getid().then(res=>{
