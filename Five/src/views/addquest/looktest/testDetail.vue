@@ -22,7 +22,7 @@
 </template>
 <script>
 import {mapActions} from "vuex";
-import MarkdownEditor from '@/components/MarkdownEditor'
+import MarkdownEditor from './Markdown'
 export default {
     components: { MarkdownEditor },
     data(){

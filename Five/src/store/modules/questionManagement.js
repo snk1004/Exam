@@ -24,20 +24,20 @@ const actions = {
       resolve(data)
     })
   },
-  insertQuestionsType({ commit }, payload) { //  添加考试类型
+  insertQuestionsType({ commit }, payload) { //  ++考试类型
     console.log(payload)
     return new Promise(async(resolve, reject) => {
       const data = await insertQuestionsType(payload)
       resolve(data)
     })
   },
-  condition({ commit }, payload) { //  添加考试
+  condition({ commit }, payload) { //  获取所有的数据
     return new Promise(async(resolve, reject) => {
       const data = await condition(payload)
       resolve(data)
     })
   },
-  update({ commit }, payload) { //  添加考试
+  update({ commit }, payload) { // 更新试题
     return new Promise(async(resolve, reject) => {
       const data = await update(payload)
       resolve(data)

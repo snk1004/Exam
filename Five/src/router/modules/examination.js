@@ -29,6 +29,11 @@ const Examinations = {
             path: 'add',
             component: () =>
                 import ('@/views/exam/add')
+        },
+        {
+            path: 'detail',
+            component: () =>
+                import ('@/views/exam/detail')
         }
     ]
 }

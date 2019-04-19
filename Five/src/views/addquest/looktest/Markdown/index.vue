@@ -35,11 +35,11 @@ export default {
       type: String,
       default: 'wysiwyg'
     },
-    height: {
-      type: String,
-      required: false,
-      default: '200px'
-    },
+    // height: {
+    //   type: String,
+    //   required: false,
+    //   default: '900px'
+    // },
     language: {
       type: String,
       required: false,
@@ -116,3 +116,11 @@ export default {
   }
 }
 </script>
+<style lang='scss'>
+.tui-editor-contents{
+    >pre{
+      white-space: initial
+    }
+}
+
+</style>

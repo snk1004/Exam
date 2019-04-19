@@ -42,17 +42,19 @@ export default {
     return {
       title:'',
       flag: false,
-      questionList:[]
+      questionList:[],
+      src:''
     };
   },
   created() {
-     console.log(this.PutCreate())
+    
     //从本地存储取出来 渲染页面
     let data = JSON.parse(window.localStorage.getItem("exam"));
-    console.log(data)
+    this.src=data.exam_exam_id;
+   
     this.title=data.title;
     this.questionList = data.questions;
-  console.log(this.questionList)
+   
   },
   methods: {
     ...mapActions({
@@ -67,20 +69,23 @@ export default {
     hisdDialog(){
         this.flag = !this.flag;
     },
-    hendleCreate(){
-     console.log(this.questionList);
+    async hendleCreate(){
      let ids=this.questionList.map(item=>{
        return item.questions_id
      });
+     //将获取到题目的id 转换成字符串 数组
      let res={
+        src:this.src,
         question_ids:JSON.stringify(ids)
      };
-     console.log(res)
-     this.PutCreate(res)
+     //将参数传入到仓库
+     let resolve=await this.PutCreate(res)
+    //跳转考试列表页面
+     this.$router.push({ path: "/examination/examinationlist" })
     },
     //点击删除的弹出框
     delmask(index) {
-      
+  
       this.$confirm('是否要删除该题目?', '确认提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

@@ -21,10 +21,21 @@ export function create(data) {
 }
 //创建试题
 export function PutCreate(data) {
-    console.log(data)
+    const { src, question_ids } = data;
     return request({
-        url: `/exam/exam/`,
+        url: `/exam/exam/${src}`,
         method: 'put',
-        data
+        data: {
+            question_ids
+        }
+    })
+}
+
+//跳转详情
+
+export function detailExam(data) {
+    return request({
+        url: `/exam/exam/${data}`,
+        method: 'get'
     })
 }
