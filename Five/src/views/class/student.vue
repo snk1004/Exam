@@ -210,11 +210,7 @@ export default {
         } else {
           this.showNodata = false
           // 筛选 姓名
-          if (this.input !== '') {
-            if (this.input === '') {
-              this.newList = this.newData
-            }
-          } else if (item.student_name === this.input) {
+          if (item.student_name === this.input) {
             nameList.push(item)
             this.newList = nameList
           }
