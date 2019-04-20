@@ -1,37 +1,60 @@
 <template>
   <div class="add-layout">
     <h2>试卷详情</h2>
-    <div v-for="(item,index) in detailList" :key="index" class="add-layout-content">
-      <div class="add-layout-question">
-        <div class="content-list">
-          <div class="list">
-            <div class="style_questionitem__3ETlC">
-              <h4>{{ index+1 }}:  {{ item.title }} </h4>
-              <div class="markdown">
-                <pre>
-                  {{ item.questions_stem }}
-                </pre>
+    <div v-if='detailList' class="content">
+      <div class="left-content">
+        <div v-for="(item,index) in detailList" :key="index" class="add-layout-content">
+          <div class="add-layout-question">
+            <div class="content-list">
+              <div class="list">
+                <div class="style_questionitem__3ETlC">
+                  <h4>{{ index+1 }}:  {{ item.title }} </h4>
+                  <div class="markdown">
+                    <pre>
+                      {{ item.questions_stem }}
+                    </pre>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        
         </div>
       </div>
-      <div class="add-layout-answer">
-        <!-- <p class="message">答案信息</p> -->
-        <div class="content-list">
-          <div class="list">
-            <div class="style_questionitem__3ETlC">
-              <div class="markdown">
-                <pre>
-                  {{ item.questions_answer }}
-                </pre>
+       <div class="right-content">
+         
+          <div class="add-layout-answer"  v-for="(item,index) in detailList" :key="index" >
+           <!-- <p class="message">答案信息</p>  -->
+            <div class="content-list">
+              <div class="list">
+                <!-- <div class="style_questionitem__3ETlC">
+                   <div class="markdown">
+                    <pre>
+                       {{ item.questions_answer }} 
+                    </pre>
+                  </div> 
+                </div> -->
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+        </div> 
+         
+       </div>
+         
     </div>
+    <div v-else class="cont">
+      <div class="left-cont">
+
+      </div>
+      <div class="right-cont"></div>
+    </div>
+
+
+
+
+   
+   </div>
   </div>
+
 </template>
 
 <script>
@@ -65,7 +88,8 @@ export default {
   flex-direction: column;
   background: #f0f2f5;
   min-height: 0;
-  // padding: 0px 24px 24px;
+  flex: 1;
+
 }
 h4{
   font-weight: 400;
@@ -82,27 +106,45 @@ h2 {
   font-weight: 500;
   font-size: 1.5em;
 }
-.add-layout-content{
+
+.content{
   width: 95%;
+  margin: 10px 2.5%;
   display: flex;
-  margin: 0 2.5%;
-  // flex-wrap: wrap;
+}
+.cont{
+  width: 95%;
+  flex: 1;
+  background: blue;
+}
+.left-content{
+  width: 65%;
+  height: 100%;
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px 0;
+}
+.right-content{
+  width: 33%;
+  margin-left: 2%;
+   background: #fff;
+   border-radius: 15px;
+    padding: 20px 0;
+}
+.add-layout-content{
+  width: 100%;
+  border-radius: 15px;
 }
 .add-layout-question {
-  width: 65%;
-  background: white;
+  width: 100%;
   border-radius: 10px;
-  float: left;
   margin-right: 20px;
   padding: 24px;
   margin-bottom: 20px;
 }
 .add-layout-answer {
-  width: 35%;
-  // flex: 1;
-  background: white;
+  width: 100%;
   border-radius: 10px;
-  float: left;
   padding: 24px;
   margin-bottom: 20px;
 }
@@ -119,8 +161,8 @@ h2 {
 .style_questionitem__3ETlC {
   text-align: left;
   border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 10px;
+  
 }
 .markdown,
 pre,

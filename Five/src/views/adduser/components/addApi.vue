@@ -1,9 +1,11 @@
 <template>
-    <div class="addUser_wrapper">
+     <div class="addUser_wrapper">
         <div class="btn">
-          <button>添加身份</button>
+          <button>添加api接口权限</button>
         </div>
-        <input type="text" placeholder="请输入身份名称" v-model="value">
+        <input type="text" placeholder="请输入api接口权限名称" v-model="apinames">
+        <input type="text" placeholder="请输入api接口权限url" v-model="apiurl">
+        <input type="text" placeholder="请输入api接口权限方法" v-model="apimethods">
         <div class="btnFotter">
           <el-button :plain="true"  @click='handleSubmit'>确认</el-button>
           <button class="resets" @click='resets'>重置</button>
@@ -15,29 +17,35 @@ import {mapActions} from 'vuex'
 export default {
     data(){
         return {
-            value:''
+            apinames:'',
+            apiurl:'',
+            apimethods:''
         }
     },
     methods:{
         ...mapActions({
-            addidentity:'usershow/setIdentity'
+            addapi:'usershow/addApi'
         }),
         handleSubmit(){
-           if(this.value){
-              this.addidentity({
-                'identity_text':this.value
+            if(this.apinames&&this.apiurl&&this.apimethods){
+                this.addapi({
+                'api_authority_text':this.apinames,
+                'api_authority_url':this.apiurl,
+                'api_authority_method':this.apimethods
             }).then(res=>{
-               this.$message({
-                message: res.msg,
-                type: 'success'
-              });
+                 this.$message({
+                    message: res.msg,
+                    type: 'success'
+                });
             })
-           }else{
-               this.$message.error('参数有误');
-           }
+            }else{
+                this.$message.error('参数有误')
+            }
         },
-         resets(){
-          this.value=''
+          resets(){
+              this.apinames=''
+              this.apiurl=''
+              this.apimethods=''
       }
     }
 }
@@ -109,4 +117,6 @@ export default {
           }
       }
 }
+
 </style>
+
