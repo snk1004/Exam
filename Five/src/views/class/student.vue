@@ -217,6 +217,15 @@ export default {
           // 筛选 教室号
           if (this.roomValue === item.room_id) {
             roomList.push(item)
+            /* if (this.input !== '' && roomList.length > 0) {
+              roomList.forEach(it => {
+                if (it.student_name === this.input) {
+                  roomList.push(it)
+                  this.newList = []
+                  this.newList.push(it)
+                }
+              })
+            } */
             this.newList = roomList
           }
           // 筛选 班级
