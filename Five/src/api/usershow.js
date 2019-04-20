@@ -68,3 +68,25 @@ export function setIdentity(data) {
     params: data
   })
 }
+
+export function addApi(data) {
+  return request({
+    url: '/user/authorityApi/edit',
+    method: 'get',
+    params: data
+  })
+}
+
+export function setApiEnter() {
+  return request({
+    url: '/user/view_authority',
+    method: 'get'
+  })
+}
+export function addViewApi(data) {
+  return request({
+    url: '/user/authorityView/edit',
+    method: 'get',
+    params: data
+  })
+}

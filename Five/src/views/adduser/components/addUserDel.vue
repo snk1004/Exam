@@ -67,9 +67,14 @@ export default {
               'user_name':this.user_name,
               'user_pwd':this.user_pwd
             }).then(res=>{
-               this.$message(res.msg);
+              this.$message({
+                message: res.msg,
+                type: 'success'
+              });
             })
 
+        }else{
+            this.$message.error('参数有误');
         }
         }else if(this.stateInd==1){       
              this.list.find(item=>{
@@ -80,8 +85,13 @@ export default {
                     'user_name':this.user_name==''?item.user_name:this.user_name,
                     'user_pwd':this.user_pwd==''?item.user_pwd:this.user_pwd
                  }).then(res=>{
-                     this.$message(res.msg);
+                      this.$message({
+                          message: res.msg,
+                          type: 'success'
+                        });
                  })
+                }else{
+                    this.$message.error('参数有误');
                 }
                }
              })
