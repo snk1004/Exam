@@ -67,7 +67,7 @@
               </th>
             </tr>
           </thead>
-          <div v-if="showNodata" class="noData">
+          <div v-if="!dataList.length" class="noData">
             <span>暂无数据</span>
           </div>
           <tbody>
@@ -208,7 +208,6 @@ export default {
         if (this.input === '' && this.roomValue === '' && this.classValue === '') {
           this.newList = this.newData
         } else {
-          this.showNodata = false
           // 筛选 姓名
           if (item.student_name === this.input) {
             nameList.push(item)
