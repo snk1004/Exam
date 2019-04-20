@@ -1,6 +1,6 @@
 <template>
   <div class="tinymce-container editor-container">
-    <p class="addtest">添加试题</p>
+    <p class="addtest">{{title}}</p>
     <div class="contentbox">
       <p class="testmesg">题目信息</p>
       <p>题干</p>
@@ -50,17 +50,18 @@ export default {
     components: { MarkdownEditor },
     data(){
         return{
-			value: '',
-			value2:'',
-			value3:'',
-			queststem:'',//获取题干
-			theme:'',//题目主题
-			answer:'',//答案
-			testtype:[],//考试类型-周考-月考
-			subjecttype:[],//考试课程
-			questionTypes:[],
-			detaildata:[],
-			alllist:[]
+					title:'添加试题',
+					value: '',
+					value2:'',
+					value3:'',
+					queststem:'',//获取题干
+					theme:'',//题目主题
+					answer:'',//答案
+					testtype:[],//考试类型-周考-月考
+					subjecttype:[],//考试课程
+					questionTypes:[],
+					detaildata:[],
+					alllist:[]
 		}
 	},
     mounted() {
@@ -102,6 +103,7 @@ export default {
 						this.value=obj.exam_name
 						this.value2=obj.subject_text
 						this.value3=obj.questions_type_text
+						this.title='更改试题'
 					}
 				}
 			})
@@ -140,7 +142,6 @@ export default {
 					type: 'warning',
 					center: true
 				}).then(() => {
-					console.log('更改')
 					this.updates({
 						"questions_id":this.$route.query.id,
 						"questions_type_id":this.value3,

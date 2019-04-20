@@ -74,15 +74,6 @@ const actions = {
       })
     })
   },
-  // viewAuthrity
-  async getViewAuthority({ commit }, authority) {
-    const viewAuthrity = await getViewAuthority()
-    if (viewAuthrity.code === 1) {
-      commit('SET_AUTHORITY', viewAuthrity.data)
-      return viewAuthrity.data
-    }
-    return []
-  },
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {

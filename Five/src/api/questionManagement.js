@@ -26,3 +26,6 @@ export const condition = params => { //  获取所有试题
 export const update = params => { //  更新试题
   return request.put('/exam/questions/update', params)
 }
+export const deltype = params => { //  更新试题
+  return request.post('/exam/delQuestionsType', params)
+}

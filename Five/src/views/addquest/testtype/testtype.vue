@@ -34,7 +34,7 @@
                 <span>{{item.questions_type_text}}</span>
               </td>
               <td>
-                <span></span>
+                <span @click="del(item.questions_type_id)">删除</span>
               </td>
             </tr> 
           </tbody>
@@ -57,7 +57,8 @@ import {mapActions} from "vuex"
     methods: {
       ...mapActions({
         getQuestionsType:"questionManagement/getQuestionsType",
-        insertQuestionsType:"questionManagement/insertQuestionsType"
+        insertQuestionsType:"questionManagement/insertQuestionsType",
+        deltype:"questionManagement/deltype"
       }),
       getlist(){
         this.getQuestionsType().then(res=>{
@@ -91,6 +92,15 @@ import {mapActions} from "vuex"
             message: '取消输入'
           });       
         });
+      },
+      del(id){
+        this.deltype({
+          "id":id
+        }).then(res=>{
+          if(res.code===1){
+            this.getlist()
+          }
+        })
       }
     }
   } 

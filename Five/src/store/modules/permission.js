@@ -49,6 +49,7 @@ const actions = {
     const view_ids = view_authority.map(item => item.view_id)
     const accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids)
     commit('SET_ROUTES', accessedRoutes)
+    return accessedRoutes
   }
 }
 
