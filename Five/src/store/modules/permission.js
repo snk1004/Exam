@@ -52,6 +52,8 @@ const actions = {
     // eslint-disable-next-line no-unused-vars
     const accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids)
     commit('SET_ROUTES', accessedRoutes)
+    return accessedRoutes
+
   }
 }
 

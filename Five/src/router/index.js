@@ -49,11 +49,6 @@ import classRouter from './modules/class'
  */
 export const constantRoutes = [
   // componentsRouter,
-  ExamRouter,
-  userRouter,
-  Examinations,
-  classRouter,
-  Markingmanagement,
   {
     path: '/redirect',
     component: Layout,
@@ -103,6 +98,11 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  ExamRouter,
+  userRouter,
+  Examinations,
+  classRouter,
+  Markingmanagement,
   { path: '*', redirect: '/404', hidden: true }
 ]
 

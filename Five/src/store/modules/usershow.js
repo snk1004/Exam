@@ -1,4 +1,4 @@
-import { show, adduser, getIdentity, getApi, getRelation, getView, getViewIdentity, getReneval, setIdentity, addApi, setApiEnter, addViewApi } from '@/api/usershow'
+import { show, adduser, getIdentity, getApi, getRelation, getView, getViewIdentity, getReneval, setIdentity, addApi, setApiEnter, addViewApi, setIdentityApi, setIdentityView } from '@/api/usershow'
 
 var state = {
   code: '',
@@ -82,6 +82,16 @@ const actions = {
   },
   async  addViewApi({ commit }, payload) {
     const data = await addViewApi(payload)
+    commit('Tips', data)
+    return data
+  },
+  async setIdentityApi({ commit }, payload) {
+    const data = await setIdentityApi(payload)
+    commit('Tips', data)
+    return data
+  },
+  async setIdentityView({ commit }, payload) {
+    const data = await setIdentityView(payload)
     commit('Tips', data)
     return data
   }

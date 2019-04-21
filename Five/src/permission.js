@@ -44,7 +44,9 @@ router.beforeEach(async(to, from, next) => {
           // 2.通过身份获取权限
           const viewAuthority = await store.dispatch('user/getViewAuthority')
           // 3.通过权限生成路由
-          await store.dispatch('permission/generateRoutes', viewAuthority)
+          const newrouter = await store.dispatch('permission/generateRoutes', viewAuthority)
+
+          router.addRoutes(newrouter)
           //   // hack method to ensure that addRoutes is complete
           //   // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })

@@ -4,14 +4,14 @@
       <h2>待批班级</h2>
     </div>
     <div class="table">
-      <Tab />
+     
     </div>
   </div>
 </template>
 <script>
-import Tab from '../table/complexTable'
+
 export default {
-  components: { Tab }
+  components: {  }
 }
 </script>
 
