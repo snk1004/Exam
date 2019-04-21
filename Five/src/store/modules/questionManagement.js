@@ -1,4 +1,4 @@
-import { examType, subject, getQuestionsType, addquestions, insertQuestionsType, condition, update } from '@/api/questionManagement'
+import { examType, subject, getQuestionsType, addquestions, insertQuestionsType, condition, update, deltype } from '@/api/questionManagement'
 const actions = {
   examType({ commit }, payload) { //  考试类型
     return new Promise(async(resolve, reject) => {
@@ -40,6 +40,12 @@ const actions = {
   update({ commit }, payload) { // 更新试题
     return new Promise(async(resolve, reject) => {
       const data = await update(payload)
+      resolve(data)
+    })
+  },
+  deltype({ commit }, payload) { // 删除试题类型
+    return new Promise(async(resolve, reject) => {
+      const data = await deltype(payload)
       resolve(data)
     })
   }

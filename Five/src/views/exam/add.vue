@@ -9,7 +9,7 @@
           <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
         </div>
         <div class="list">
-          <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList">
+          <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList" :key="index">
             <h4>{{item.title}} <el-button type="text" @click="delmask(index)" style="float: right;"><a href="javascript:;" >删除</a></el-button></h4>
             <div class="markdown">
               <pre>
