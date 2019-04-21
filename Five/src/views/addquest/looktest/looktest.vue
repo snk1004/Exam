@@ -35,7 +35,7 @@
     </div>
     <div class="content_box">
         <ul>
-          <li v-for="(item,index) in contentdata" :key="index" @click="detail(item.questions_id)">
+          <li v-for="(item,index) in contentdata" :key="index" @click="detail($event,item.questions_id)">
             <p>{{item.title}}</p>
             <div>
               <p>
@@ -43,7 +43,7 @@
                 <span>{{item.subject_text}}</span>
                 <span>{{item.exam_name}}</span>
               </p>
-              <span @click="edit(item.questions_id)">编辑</span>
+              <span>编辑</span>
             </div> 
             <p>{{item.user_name}}发布</p>
           </li>
@@ -130,12 +130,12 @@ export default {
 			this.getlist()
 		}
 	},
-	edit(id){//跳转编辑页面
-		this.$router.push(`/exam/addquest?id=${id}`)
-  },
-  detail(id){
-    console.log(id)
+  detail(e,id){
+    if(e.target.innerHTML!=='编辑'){
     this.$router.push(`/exam/detail?id=${id}`)
+    }else{
+		  this.$router.push(`/exam/addquest?id=${id}`)
+    }
   }
   }
 };

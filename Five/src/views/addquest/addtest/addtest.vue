@@ -1,13 +1,12 @@
 <template>
   <div class="tinymce-container editor-container">
-    <p class="addtest">添加试题</p>
+    <p class="addtest">{{title}}</p>
     <div class="contentbox">
       <p class="testmesg">题目信息</p>
       <p>题干</p>
-      <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic" @input="change($event)">
+      <input type="text" placeholder="请输入题目要求，不超过20个字" class="topic" v-model='queststem' />
       <p>题目主题</p>
-      <editorImage color="#1890ff" class="editor-upload-btn" />
-	  <textarea id='areaOne' rows="19" @input="titleTheme($event)"></textarea>
+		<markdown-editor v-model="theme" />
       <div class="testtype_select">
         <p>请选择考试类型:</p>
         <el-select v-model="value" placeholder="请选择">
@@ -37,29 +36,32 @@
           </el-option>
         </el-select>
         <p>答案信息</p>
-        <editorImage color="#1890ff" class="editor-upload-btn">
-		</editorImage>
-		<textarea id='areaTwo' rows="19" @input="answermesg($event)"></textarea>
+		<markdown-editor v-model="answer" />
         <p class="class-btn-box"><button class="class-btn" type="text" @click="open">提交</button> </p>
       </div>
     </div>
   </div>
 </template>
 <script>
-import editorImage from '../../../components/Tinymce';
+import MarkdownEditor from '@/components/MarkdownEditor'
+
 import {mapActions} from "vuex";
 export default {
-	data() {
-		return {
-			value: '',
-			value2:'',
-			value3:'',
-			queststem:'',//获取题干
-			theme:'',//题目主题
-			answer:'',//答案
-			testtype:[],//考试类型-周考-月考
-			subjecttype:[],//考试课程
-			questionTypes:[]
+    components: { MarkdownEditor },
+    data(){
+        return{
+					title:'添加试题',
+					value: '',
+					value2:'',
+					value3:'',
+					queststem:'',//获取题干
+					theme:'',//题目主题
+					answer:'',//答案
+					testtype:[],//考试类型-周考-月考
+					subjecttype:[],//考试课程
+					questionTypes:[],
+					detaildata:[],
+					alllist:[]
 		}
 	},
     mounted() {
@@ -67,21 +69,14 @@ export default {
 	},
     methods: {
 		...mapActions({
-			list:"questionManagement/examType",
-			subject:"questionManagement/subject",
-			getQuestionsType:"questionManagement/getQuestionsType",
-			addquestions:"questionManagement/addquestions"
+			list:"questionManagement/examType",//周考-月考
+			subject:"questionManagement/subject",//js上下
+			getQuestionsType:"questionManagement/getQuestionsType",//手写代码
+			addquestions:"questionManagement/addquestions",//添加考试
+			alldata:"questionManagement/condition",//所有的数据
+			updates:"questionManagement/update"//更新数据
 		}),
-		change(e){//获取题干
-            this.queststem=e.target.value
-		},
-		titleTheme(e){//获取题目主题
-      		this.theme=e.target.value
-		},
-		answermesg(e){//获取答案
-			this.answer=e.target.value
-		},
-		gettesttype(){
+		gettesttype(){//获取对应的数据渲染列表
 			this.list().then(res=>{
 				if(res.code===1){
 					this.testtype=res.data;
@@ -96,10 +91,25 @@ export default {
 				if(res.code===1){
 					this.questionTypes=res.data;
 				}
+			}),
+			this.alldata().then(res=>{
+				if(res.code===1){
+					this.alllist=res.data; 
+					if(this.$route.query.id){
+						let obj=this.alllist.filter(item=>item.questions_id===this.$route.query.id)[0]
+						this.queststem=obj.title
+						this.answer=obj.questions_answer
+						this.theme=obj.questions_stem
+						this.value=obj.exam_name
+						this.value2=obj.subject_text
+						this.value3=obj.questions_type_text
+						this.title='更改试题'
+					}
+				}
 			})
 		},
 		open() {
-			if(this.queststem!==''&&this.answer!==''&&this.theme!==''){
+			if(this.queststem!==''&&this.answer!==''&&this.theme!==''&& this.value!==''&&this.value2!=='' && this.value3!==''&& this.$route.query.id===undefined){
 				this.$confirm('真的要添加吗?', '你确定要添加这道试题吗？', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
@@ -119,24 +129,41 @@ export default {
 						type: 'success',
 						message: '添加成功!'
 					});
-					this.value3='';
-					this.queststem='';
-					this.value2='';
-					this.value='';
-					this.answer='';
-					this.theme='';
 				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消添加'
 					});
 				});
-			}else{
-				alert("参数丢失")
+			}else if(this.$route.query.id&&this.queststem!==''&&this.answer!==''&&this.theme!==''&& this.value!==''&&this.value2!=='' && this.value3!==''){
+				this.$confirm('真的要更改吗?', '你确定要更改这道试题吗？', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning',
+					center: true
+				}).then(() => {
+					this.updates({
+						"questions_id":this.$route.query.id,
+						"questions_type_id":this.value3,
+						"questions_stem":this.queststem,
+						"subject_id":this.value2,
+						"exam_id":this.value,
+						"questions_answer":this.answer,
+						"title":this.theme
+					})
+					this.$message({
+						type: 'success',
+						message: '更改成功!'
+					});
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消更改'
+					});
+				});
 			}
 		}
   	},
-  	components: { editorImage }
 }
 </script>
 

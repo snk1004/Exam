@@ -12,7 +12,7 @@ const Markingmanagement = {
   },
   children: [
     {
-      path: '/markingmanagement/awaitingclass',
+      path: 'awaitingclass',
       component: () => import('@/views/awaiting/awaiting'),
       name: 'Awaitingclasst',
       meta: { title: 'awaitingclass', noCache: true, view_id: 'main-examPaperClassmate' }

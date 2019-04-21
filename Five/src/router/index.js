@@ -7,18 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-// import componentsRouter from './modules/components'
 import ExamRouter from './modules/exam'
 import Examinations from './modules/examination'
 import Markingmanagement from './modules/Markingmanagement'
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
 import userRouter from './modules/user'
-
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
 import classRouter from './modules/class'
 
 /**

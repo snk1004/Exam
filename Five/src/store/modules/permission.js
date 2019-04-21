@@ -20,7 +20,6 @@ function hasPermission(view_ids, route) {
  */
 export function filterAsyncRoutes(routes, view_ids) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(view_ids, tmp)) {
@@ -30,7 +29,6 @@ export function filterAsyncRoutes(routes, view_ids) {
       res.push(tmp)
     }
   })
-
   return res
 }
 
@@ -47,13 +45,11 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
-    const view_ids = roles.map(item => item.view_id)
-    // eslint-disable-next-line no-unused-vars
+  generateRoutes({ commit }, view_authority) {
+    const view_ids = view_authority.map(item => item.view_id)
     const accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids)
     commit('SET_ROUTES', accessedRoutes)
     return accessedRoutes
-
   }
 }
 

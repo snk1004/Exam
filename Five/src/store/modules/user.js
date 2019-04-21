@@ -9,7 +9,7 @@ const state = {
   introduction: '',
   roles: [],
   userInfo: {},
-  authoritys: []
+  viewAuthority: []
 }
 
 const mutations = {
@@ -31,8 +31,8 @@ const mutations = {
   SET_USERINFO: (state, userInfo) => {
     state.userInfo = userInfo
   },
-  SET_AUTHORITY: (state, authority) => {
-    state.authoritys = authority
+  SET_VIEWAUTHORITY: (state, viewAuthority) => {
+    state.viewAuthority = viewAuthority
   }
 }
 
@@ -51,7 +51,15 @@ const actions = {
     commit('SET_USERINFO', data.data)
     return data.data
   },
-
+  // get use getViewAuthority
+  async getViewAuthority({ commit }, payload) {
+    const userAuthority = await getViewAuthority()
+    if (userAuthority.code === 1) {
+      commit('SET_VIEWAUTHORITY', userAuthority.data)
+      return userAuthority.data
+    }
+    return []
+  },
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -65,15 +73,6 @@ const actions = {
         reject(error)
       })
     })
-  },
-  // viewAuthrity
-  async getViewAuthority({ commit }, authority) {
-    const viewAuthrity = await getViewAuthority()
-    if (viewAuthrity.code === 1) {
-      commit('SET_AUTHORITY', viewAuthrity.data)
-      return viewAuthrity.data
-    }
-    return []
   },
   // remove token
   resetToken({ commit }) {

@@ -15,7 +15,6 @@ export function getInfo() {
   })
 }
 
-// 获取权限列表
 export function getViewAuthority() {
   return request({
     url: '/user/view_authority',

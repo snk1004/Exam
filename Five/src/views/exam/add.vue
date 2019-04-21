@@ -9,7 +9,7 @@
           <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
         </div>
         <div class="list">
-          <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList">
+          <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList" :key="index">
             <h4>{{item.title}} <el-button type="text" @click="delmask(index)" style="float: right;"><a href="javascript:;" >删除</a></el-button></h4>
             <div class="markdown">
               <pre>
@@ -42,17 +42,19 @@ export default {
     return {
       title:'',
       flag: false,
-      questionList:[]
+      questionList:[],
+      src:''
     };
   },
   created() {
-     console.log(this.PutCreate())
+    
     //从本地存储取出来 渲染页面
     let data = JSON.parse(window.localStorage.getItem("exam"));
-    console.log(data)
+    this.src=data.exam_exam_id;
+   
     this.title=data.title;
     this.questionList = data.questions;
-  console.log(this.questionList)
+   
   },
   methods: {
     ...mapActions({
@@ -67,20 +69,23 @@ export default {
     hisdDialog(){
         this.flag = !this.flag;
     },
-    hendleCreate(){
-     console.log(this.questionList);
+    async hendleCreate(){
      let ids=this.questionList.map(item=>{
        return item.questions_id
      });
+     //将获取到题目的id 转换成字符串 数组
      let res={
+        src:this.src,
         question_ids:JSON.stringify(ids)
      };
-     console.log(res)
-     this.PutCreate(res)
+     //将参数传入到仓库
+     let resolve=await this.PutCreate(res)
+    //跳转考试列表页面
+     this.$router.push({ path: "/examination/examinationlist" })
     },
     //点击删除的弹出框
     delmask(index) {
-      
+  
       this.$confirm('是否要删除该题目?', '确认提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

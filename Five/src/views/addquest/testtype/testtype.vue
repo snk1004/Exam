@@ -34,7 +34,7 @@
                 <span>{{item.questions_type_text}}</span>
               </td>
               <td>
-                <span></span>
+                <span @click="del(item.questions_type_id)">删除</span>
               </td>
             </tr> 
           </tbody>
@@ -44,7 +44,7 @@
   </div>
 </template> 
 <script>
-import {mapActions} from "vuex";
+import {mapActions} from "vuex"
   export default {
     data(){
       return{
@@ -57,7 +57,8 @@ import {mapActions} from "vuex";
     methods: {
       ...mapActions({
         getQuestionsType:"questionManagement/getQuestionsType",
-        insertQuestionsType:"questionManagement/insertQuestionsType"
+        insertQuestionsType:"questionManagement/insertQuestionsType",
+        deltype:"questionManagement/deltype"
       }),
       getlist(){
         this.getQuestionsType().then(res=>{
@@ -78,23 +79,29 @@ import {mapActions} from "vuex";
             this.insertQuestionsType({
               text:value,
               sort:this.list.length+1
-            }),
-            this.getQuestionsType().then(res=>{
-              if(res.code===1){
-                this.list=res.data
-            }
-        })
+            }).then(res=>{
+              this.getlist()
+              this.$message({
+                type: 'success',
+                message: '你的类型是: ' + value
+              });
+            })
           }
-          this.$message({
-            type: 'success',
-            message: '你的类型是: ' + value
-          });
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '取消输入'
           });       
         });
+      },
+      del(id){
+        this.deltype({
+          "id":id
+        }).then(res=>{
+          if(res.code===1){
+            this.getlist()
+          }
+        })
       }
     }
   } 
@@ -160,7 +167,7 @@ import {mapActions} from "vuex";
           height: 52px;
           line-height: 26px;
           padding: 16px 16px;
-          flex: 1;
+          flex: 7;
           border-bottom: 1px solid #e8e8e8;
           div{
             text-align: left;
@@ -168,18 +175,25 @@ import {mapActions} from "vuex";
             font-weight: 500;
           }
         }
+        th:nth-child(1){
+          flex: 3;
+        }
+        th:nth-child(3){
+          flex: 1;
+        }
       }
-      tbody tr{
+      tbody>tr{
         transition: all 0.3s, height 0s;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        color: #ccc;
         td{
           height: 52px;
           line-height: 26px;
           padding: 16px 16px;
-          flex: 1;
+          flex: 7;
           border-bottom: 1px solid #e8e8e8;
           span{
             text-align: left;
@@ -187,8 +201,18 @@ import {mapActions} from "vuex";
             font-weight: 500;
           }
         }
+        td:nth-child(1){
+          flex: 3;
+        }
+        td:nth-child(3){
+          flex: 1;
+
+        }
       }
     }
   }
 }
+tr:hover{
+      background: #f7f9ff;
+  }
 </style>
