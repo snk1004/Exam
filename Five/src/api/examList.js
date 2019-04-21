@@ -39,3 +39,8 @@ export function detailExam(data) {
         method: 'get'
     })
 }
+
+//选择试题
+export const Questions = parmas => {
+    return request.get('/exam/questions/new', parmas)
+}

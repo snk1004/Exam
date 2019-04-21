@@ -1,4 +1,4 @@
-import { subject, examType, create, examList, PutCreate, detailExam } from '@/api/examList';
+import { subject, examType, create, examList, PutCreate, detailExam, Questions } from '@/api/examList';
 import moment from 'moment';
 const state = {
     courseList: []
@@ -54,6 +54,15 @@ const actions = {
             resolve(typeData)
         })
     },
+
+
+    //试题列表
+    Questions({ commit }, payload) {
+        return new Promise(async(resolve, reject) => {
+            const res = await Questions(payload)
+            resolve(res)
+        })
+    }
 }
 export default {
     namespaced: true,

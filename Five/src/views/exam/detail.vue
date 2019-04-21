@@ -1,7 +1,7 @@
 <template>
   <div class="add-layout">
     <h2>试卷详情</h2>
-    <div v-if='detailList' class="content">
+    <div v-if='detailList.length>0' class="content">
       <div class="left-content">
         <div v-for="(item,index) in detailList" :key="index" class="add-layout-content">
           <div class="add-layout-question">
@@ -21,40 +21,28 @@
         
         </div>
       </div>
-       <div class="right-content">
-         
-          <div class="add-layout-answer"  v-for="(item,index) in detailList" :key="index" >
-           <!-- <p class="message">答案信息</p>  -->
-            <div class="content-list">
-              <div class="list">
-                <!-- <div class="style_questionitem__3ETlC">
-                   <div class="markdown">
-                    <pre>
-                       {{ item.questions_answer }} 
-                    </pre>
-                  </div> 
-                </div> -->
-              </div>
+      <div class="right-content">
+        <div class="add-layout-answer"  v-for="(item,index) in detailList" :key="index" >
+          <!-- <p class="message">答案信息</p>  -->
+          <div class="content-list">
+            <div class="list">
+              <!-- <div class="style_questionitem__3ETlC">
+                  <div class="markdown">
+                  <pre>
+                      {{ item.questions_answer }} 
+                  </pre>
+                </div> 
+              </div> -->
             </div>
-        </div> 
-         
-       </div>
-         
+          </div>
+        </div>  
+      </div>    
     </div>
-    <div v-else class="cont">
-      <div class="left-cont">
-
-      </div>
-      <div class="right-cont"></div>
+    <div class="cont" v-else>
+      <div class="left-content"></div>
+      <div class="right-content"></div>
     </div>
-
-
-
-
-   
-   </div>
-  </div>
-
+ </div>
 </template>
 
 <script>
@@ -69,7 +57,8 @@ export default {
     const id = this.$route.query.id
     const result = await this.detailExam(id).then(res=>{
 
-       this.detailList=res.data.questions
+       this.detailList=res.data.questions;
+       console.log(this.detailList.length)
     })
    
   },
@@ -89,7 +78,7 @@ export default {
   background: #f0f2f5;
   min-height: 0;
   flex: 1;
-
+  
 }
 h4{
   font-weight: 400;
@@ -106,20 +95,20 @@ h2 {
   font-weight: 500;
   font-size: 1.5em;
 }
-
+.cont{
+  width: 95%;
+  margin: 10px 2.5%;
+  display: flex;
+  flex: 1;
+}
 .content{
   width: 95%;
   margin: 10px 2.5%;
   display: flex;
 }
-.cont{
-  width: 95%;
-  flex: 1;
-  background: blue;
-}
 .left-content{
   width: 65%;
-  height: 100%;
+  // height: 100%;
   background: #fff;
   border-radius: 15px;
   padding: 20px 0;

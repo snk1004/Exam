@@ -51,14 +51,16 @@ export default {
     //从本地存储取出来 渲染页面
     let data = JSON.parse(window.localStorage.getItem("exam"));
     this.src=data.exam_exam_id;
-   
     this.title=data.title;
     this.questionList = data.questions;
-   
+    console.log(this.Questions())
   },
   methods: {
     ...mapActions({
+      //创建试题
       PutCreate:"examList/PutCreate",
+      //获取试题列表
+      Questions:"examList/Questions"
     }),
    
     //点击弹出试题列表
