@@ -19,8 +19,15 @@ const Markingmanagement = {
     }, {
       path: 'awaitingclasstwo',
       component: () => import('@/views/charts/keyboard'),
-      name: 'Awaitingclassttwo',
-      meta: { title: 'awaitingclasstwo', noCache: true, view_id: 'aa' }
+      name: 'Awaitingclassttwo'
+    }, {
+      path: 'awaitinglist',
+      component: () => import('@/views/awaiting/awaitlist'),
+      name: 'awaitinglist'
+    }, {
+      path: 'markpapers',
+      component: () => import('@/views/awaiting/markpapers'),
+      name: 'markpapers'
     }
   ]
 }
