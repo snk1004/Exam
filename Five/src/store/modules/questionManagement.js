@@ -43,7 +43,7 @@ const actions = {
       resolve(data)
     })
   },
-  deltype({ commit }, payload) { // 更新试题
+  deltype({ commit }, payload) { // 删除试题类型
     return new Promise(async(resolve, reject) => {
       const data = await deltype(payload)
       resolve(data)

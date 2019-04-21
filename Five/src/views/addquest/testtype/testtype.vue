@@ -79,13 +79,14 @@ import {mapActions} from "vuex"
             this.insertQuestionsType({
               text:value,
               sort:this.list.length+1
-            }),
-            this.getlist()
+            }).then(res=>{
+              this.getlist()
+              this.$message({
+                type: 'success',
+                message: '你的类型是: ' + value
+              });
+            })
           }
-          this.$message({
-            type: 'success',
-            message: '你的类型是: ' + value
-          });
         }).catch(() => {
           this.$message({
             type: 'info',
