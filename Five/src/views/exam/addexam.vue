@@ -116,8 +116,7 @@ export default {
             rules: {
                 //名称的规则
                 name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                   
+                    { required: true, message: '请输入活动名称', trigger: 'blur' },           
                 ],
                 //考试类型的规则
                 courseExamId: [
@@ -198,10 +197,8 @@ export default {
                     this.course=res.data;
                 }
             })
-        }
-        
+        }  
     }
- 
 }
 </script>
 

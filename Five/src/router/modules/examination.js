@@ -28,13 +28,16 @@ const Examinations = {
         {
             path: 'add',
             component: () =>
-                import ('@/views/exam/add')
+                import ('@/views/exam/add'),
+            name: 'add'
         },
         {
             path: 'detail',
             component: () =>
-                import ('@/views/exam/detail')
-        }
+                import ('@/views/exam/detail'),
+            name: 'detail'
+        },
+
     ]
 }
 
