@@ -7,7 +7,6 @@
           <el-option
             v-for="item in list"
             :key="item.user_name"
-            :label="item.label"
             :value="item.user_name"
           />
         </el-select>
@@ -17,7 +16,6 @@
           <el-option
             v-for="item in options"
             :key="item.identity_text"
-            :label="item.label"
             :value="item.identity_text"
           />
         </el-select>
@@ -63,9 +61,12 @@ export default {
       handleSubmit(){
         if(this.stateInd==0){
           if(this.user_pwd&&this.user_name){
+            let user_id=this.options.find(item=>item.identity_text==this.value)
+            console.log(user_id)
             this.addSubmit({
               'user_name':this.user_name,
-              'user_pwd':this.user_pwd
+              'user_pwd':this.user_pwd,
+              'identity_id':user_id.identity_id
             }).then(res=>{
               this.$message({
                 message: res.msg,
@@ -76,14 +77,16 @@ export default {
         }else{
             this.$message.error('参数有误');
         }
-        }else if(this.stateInd==1){       
+        }else if(this.stateInd==1){    
+            let user_id=this.options.find(item=>item.identity_id==this.values)   
              this.list.find(item=>{
                if(item.user_name==this.values){
                 if(this.user_name||this.user_pwd||this.value!='请选择身份id'){
                    this.getreneval({
                     'user_id':item.user_id,
                     'user_name':this.user_name==''?item.user_name:this.user_name,
-                    'user_pwd':this.user_pwd==''?item.user_pwd:this.user_pwd
+                    'user_pwd':this.user_pwd==''?item.user_pwd:this.user_pwd,
+                    'identity_id':user_id.identity_id
                  }).then(res=>{
                       this.$message({
                           message: res.msg,

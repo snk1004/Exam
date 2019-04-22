@@ -1,14 +1,11 @@
 <template>
   <div class="navbar">
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+        <div class="avatar-wrapper"> 
+             <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+            <span>{{userInfo.user_name}}</span>   
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
@@ -55,7 +52,8 @@ export default {
       'sidebar',
       'name',
       'avatar',
-      'device'
+      'device',
+      'userInfo'
     ])
   },
   methods: {
@@ -66,6 +64,9 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
+  },
+  created(){
+    console.log(this.userInfo)
   }
 }
 </script>
@@ -131,16 +132,19 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
-
+        display: flex;
+        align-items: center;
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 100%;
         }
-
+        >span{
+          font-size: 14px;
+          margin-left: 10px;
+        }
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;

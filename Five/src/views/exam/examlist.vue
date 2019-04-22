@@ -1,7 +1,7 @@
 <template>
   <div class="examlist">
       <h3>
-        试题列表
+        试卷列表
       </h3>
       <div class="ant-layout-top">
           <el-form :inline="true"  class="demo-form-inline">
@@ -29,7 +29,6 @@
             <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
         </el-form-item>
         </el-form>
-          
       </div>
       <div class="ant-layout-content">
         <div class="style_container__2hI6B">
@@ -122,16 +121,12 @@ export default {
         type:"",
         radio4:'',
         start_time:[]
-        
     }
   },
   created(){
-  
   },
   mounted(){
       this.getList();
-        
-      
   },
   methods:{
     ...mapActions({
@@ -141,7 +136,6 @@ export default {
       detailExam:'examList/detailExam'
     }),
     getList(){
-
       //考试类型
       this.examType().then(res=>{
           if(res.code==1){        
@@ -153,31 +147,22 @@ export default {
           if(res.code==1){
               this.courses=res.data;
           }
-
       })
       //获取的列表
       this.examList().then(res=>{
           if(res.code==1){  
-            console.log(res.exam)
-            // end_time=[]
             res.exam.map(item=>{
               item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
               item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
             })
-            console.log(res.exam)
               this.examLists=res.exam;
           }
-
       })
-    //  console.log(this.examLists)
     },
-   
     onSubmit() {
       console.log('submit!');
     },
     handleEdit(index,id) {
-      console.log(this.detailExam())
-        // this.detailExam(id)
          this.$router.push({ path: "/examination/detail",query:{id:id} })
       }
   }
