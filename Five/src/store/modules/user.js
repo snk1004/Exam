@@ -48,7 +48,9 @@ const actions = {
   // get user info
   async getInfo({ commit, state }) {
     const data = await getInfo()
+    const avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
     commit('SET_USERINFO', data.data)
+    commit('SET_AVATAR', avatar)
     return data.data
   },
   // get use getViewAuthority
