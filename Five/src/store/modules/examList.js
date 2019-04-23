@@ -21,10 +21,12 @@ const actions = {
     //考试列表
     examList({ commit }, payload) {
         return new Promise(async(resolve, reject) => {
-            const examLists = await examList(payload)
+            const examLists = await examList(payload);
+
             resolve(examLists)
         })
     },
+
     //考试科目
     subject({ commit }, payload) {
         return new Promise(async(resolve, reject) => {

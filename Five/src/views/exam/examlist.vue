@@ -6,17 +6,19 @@
       <div class="ant-layout-top">
           <el-form :inline="true"  class="demo-form-inline">
           <el-form-item label="考试类型">
-             <el-select v-model="type" placeholder="请选择">
+             <el-select v-model="type" placeholder="请选择" @change="healeType">
                     <el-option
                     v-for="item in examTypes"
                     :key="item.exam_name"
                     :label="item.exam_name"
-                    :value="item.exam_name">
+                    :value="item.exam_name"
+                  
+                    >
                     </el-option>
                 </el-select>
           </el-form-item>
           <el-form-item label="课程">
-            <el-select v-model="course"  placeholder="请选择">
+            <el-select v-model="course"  placeholder="请选择" @change="healeCourses">
                     <el-option
                     v-for="item in courses"
                     :key="item.subject_text"
@@ -35,17 +37,18 @@
           <div class="style_tool__31xLZ">
             <h4>试卷列表</h4>
               <div>
-                <el-radio-group v-model="radio4" >
-                <el-radio-button label="全部" ></el-radio-button>
-                <el-radio-button label="进行中"></el-radio-button>
-                <el-radio-button label="已完成"></el-radio-button>
-              </el-radio-group>
+                  <span v-for="(item,index) in timer" 
+                  :key="item.id"
+                   :class="TimerIndex==index?'active':null"
+                   @click="headleTimer(index)"
+                  >{{item.title}}</span>
+   
              </div>
           </div>
         </div>
         <div class="ant-table-body">    
        <el-table
-          :data="examLists"
+          :data="list"
           style="width: 100%">
           <el-table-column
             label="试卷信息"
@@ -74,7 +77,6 @@
                   <span v-for=" (item,index) in scope.row.grade_name" :key="index">{{ item }}</span>
                 </p>
                 </div>
-            
             </template>
           </el-table-column>
           <el-table-column label="创始人"
@@ -105,28 +107,46 @@
           </el-table-column>
         </el-table>  
         </div>
+        <div class="block">
+          
+          <el-pagination
+            layout="prev, pager, next"
+            :total="50">
+          </el-pagination>
+        </div>
+
       </div> 
   </div>
 </template>
 <script>
   import {mapActions} from 'vuex';
-  import moment from 'moment'
+  import moment from 'moment';
+  let timer=[{title:'全部',id:1},{title:'进行中',id:2},{title:'已完成',id:3}]
 export default {
   data(){
     return {
+      timer,
+      //考试科目
         courses:[],
+        //考试科目select
         course:'',
+        //考试类型列表
         examTypes:[],
+        //所有列表
         examLists:[],
+        //考试类型select中的值
         type:"",
-        radio4:'',
-        start_time:[]
+        TimerIndex:0,
+        typeId:'',
+        coursesId:'',
+        list:[]
+
+       
     }
   },
-  created(){
-  },
+
   mounted(){
-      this.getList();
+      this.getList();  
   },
   methods:{
     ...mapActions({
@@ -135,6 +155,45 @@ export default {
       examList:"examList/examList",
       detailExam:'examList/detailExam'
     }),
+    healeType(e){
+      let name=e
+      this.examTypes.map(item=>{
+        if(item.exam_name==name){
+          this.typeId=item.exam_id
+        }
+      })
+    },
+    healeCourses(e){
+      let name=e
+      this.courses.map(item=>{
+        if(item.subject_text==name){
+          this.coursesId=item.subject_id
+        }
+      }) 
+    },
+    //点击搜索 调用按需加载
+    onSubmit() {
+    this.listExams()
+    },
+    //按需加载
+    listExams(){
+        this.list=this.examLists.filter((item)=>{
+        if(item.exam_id==this.typeId&&item.subject_id==this.coursesId){
+            return item
+        }
+      })
+    },
+    //点击 时间类型
+    headleTimer(index){
+      this.TimerIndex=index;
+      var now = moment().unix()*1000;
+       console.log(moment(now*1).format('YYYY-MM-DD HH:MM:SS'))
+        
+      if(this.TimerIndex==1){
+      
+      }
+    },
+
     getList(){
       //考试类型
       this.examType().then(res=>{
@@ -150,18 +209,18 @@ export default {
       })
       //获取的列表
       this.examList().then(res=>{
+       
           if(res.code==1){  
             res.exam.map(item=>{
               item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
               item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
             })
               this.examLists=res.exam;
+              this.list=this.examLists
           }
       })
     },
-    onSubmit() {
-      console.log('submit!');
-    },
+    
     handleEdit(index,id) {
          this.$router.push({ path: "/examination/detail",query:{id:id} })
       }
@@ -217,6 +276,24 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            >div{
+              span{
+                display: inline-block;
+                padding: 5px 10px;
+                border:1px solid #ccc;
+                font-size: 14px;
+                :nth-child(2){
+                  border-left:0 ;
+                  border-right: 0;
+
+                }
+              }
+              span.active{
+                background: #409EFF;
+                color: #fff;
+                border:1px solid #409EFF;
+              }
+            }
           }
         }
       .name-wrapper{

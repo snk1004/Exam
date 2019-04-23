@@ -12,27 +12,28 @@ const Examinations = {
     },
     children: [{
             //跳转考试管理
-            path: 'addexamination',
+            path: 'addexamination', //添加考试
             component: () =>
                 import ('@/views/exam/addexam'),
             name: 'Addexaminationt',
-            meta: { title: 'addexamination', noCache: true }
+            meta: { title: 'addexamination', noCache: true, view_id: "main-addExam" }
         },
         {
-            path: 'examinationlist',
+            path: 'examinationlist', //考试列表
             component: () =>
                 import ('@/views/exam/examlist'),
             name: 'Examinationlist',
-            meta: { title: 'examinationlist', noCache: true }
+            meta: { title: 'examinationlist', noCache: true, view_id: "main-examList" }
         },
         {
-            path: 'add',
+            path: 'add', //添加试题
             component: () =>
                 import ('@/views/exam/add'),
             name: 'add'
+
         },
         {
-            path: 'detail',
+            path: 'detail', //列表详情
             component: () =>
                 import ('@/views/exam/detail'),
             name: 'detail'

@@ -9,9 +9,10 @@ export const examType = parmas => {
     }
     //  考试列表
 export const examList = parmas => {
-        return request.get('/exam/exam', parmas)
-    }
-    // 创建考试
+    return request.get('/exam/exam', parmas)
+}
+
+// 创建考试
 export function create(data) {
     return request({
         url: '/exam/exam',

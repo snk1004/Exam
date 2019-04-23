@@ -12,7 +12,7 @@ import Examinations from './modules/examination'
 import Markingmanagement from './modules/Markingmanagement'
 import userRouter from './modules/user'
 import classRouter from './modules/class'
-
+import UpImg from './modules/upImg'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -39,76 +39,78 @@ import classRouter from './modules/class'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
-      }
+export const constantRoutes = [{
+            path: '/redirect',
+            component: Layout,
+            hidden: true,
+            children: [{
+                path: '/redirect/:path*',
+                component: () =>
+                    import ('@/views/redirect/index')
+            }]
+        }, {
+            path: '/login',
+            component: () =>
+                import ('@/views/login/index'),
+            hidden: true
+        },
+        {
+            path: '/auth-redirect',
+            component: () =>
+                import ('@/views/login/authRedirect'),
+            hidden: true
+        },
+        {
+            path: '/404',
+            component: () =>
+                import ('@/views/errorPage/404'),
+            hidden: true
+        },
+        {
+            path: '/401',
+            component: () =>
+                import ('@/views/errorPage/401'),
+            hidden: true
+        },
+        {
+            path: '',
+            component: Layout,
+            redirect: 'dashboard',
+            children: [{
+                path: 'dashboard',
+                component: () =>
+                    import ('@/views/dashboard'),
+                name: 'Dashboard',
+                meta: { title: '', icon: '', noCache: true, affix: true }
+            }]
+        }
     ]
-  }, {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/authRedirect'),
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/errorPage/404'),
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: () => import('@/views/errorPage/401'),
-    hidden: true
-  },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard'),
-        name: 'Dashboard',
-        meta: { title: '', icon: '', noCache: true, affix: true }
-      }
-    ]
-  }
-]
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
+    /**
+     * asyncRoutes
+     * the routes that need to be dynamically loaded based on user roles
+     */
 export const asyncRoutes = [
-  ExamRouter,
-  userRouter,
-  Examinations,
-  classRouter,
-  Markingmanagement,
-  { path: '*', redirect: '/404', hidden: true }
+    ExamRouter,
+    userRouter,
+    Examinations,
+    classRouter,
+    Markingmanagement,
+    UpImg,
+    { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
 })
 
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+    const newRouter = createRouter()
+    router.matcher = newRouter.matcher // reset router
 }
 
 export default router

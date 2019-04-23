@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -54,11 +54,9 @@ export default {
     }
   },
   async created() {
-    const id = this.$route.query.id
+    const id = this.$route.query.id;
     const result = await this.detailExam(id).then(res=>{
-
        this.detailList=res.data.questions;
-       console.log(this.detailList.length)
     })
    
   },
@@ -161,7 +159,7 @@ code {
 }
 .markdown pre {
   margin-top: 5px;
-  height: 100%;
+  // height: 100%;
   display: block;
   padding: 2em;
   line-height: 1.2;

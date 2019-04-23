@@ -26,7 +26,7 @@
       <div class="add-drawer-right">
         <p>所有试题</p>
         <ul>
-          <li v-for="item in NewQuestion">
+          <li v-for="(item,index) in NewQuestion" @click="headleAdd(item.questions_id,index)">
             {{item.title}}
           </li>
         </ul>
@@ -71,17 +71,31 @@ export default {
     //点击弹出试题列表
     showDialog() {
       this.flag = !this.flag;
-      //this.gitQuestion()
+      this.gitQuestion()
+    },
+      //获取试题列表
+     gitQuestion(){
+      this.Questions().then(res=>{
+        if(res.code==1){
+          this.NewQuestion=res.data
+        }
+
+      })
     },
 
-    //  gitQuestion(){
-    //   this.Questions().then(res=>{
-    //     if(res.code==1){
-    //       this.NewQuestion=res.data
-    //     }
-
-    //   })
-    // },
+    //点击添加试题
+    headleAdd(id,index){
+      console.log(id)
+      //遍历所有的试题
+    let items=this.NewQuestion.map(item=>{
+        //判断id是否一致
+        if(item.questions_id==id){
+          //返回该数据
+        return item
+        }
+      })
+     this.questionList.push(items[index])
+    },
      //点击收起试题列表
     hisdDialog(){
         this.flag = !this.flag;

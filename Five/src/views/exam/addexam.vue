@@ -4,7 +4,6 @@
         <div class='ant'>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item
-                 
                   prop="name">
                    <span class="demonstration">
                     <b>*</b> 试卷名称：
@@ -160,9 +159,7 @@ export default {
             if (valid) {
                 //将时间对象转为时间戳
                 let start_time =moment(this.ruleForm.date1).unix()*1000;
-                console.log(start_time)
-            //    let start=moment(start_time*1).format('YYYY-MM-DD HH:MM:SS')
-            //     console.log(start)
+               
                 let end_time =moment(this.ruleForm.date2).unix()*1000;
                 //将时间戳放入ruleForm数组
                 let ruleForm ={
