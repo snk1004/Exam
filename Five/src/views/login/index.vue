@@ -2,12 +2,10 @@
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <div class="title-container">
-        <h3 class="title">
-          {{ $t('login.title') }}
-        </h3>
+
         <lang-select class="set-language" />
       </div>
-      <el-form-item prop="username">
+      <el-form-item prop="username" class="users">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -21,7 +19,7 @@
         />
       </el-form-item>
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
+        <el-form-item prop="password" class="pwds">
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
@@ -199,23 +197,30 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#2264bb;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background:url(/public/spa/static/media/login_wraper.8ab0d297.jpg) navy;
   overflow: hidden;
 
   .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+    width: 400px;
+    padding: 40px 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    position: absolute;
+    right: 15%;
+    top: 25%;
+    box-sizing: border-box;
+    >.users,>.pwds{
+      background: rgb(195, 229, 243);
+      color: #333;
+    }
   }
 
   .tips {
@@ -280,5 +285,10 @@ $light_gray:#eee;
       display: none;
     }
   }
+  .el-button--medium{
+   padding: 20px 40px!important;
+   background: linear-gradient(-90deg,#4e75ff,#0139fd)!important
+  }
+
 }
 </style>
