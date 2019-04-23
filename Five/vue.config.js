@@ -3,7 +3,7 @@ const path = require('path')
 const pkg = require('./package.json')
 
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, dir) 
 }
 
 const name = pkg.name || 'vue-element-admin' // page title

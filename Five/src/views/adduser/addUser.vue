@@ -67,10 +67,8 @@ import addUserDel from './components/addUserDel'
 import addIdentity from './components/addIdentity'
 import addApi from './components/addApi'
 import setApiEnter from './components/setApiEnter'
-
-
 export default {
-  components:{addUserDel,addIdentity,addApi,setApiEnter},
+  components: { addUserDel, addIdentity, addApi, setApiEnter },
   data() {
     return {
       options: [{

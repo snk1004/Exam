@@ -5,7 +5,7 @@
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
-       
+
       </div>
       <app-main />
       <!-- <right-panel v-if="showSettings">

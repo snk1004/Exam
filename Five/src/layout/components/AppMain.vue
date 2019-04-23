@@ -33,6 +33,7 @@ export default {
   background: #f0f2f5;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .fixed-header+.app-main {

@@ -1,14 +1,14 @@
 <template>
   <div class="chart-container">
     <p class="looktest">
-      查看试题 
+      查看试题
     </p>
     <div class="contentbox_looktest">
       <div class="testtype_top">
-        <span>课程类型:</span> 
+        <span>课程类型:</span>
         <ul class="testtype_ullist">
           <li :class="allflag?'active':''" @click="all">All</li>
-          <li :class="listindex===index?'active':''" :style="listflag?'background:blue;color:#fff':''" @click="selechecklist(index,item.subject_id)" v-for="(item,index) in list" :key="item.subject_id">{{item.subject_text}}</li>
+          <li v-for="(item,index) in list" :key="item.subject_id" :class="listindex===index?'active':''" :style="listflag?'background:blue;color:#fff':''" @click="selechecklist(index,item.subject_id)">{{ item.subject_text }}</li>
         </ul>
       </div>
       <div class="testtype_select">
@@ -18,8 +18,8 @@
             v-for="item in testtypes"
             :key="item.exam_id"
             :label="item.exam_name"
-            :value="item.exam_id">
-          </el-option>
+            :value="item.exam_name"
+          />
         </el-select>
         <span>题目类型:</span>
         <el-select v-model="value2" placeholder="">
@@ -27,119 +27,125 @@
             v-for="item in titletypes"
             :key="item.questions_type_id"
             :label="item.questions_type_text"
-            :value="item.questions_type_id">
-          </el-option>
+            :value="item.questions_type_text"
+          />
         </el-select>
         <button @click="search">查询</button>
       </div>
     </div>
     <div class="content_box">
-        <ul>
-          <li v-for="(item,index) in contentdata" :key="index" @click="detail($event,item.questions_id)">
-            <p>{{item.title}}</p>
-            <div>
-              <p>
-                <span>{{item.questions_type_text}}</span>
-                <span>{{item.subject_text}}</span>
-                <span>{{item.exam_name}}</span>
-              </p>
-              <span>编辑</span>
-            </div> 
-            <p>{{item.user_name}}发布</p>
-          </li>
-        </ul>
+      <ul>
+        <li v-for="(item,index) in contentdata" :key="index" @click="detail($event,item.questions_id)">
+          <p>{{ item.title }}</p>
+          <div>
+            <p>
+              <span>{{ item.questions_type_text }}</span>
+              <span>{{ item.subject_text }}</span>
+              <span>{{ item.exam_name }}</span>
+            </p>
+            <span>编辑</span>
+          </div>
+          <p>{{ item.user_name }}发布</p>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from 'vuex'
 export default {
   data() {
-      return {
-        value: '',
-        value2:'',
-        list:[],
-        testtypes:[],
-        titletypes:[],
-		contentdata:[],
-		alldata:[],
-		allflag:false,
-		listflag:false,
-		listindex:-1,
-		newlist:[]
-      }
+    return {
+      value: '',
+      value2: '',
+      list: [],
+      testtypes: [],
+      titletypes: [],
+      contentdata: [],
+      alldata: [],
+      allflag: false,
+      listflag: false,
+      listindex: -1,
+      newlist: []
+    }
   },
   mounted() {
     this.getlist()
   },
   methods: {
     ...mapActions({
-      subject:"questionManagement/subject",//js上下
-      testtype:"questionManagement/examType",//周考月考
-      titletype:"questionManagement/getQuestionsType",//题的类型---简单题
-      condition:"questionManagement/condition"//所有的数据
+      subject: 'questionManagement/subject', // js上下
+      testtype: 'questionManagement/examType', // 周考月考
+      titletype: 'questionManagement/getQuestionsType', // 题的类型---简单题
+      condition: 'questionManagement/condition'// 所有的数据
     }),
-    getlist(){//渲染对应列表数据
-      this.subject().then(res=>{
-        if(res.code===1){
-          this.list=res.data
+    getlist() { // 渲染对应列表数据
+      this.subject().then(res => {
+        if (res.code === 1) {
+          this.list = res.data
         }
       }),
-      this.testtype().then(res=>{
-        if(res.code===1){
-          this.testtypes=res.data
+      this.testtype().then(res => {
+        if (res.code === 1) {
+          this.testtypes = res.data
         }
       }),
-      this.titletype().then(res=>{
-        if(res.code===1){
-          this.titletypes=res.data 
+      this.titletype().then(res => {
+        if (res.code === 1) {
+          this.titletypes = res.data
         }
       }),
-      this.condition().then(res=>{
-        if(res.code===1){
-		  this.contentdata=res.data
-		  this.alldata=res.data
+      this.condition().then(res => {
+        if (res.code === 1) {
+          this.contentdata = res.data
+          this.alldata = res.data
         }
       })
-	},
-	all(){//全选所有的课程
-		this.allflag=!this.allflag;
-		if(this.allflag){
-			this.listflag=true
-		}else{
-			this.listflag=false
-		}
-	},
-	selechecklist(index,id){//单选筛选对应数据
-		this.listindex=index;
-		this.newlist=this.alldata.filter(item=>item.subject_id===id);
-		if(this.listflag){
-			this.listflag=!this.listflag;
-		}
-		if(!this.listflag){ 
-			this.allflag=false 
-		}
-	},
-	search(){//查询的时候渲染对应的列表
-		if(this.newlist.length){
-			this.contentdata=this.newlist;
-		}else{
-			alert('暂无数据')
-		}
-		if(this.allflag){
-			this.getlist()
-		}
-	},
-  detail(e,id){
-    if(e.target.innerHTML!=='编辑'){
-    this.$router.push(`/exam/detail?id=${id}`)
-    }else{
-		  this.$router.push(`/exam/addquest?id=${id}`)
+    },
+    all() { // 全选所有的课程
+      this.allflag = !this.allflag
+      if (this.allflag) {
+        this.listflag = true
+      } else {
+        this.listflag = false
+      }
+    },
+    selechecklist(index, id) { // 单选筛选对应数据
+      this.listindex = index
+      this.newlist = this.alldata.filter(item => item.subject_id === id)
+      if (this.listflag) {
+        this.listflag = !this.listflag
+      }
+      if (!this.listflag) {
+        this.allflag = false
+      }
+    },
+    search() { // 查询的时候渲染对应的列表
+      if (this.allflag) {
+        this.getlist()
+      }
+      if (this.value) {
+        const datas = this.alldata.filter(item => item.exam_name === this.value)
+        this.contentdata = datas
+      }
+      if (this.value2) {
+        const dates = this.alldata.filter(item => item.questions_type_text === this.value2)
+        this.contentdata = dates
+      }
+      if (this.newlist.length) {
+        this.contentdata = this.newlist
+      }
+    },
+    detail(e, id) {
+      if (e.target.innerHTML !== '编辑') {
+        this.$router.push(`/exam/detail?id=${id}`)
+      } else {
+        this.$router.push(`/exam/addquest?id=${id}`)
+      }
     }
   }
-  }
-};
-  
+}
+
 </script>
 
 <style scoped lang='scss'>
@@ -172,7 +178,7 @@ li.active{
 .testtype_ullist{
   flex:1;
   display: flex;
-  font-size: 12px; 
+  font-size: 12px;
   align-items: center;
   padding: 0 5px;
   >li{
@@ -216,7 +222,7 @@ li.active{
 		list-style: none;
 		padding:10px 0;
 		border-bottom: 1px solid #ccc;
-    >p:nth-child(1){ 
+    >p:nth-child(1){
       padding: 10px 0;
       font-size: 14px;
       line-height: 25px;
@@ -231,7 +237,7 @@ li.active{
       height: 50px;
       line-height: 50px;
       >p{
-        display: inline-block; 
+        display: inline-block;
         margin: 0;
         height: 16px;
         line-height: 16px;
@@ -241,7 +247,7 @@ li.active{
           background: pink;
           font-size: 12px;
           padding: 3px 6px;
-          margin-right:5px; 
+          margin-right:5px;
         }
       }
       >span{

@@ -1,88 +1,95 @@
 <template>
-  <div class="bigbox"> 
-    <p class="Awaitingclass">待批班级</p> 
+  <div class="bigbox">
+    <p class="Awaitingclass">待批班级</p>
     <div class="tablebox">
-    <table>
-          <colgroup>
-            <col>
-            <col>
-            <col>
-          </colgroup>
-          <thead>
-            <tr>
-              <th>
-                <div>班级名</div>
-              </th>
-              <th>
-                <div>课程名称</div>
-              </th>
-              <th>
-                <div>阅卷状态</div>
-              </th>
-              <th>
-                <div>教室号</div>
-              </th>
-              <th>
-                <div>操作</div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in alldata" :key="item.grade_id">
-              <td>
-                <span>{{item.grade_name}}</span>
-              </td>
-              <td>
-                <span>{{item.subject_text}}</span>
-              </td>
-              <td> 
-                <span>未阅</span>
-              </td> 
-                <td>
-                <span>{{item.room_text}}</span>
-              </td>
-              <td> 
-                <span @click="change($event,item.grade_id,item.grade_name)">{{item.operation}}</span>
-              </td>
-            </tr> 
-          </tbody>
-        </table>
+      <table>
+        <colgroup>
+          <col>
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>
+              <div>班级名</div>
+            </th>
+            <th>
+              <div>课程名称</div>
+            </th>
+            <th>
+              <div>阅卷状态</div>
+            </th>
+            <th>
+              <div>教室号</div>
+            </th>
+            <th>
+              <div>操作</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in alldata" :key="item.grade_id">
+            <td>
+              <span>{{ item.grade_name }}</span>
+            </td>
+            <td>
+              <span>{{ item.subject_text }}</span>
+            </td>
+            <td>
+              <span>未阅</span>
+            </td>
+            <td>
+              <span>{{ item.room_text }}</span>
+            </td>
+            <td>
+              <span @click="change($event,item.grade_id,item.grade_name)">{{ item.operation }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script>
-import {mapActions} from "vuex"
- export default {
-      data() {
-        return {
-          alldata:[]
-        }
-      },
-      mounted() {
-        this.getDate()
-      },
-      methods: {
-        ...mapActions({
-        list:'swaitingClass/paperDetails'
-        }),
-        getDate(){
-          this.list().then(res=>{
-            if(res.code===1){
-              this.alldata=res.data;
-              for(let i=0;i<this.alldata.length;i++){
-                this.alldata[i].operation='批卷'
-              }
-            }
-          })
-        },
-        change(e,gradeid,gradename){
-          if(e.target.innerHTML==='批卷'){
-            this.$router.push(`/markingmanagement/awaitinglist?id=${gradeid}&grad=${gradename}`)
+import { mapActions } from 'vuex'
+export default {
+  data() {
+    return {
+      alldata: []
+    }
+  },
+  mounted() {
+    this.getDate()
+  },
+  methods: {
+    ...mapActions({
+      list: 'swaitingClass/paperDetails', // 获取所有班级
+      studentDetail: 'swaitingClass/studentDetail'
+    }),
+    getDate() {
+      this.list().then(res => {
+        if (res.code === 1) {
+          this.alldata = res.data
+          for (let i = 0; i < this.alldata.length; i++) {
+            this.alldata[i].operation = '批卷'
           }
         }
+      })
+    },
+    change(e, gradeid, gradename) {
+      if (e.target.innerHTML === '批卷') {
+        this.studentDetail({
+          gradeid: gradeid
+        }).then(res => {
+          if (res.code === 1) {
+            this.$router.push(`/markingmanagement/awaitinglist?grade_id=${gradeid}&grad=${gradename}`)
+          }
+        })
       }
-      
     }
+  }
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -95,13 +102,13 @@ import {mapActions} from "vuex"
       color: rgba(0, 0, 0, 0.85);
       font-size: 20px;
       padding: 10px 0;
-    } 
+    }
     .tablebox{
       width:100%;
       background: #fff;
       padding:30px 30px;
       border-radius: 20px;
-    }  
+    }
       table{
         width: 100%;
       }
@@ -146,11 +153,11 @@ import {mapActions} from "vuex"
             font-size: 14px;
             display: inline-block;
           }
-        } 
+        }
         td:last-child>span{
           color: blue;
         }
-      } 
+      }
 tr:hover{
       background: #f7f9ff;
   }
