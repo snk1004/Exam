@@ -1,125 +1,121 @@
 <template>
-     <div class="addUser_wrapper">
-        <div class="btn">
-          <button v-for='(item,i) in userState' :class="stateInd==i?'active':''" @click='handleState(i)'    :key='item.id'>{{item.states}}</button>
-        </div>
-        <el-select v-model="values" placeholder="请选择" v-if='stateInd'>
-          <el-option
-            v-for="item in list"
-            :key="item.user_name"
-            :value="item.user_name"
-          />
-        </el-select>
-        <input type="text" placeholder="请输入用户名" v-model="user_name">
-        <input type="password" placeholder="请输入密码" v-model="user_pwd">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.identity_text"
-            :value="item.identity_text"
-          />
-        </el-select>
-        <div class="btnFotter">
-           <el-button :plain="true"  @click='handleSubmit'>确认</el-button>
-          <button class="resets" @click='resets'>重置</button>
-        </div>
-       
-        
-      </div>
+  <div class="addUser_wrapper">
+    <div class="btn">
+      <button v-for="(item,i) in userState" :key='item.id' :class="stateInd==i?'active':''" @click="handleState(i)">{{ item.states }}</button>
+    </div>
+    <el-select v-if='stateInd' v-model="values" placeholder="请选择">
+      <el-option
+        v-for="item in list"
+        :key="item.user_name"
+        :value="item.user_name"
+      />
+    </el-select>
+    <input v-model="user_name" type="text" placeholder="请输入用户名">
+    <input v-model="user_pwd" type="password" placeholder="请输入密码">
+    <el-select v-model="value" placeholder="请选择">
+      <el-option
+        v-for="item in options"
+        :key="item.identity_text"
+        :value="item.identity_text"
+      />
+    </el-select>
+    <div class="btnFotter">
+      <el-button :plain="true" @click="handleSubmit">确认</el-button>
+      <button class="resets" @click="resets">重置</button>
+    </div>
+
+  </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-  data(){
+  data() {
     return {
-        userState:[{
-          id:'1',
-          states:'添加用户'
-        },{
-          id:'2',
-          states:'更新用户'
-        }],
-        options: [],
+      userState: [{
+        id: '1',
+        states: '添加用户'
+      }, {
+        id: '2',
+        states: '更新用户'
+      }],
+      options: [],
       value: '请选择身份id',
-      user_name:'',
-      user_pwd:'',
-      stateInd:0,
-      values:'请选择身份id',
-      list:[],
+      user_name: '',
+      user_pwd: '',
+      stateInd: 0,
+      values: '请选择身份id',
+      list: []
     }
   },
-  methods:{
+  methods: {
     ...mapActions({
-        getid:'usershow/getIdentity',
-        addSubmit:'usershow/adduser',
-        getList: "usershow/show",
-        getreneval: 'usershow/getReneval'
-      }),
-      handleState(i){
-        this.stateInd=i;
-      },
-      handleSubmit(){
-        if(this.stateInd==0){
-          if(this.user_pwd&&this.user_name){
-            let user_id=this.options.find(item=>item.identity_text==this.value)
-            console.log(user_id)
-            this.addSubmit({
-              'user_name':this.user_name,
-              'user_pwd':this.user_pwd,
-              'identity_id':user_id.identity_id
-            }).then(res=>{
-              this.$message({
-                message: res.msg,
-                type: 'success'
-              });
+      getid: 'usershow/getIdentity',
+      addSubmit: 'usershow/adduser',
+      getList: 'usershow/show',
+      getreneval: 'usershow/getReneval'
+    }),
+    handleState(i) {
+      this.stateInd = i
+    },
+    handleSubmit() {
+      if (this.stateInd == 0) {
+        if (this.user_pwd && this.user_name) {
+          const user_id = this.options.find(item => item.identity_text == this.value)
+          console.log(user_id)
+          this.addSubmit({
+            'user_name': this.user_name,
+            'user_pwd': this.user_pwd,
+            'identity_id': user_id.identity_id
+          }).then(res => {
+            this.$message({
+              message: res.msg,
+              type: 'success'
             })
-
-        }else{
-            this.$message.error('参数有误');
+          })
+        } else {
+          this.$message.error('参数有误')
         }
-        }else if(this.stateInd==1){    
-            let user_id=this.options.find(item=>item.identity_id==this.values)   
-             this.list.find(item=>{
-               if(item.user_name==this.values){
-                if(this.user_name||this.user_pwd||this.value!='请选择身份id'){
-                   this.getreneval({
-                    'user_id':item.user_id,
-                    'user_name':this.user_name==''?item.user_name:this.user_name,
-                    'user_pwd':this.user_pwd==''?item.user_pwd:this.user_pwd,
-                    'identity_id':user_id.identity_id
-                 }).then(res=>{
-                      this.$message({
-                          message: res.msg,
-                          type: 'success'
-                        });
-                 })
-                }else{
-                    this.$message.error('参数有误');
-                }
-               }
-             })
-
-        }
-      },
-      resets(){
-          this.value='请选择身份id'
-          this.user_name=''
-          this.user_pwd=''
-          this.values='请选择身份id'
+      } else if (this.stateInd == 1) {
+        const user_id = this.options.find(item => item.identity_id == this.values)
+        this.list.find(item => {
+          if (item.user_name == this.values) {
+            if (this.user_name || this.user_pwd || this.value != '请选择身份id') {
+              this.getreneval({
+                'user_id': item.user_id,
+                'user_name': this.user_name == '' ? item.user_name : this.user_name,
+                'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd,
+                'identity_id': user_id.identity_id
+              }).then(res => {
+                this.$message({
+                  message: res.msg,
+                  type: 'success'
+                })
+              })
+            } else {
+              this.$message.error('参数有误')
+            }
+          }
+        })
       }
- },
- created(){
-   this.getid().then(res=>{
-     this.options=res.data
-   })
-   this.getList().then(res=>{
-     this.list = res.data
-   })
- }
+    },
+    resets() {
+      this.value = '请选择身份id'
+      this.user_name = ''
+      this.user_pwd = ''
+      this.values = '请选择身份id'
+    }
+  },
+  created() {
+    this.getid().then(res => {
+      this.options = res.data
+    })
+    this.getList().then(res => {
+      this.list = res.data
+    })
+  }
 }
 
 </script>
-
 
 <style lang="scss" scoped>
 .addUser_grid{

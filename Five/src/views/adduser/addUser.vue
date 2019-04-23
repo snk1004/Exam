@@ -22,7 +22,7 @@ import setApiEnter from './components/setApiEnter'
 import addIdentityApi from './components/addIdentityApi'
 import setIdentityView from './components/setIdentityView'
 export default {
-  components:{addUserDel,addIdentity,addApi,setApiEnter,addIdentityApi, setIdentityView},
+  components: { addUserDel, addIdentity, addApi, setApiEnter, addIdentityApi, setIdentityView },
   data() {
     return {
     }

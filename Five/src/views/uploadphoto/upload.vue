@@ -1,12 +1,9 @@
 <template>
-  <div class="components-container">
-
+  <div>
     <pan-thumb :image="image" />
-
-    <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
-      更 换 头 像
+    <el-button type="primary" icon="upload" style="position: absolute;bottom: 200px;margin-left: 40px;" @click="imagecropperShow=true">
+      上传头像
     </el-button>
-
     <image-cropper
       v-show="imagecropperShow"
       :key="imagecropperKey"
@@ -19,13 +16,12 @@
     />
   </div>
 </template>
-
 <script>
 import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
-import { mapActions } from 'vuex'
-
+import { mapActions, mapGetters } from 'vuex'
 export default {
+  name: 'AvatarUploadDemo',
   components: { ImageCropper, PanThumb },
   data() {
     return {
@@ -34,18 +30,24 @@ export default {
       image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
   methods: {
     ...mapActions({
-      upHead: 'class/upHead'
+      users: 'usershow/getReneval'
     }),
     cropSuccess(resData) {
-      console.log(resData)
-
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
       this.image = resData[0].path
-      this.upHead({
-          "user_id": 444
+      this.users({
+        user_id: this.userInfo.user_id,
+        avatar: this.image
+      }).then(res => {
+        console.log(res, 'ressss')
       })
     },
     close() {
@@ -56,10 +58,9 @@ export default {
 </script>
 
 <style scoped>
-  .avatar{
+  /* .avatar{
     width: 200px;
     height: 200px;
     border-radius: 50%;
-  }
+  } */
 </style>
-

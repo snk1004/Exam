@@ -15,7 +15,13 @@ const Markingmanagement = {
       path: 'awaitingclass',
       component: () => import('@/views/awaiting/awaiting'),
       name: 'Awaitingclasst',
-      meta: { title: 'awaitingclass', noCache: true, view_id: 'main-examPaperClassmate' }
+      meta: { title: 'awaitingclass', noCache: true }
+    },
+    {
+      path: 'volume',
+      component: () => import('@/views/awaiting/volume'),
+      name: 'volume'
+      // meta: { title: 'volume', noCache: true }
     }, {
       path: 'awaitingclasstwo',
       component: () => import('@/views/charts/keyboard'),
@@ -24,12 +30,7 @@ const Markingmanagement = {
       path: 'awaitinglist',
       component: () => import('@/views/awaiting/awaitlist'),
       name: 'awaitinglist'
-    }, {
-      path: 'markpapers',
-      component: () => import('@/views/awaiting/markpapers'),
-      name: 'markpapers'
     }
   ]
 }
-
 export default Markingmanagement

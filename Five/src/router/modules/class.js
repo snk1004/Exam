@@ -16,19 +16,19 @@ const classRoom = {
       path: 'manage',
       component: () => import('@/views/class/manage'),
       name: 'KeyboardChart',
-      meta: { title: 'Manage', noCache: true }
+      meta: { title: 'Manage', noCache: true, view_id: 'main-grade' }
     },
     {
       path: 'classroom',
       component: () => import('@/views/class/classroom'),
       name: 'LineChart',
-      meta: { title: 'classRoom', noCache: true }
+      meta: { title: 'classRoom', noCache: true, view_id: 'main-room' }
     },
     {
       path: 'student',
       component: () => import('@/views/class/student'),
       name: 'MixChart',
-      meta: { title: 'Student', noCache: true }
+      meta: { title: 'Student', noCache: true, view_id: 'main-student' }
     }
   ]
 }
