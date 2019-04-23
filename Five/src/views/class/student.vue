@@ -148,7 +148,6 @@ export default {
         const num = this.dataList.length / this.pagesize
         this.total = Math.ceil(num)
       }
-      console.log(this.dataList)
     })
     this.getAllRoom().then(res => {
       if (res.code === 1) {
@@ -216,7 +215,7 @@ export default {
           // 筛选 教室号
           if (this.roomValue === item.room_id) {
             roomList.push(item)
-            /* if (this.input !== '' && roomList.length > 0) {
+            if (this.input !== '' && roomList.length > 0) {
               roomList.forEach(it => {
                 if (it.student_name === this.input) {
                   roomList.push(it)
@@ -224,7 +223,7 @@ export default {
                   this.newList.push(it)
                 }
               })
-            } */
+            }
             this.newList = roomList
           }
           // 筛选 班级

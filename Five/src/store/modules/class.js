@@ -17,7 +17,8 @@ import {
   // 修改学生信息
   resetStudent,
   // 删除学生
-  deleteStudent
+  deleteStudent,
+  upHead
 } from '@/api/class'
 
 const actions = {
@@ -101,6 +102,13 @@ const actions = {
   deleteStudent({ state }, payload) {
     return new Promise(async(resolve, reject) => {
       const Data = await deleteStudent(payload)
+      resolve(Data)
+    })
+  },
+  // 上传图片
+  upHead({ state }, payload) {
+    return new Promise(async(resolve, reject) => {
+      const Data = await upHead(payload)
       resolve(Data)
     })
   }

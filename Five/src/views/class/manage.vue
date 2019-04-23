@@ -203,7 +203,6 @@ export default {
     // 添加班级
     addRoomConfirm() {
       this.dataList.forEach(item => {
-        // console.log(this.ruleForm.roomRegion, this.ruleForm.proRegion, this.ruleForm.name)
         if (this.ruleForm.roomRegion === '' || this.ruleForm.proRegion === '' || this.ruleForm.name === '') {
           this.$message.error('请输入信息')
         } else if (this.ruleForm.name === item.grade_name) {
