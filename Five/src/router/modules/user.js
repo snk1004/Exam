@@ -22,6 +22,12 @@ const userRouter = {
       component: () => import('@/views/userShow/userShow'),
       name: 'userShow',
       meta: { title: 'UserShow', noCache: true }
+    },
+    {
+      path: 'addphoto',
+      component: () => import('@/views/userShow/addphoto'),
+      name: 'photo',
+      meta: { title: 'photo', noCache: true }
     }
   ]
 }

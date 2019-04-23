@@ -79,7 +79,8 @@ export default {
     classManage: '班级管理',
     Manage: '班级管理',
     classRoom: '教室管理',
-    Student: '学生管理'
+    Student: '学生管理',
+    photo: '上传头像'
   },
   navbar: {
     logOut: '退出登录',

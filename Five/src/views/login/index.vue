@@ -40,8 +40,12 @@
           </span>
         </el-form-item>
       </el-tooltip>
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-       @click.native.prevent="handleLogin">
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >
         {{ $t('login.logIn') }}
       </el-button>
     </el-form>
@@ -58,7 +62,7 @@
 <script>
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   components: { LangSelect, SocialSign },
@@ -84,7 +88,7 @@ export default {
         password: 'Chenmanjie123!'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur'},{trigger:'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur' }, { trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -117,7 +121,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/login'
+      login: 'user/login'
     }),
     showPwd() {
       if (this.passwordType === 'password') {
@@ -129,15 +133,15 @@ export default {
         this.$refs.password.focus()
       })
     },
-     handleLogin() {
+    handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           this.loading = true
-         let res = await this.login(this.loginForm)
-        if(res.code ===1 ){
-          this.$router.push({ path: this.redirect || '/' })
-        }
-        this.loading = false
+          const res = await this.login(this.loginForm)
+          if (res.code === 1) {
+            this.$router.push({ path: this.redirect || '/' })
+          }
+          this.loading = false
         } else {
           return false
         }

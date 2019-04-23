@@ -39,6 +39,7 @@ const mutations = {
 const actions = {
   // user login
   async login({ commit }, userInfo) {
+    console.log(userInfo)
     const { username, password } = userInfo
     var res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
@@ -48,9 +49,9 @@ const actions = {
   // get user info
   async getInfo({ commit, state }) {
     const data = await getInfo()
-    const avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+    console.log(data)
     commit('SET_USERINFO', data.data)
-    commit('SET_AVATAR', avatar)
+    commit('SET_AVATAR', data.data.avatar)
     return data.data
   },
   // get use getViewAuthority
