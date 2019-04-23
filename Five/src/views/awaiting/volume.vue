@@ -4,11 +4,11 @@
     <div class="content">
       <div class="leftbox">
         <div>
-          <span>1.{{ answerlist[0].title }}</span><!--生命周期 -->
-          <span>{{ answerlist[0].questions_type_text }}</span><!---简单题 -->
-          <p>{{ answerlist[0].questions_stem.split("!")[0].split("#")[1] }}</p><!---周期图标题 -->
-          <img :src="imgs" alt=""><!---图片 -->
-          <p>{{ answerlist[0].questions_stem.split(")")[1] }}</p><!---题目 -->
+          <span>1.{{ answerlist[0].title }}</span>
+          <span>{{ answerlist[0].questions_type_text }}</span>
+          <p>{{ answerlist[0].questions_stem.split("!")[0].split("#")[1] }}</p>
+          <img class="imgs" :src="imgs" alt="">
+          <p>{{ answerlist[0].questions_stem.split(")")[1] }}</p>
           <div class="contentTopbox">
             <div>
               <p>学生答案</p>
@@ -33,7 +33,6 @@
             <div>
               <p>标准答案</p>
               <markdown-editor v-model="aswertwo" />
-              <!-- <span>{{ .split(/[0-9]/).join("").split(',.').join("").split(".").join('') }}</span> -->
             </div>
           </div>
         </div>
@@ -58,7 +57,6 @@
           <span>{{ answerlist[3].questions_type_text }}</span>
           <p>{{ answerlist[3].questions_stem.split("!")[0].split("#")[1] }}</p>
           <h3>{{ answerlist[3].questions_stem.split("```js")[0].split("##")[1] }}</h3>
-          <!-- <p>{{ answerlist[3].questions_stem.split('promise')[1] }}</p> -->
           <markdown-editor v-model="content" />
           <div class="contentTopbox">
             <div>
@@ -208,7 +206,7 @@ export default {
         }
     }
 }
-img{
+.imgs{
   width: 100%;
   height: 400px;
 }

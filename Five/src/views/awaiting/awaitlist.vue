@@ -126,6 +126,7 @@ export default {
       console.log(this.value2)
     },
     pijuan(studid) {
+      console.log(studid)
       this.$router.push(`/markingmanagement/volume?id=${studid}`)
     }
   }

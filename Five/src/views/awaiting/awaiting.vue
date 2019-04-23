@@ -78,7 +78,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      list: 'swaitingClass/paperDetails'
+      list: 'swaitingClass/paperDetails',
+      studentDetail: 'swaitingClass/studentDetail'
     }),
     getDate(limit, page) {
       this.list().then(res => {
@@ -93,7 +94,13 @@ export default {
     },
     change(e, gradeid, gradename) {
       if (e.target.innerHTML === '批卷') {
-        this.$router.push(`/markingmanagement/awaitinglist?id=${gradeid}&grad=${gradename}`)
+        this.studentDetail({
+          gradeid: gradeid
+        }).then(res => {
+          if (res.code === 1) {
+            this.$router.push(`/markingmanagement/awaitinglist?grade_id=${gradeid}&grad=${gradename}`)
+          }
+        })
       }
     },
     handleCurrentChange(val) {
