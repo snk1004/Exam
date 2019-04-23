@@ -28,83 +28,83 @@
           <tbody>
             <tr v-for="item in list" :key="item.questions_type_id">
               <td>
-                <span>{{item.questions_type_id}}</span>
+                <span>{{ item.questions_type_id }}</span>
               </td>
               <td>
-                <span>{{item.questions_type_text}}</span>
+                <span>{{ item.questions_type_text }}</span>
               </td>
               <td>
                 <span @click="del(item.questions_type_id)">删除</span>
               </td>
-            </tr> 
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-</template> 
+</template>
 <script>
-import {mapActions} from "vuex"
-  export default {
-    data(){
-      return{
-        list:[]
-      }
-    },
-    mounted() {
-        this.getlist()
-      },
-    methods: {
-      ...mapActions({
-        getQuestionsType:"questionManagement/getQuestionsType",
-        insertQuestionsType:"questionManagement/insertQuestionsType",
-        deltype:"questionManagement/deltype"
-      }),
-      getlist(){
-        this.getQuestionsType().then(res=>{
-          if(res.code===1){
-            this.list=res.data
-          }
-        })
-      },
-      open() {
-        this.$prompt('', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          inputPlaceholder:'请输入类型名称',
-          title:'创建新类型',
-          center:true
-        }).then(({ value }) => {
-          if(value){
-            this.insertQuestionsType({
-              text:value,
-              sort:this.list.length+1
-            }).then(res=>{
-              this.getlist()
-              this.$message({
-                type: 'success',
-                message: '你的类型是: ' + value
-              });
-            })
-          }
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });       
-        });
-      },
-      del(id){
-        this.deltype({
-          "id":id
-        }).then(res=>{
-          if(res.code===1){
-            this.getlist()
-          }
-        })
-      }
+import { mapActions } from 'vuex'
+export default {
+  data() {
+    return {
+      list: []
     }
-  } 
+  },
+  mounted() {
+    this.getlist()
+  },
+  methods: {
+    ...mapActions({
+      getQuestionsType: 'questionManagement/getQuestionsType',
+      insertQuestionsType: 'questionManagement/insertQuestionsType',
+      deltype: 'questionManagement/deltype'
+    }),
+    getlist() {
+      this.getQuestionsType().then(res => {
+        if (res.code === 1) {
+          this.list = res.data
+        }
+      })
+    },
+    open() {
+      this.$prompt('', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPlaceholder: '请输入类型名称',
+        title: '创建新类型',
+        center: true
+      }).then(({ value }) => {
+        if (value) {
+          this.insertQuestionsType({
+            text: value,
+            sort: this.list.length + 1
+          }).then(res => {
+            this.getlist()
+            this.$message({
+              type: 'success',
+              message: '你的类型是: ' + value
+            })
+            })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })       
+        })
+      },
+    del(id) {
+      this.deltype({
+        'id': id
+      }).then(res => {
+        if (res.code === 1) {
+          this.getlist()
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang='scss'>
@@ -137,7 +137,7 @@ import {mapActions} from "vuex"
       display: flex;
       margin-bottom: 25px;
       .class-btn{
-        padding: 10px 30px; 
+        padding: 10px 30px;
         display: block;
         background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
         border: none;

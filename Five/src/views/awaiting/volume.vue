@@ -2,7 +2,7 @@
   <div class="box">
     <p>阅卷</p>
     <div class="content">
-      <div class="leftbox">
+      <div v-if="answerlist.length" class="leftbox">
         <div>
           <span>1.{{ answerlist[0].title }}</span>
           <span>{{ answerlist[0].questions_type_text }}</span>

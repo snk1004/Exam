@@ -38,7 +38,7 @@
         <li v-for="(item,index) in contentdata" :key="index" @click="detail($event,item.questions_id)">
           <p>{{ item.title }}</p>
           <div>
-            <p>
+            <p class="minlist">
               <span>{{ item.questions_type_text }}</span>
               <span>{{ item.subject_text }}</span>
               <span>{{ item.exam_name }}</span>
@@ -94,31 +94,28 @@ export default {
         this.limit * (val - 1),
         this.limit * val
       )
-      // this.contentdata = this.newlist.slice(
-      //   this.limit * (val - 1),
-      //   this.limit * val
-      // )
     },
     getlist() { // 渲染对应列表数据
-      this.subject().then(res => {
+      this.subject().then(res => { // js上下
         if (res.code === 1) {
           this.list = res.data
         }
       })
-      this.testtype().then(res => {
+      this.testtype().then(res => { // 周考月考
         if (res.code === 1) {
           this.testtypes = res.data
         }
       })
-      this.titletype().then(res => {
+      this.titletype().then(res => { // 题的类型---简单题
         if (res.code === 1) {
           this.titletypes = res.data
         }
       })
-      this.condition().then(res => {
+      this.condition().then(res => { // 所有的数据
         if (res.code === 1) {
-          this.contentdata = res.data.slice(0, this.limit)
           this.alldata = res.data
+          this.contentdata = res.data
+          this.contentdata = this.alldata.slice(0, this.limit)
         }
       })
     },
@@ -132,7 +129,7 @@ export default {
     },
     selechecklist(index, id) { // 单选筛选对应数据
       this.listindex = index
-      this.newlist = this.alldata.filter(item => item.subject_id === id)
+      this.newlist = this.contentdata.filter(item => item.subject_id === id)// 通过对应的课程类型筛选对应的课程类型
       if (this.listflag) {
         this.listflag = !this.listflag
       }
@@ -141,24 +138,30 @@ export default {
       }
     },
     search() { // 查询的时候渲染对应的列表
-      if (this.allflag) {
+      if (this.allflag) { // 如果全选状态---渲染所有的数据
         this.getlist()
       }
       if (this.value) {
-        const datas = this.alldata.filter(item => item.exam_name === this.value)
-        if (datas.length > this.limit) {
-          this.contentdata = datas.slice(0, this.limit)
-        } else {
-          this.contentdata = datas
-        }
+        this.contentdata = this.alldata.filter(item => item.exam_name === this.value)
+      }
+      if (this.listindex !== -1) {
+        this.contentdata = this.alldata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
       }
       if (this.value2) {
-        const dates = this.alldata.filter(item => item.questions_type_text === this.value2)
-        if (dates.length > this.limit) {
-          this.contentdata = dates.slice(0, this.limit)
-        } else {
-          this.contentdata = dates
-        }
+        this.contentdata = this.alldata.filter(item => item.questions_type_text === this.value2)
+      }
+      if (this.listindex !== -1 && this.value) { // 判断---周考-月考 +  js上下
+        const datas = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+        this.contentdata = datas.filter(item => item.exam_name === this.value)
+      }
+      if (this.listindex !== -1 && this.value2) {
+        this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+      }
+      if (this.listindex !== -1 && this.value && this.value2) {
+        this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+      }
+      if (this.contentdata.length > 10) {
+        this.contentdata = this.contentdata.slice(0, this.limit)
       }
       if (this.newlist.length) { // 点击全部--搜索渲染所有数据
         if (this.newlist.length > 10) {
@@ -181,6 +184,23 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+.minlist{
+  >span:nth-child(1){
+    color: #1890ff;
+    background: #e6f7ff;
+    border-color: #91d5ff;
+  }
+  >span:nth-child(2){
+    color: #2f54eb;
+    background: #f0f5ff;
+    border-color: #adc6ff;
+  }
+  >span:nth-child(3){
+    color: #fa8c16;
+    background: #fff7e6;
+    border-color: #ffd591;
+  }
+}
 li.active{
 	background: #0139FD;
 	color: #fff!important;
@@ -214,7 +234,7 @@ li.active{
   align-items: center;
   padding: 0 5px;
   >li{
-    padding:5px 10px;
+    padding:5px 8px;
     list-style:none;
     font-weight: normal;
     color: #333;
