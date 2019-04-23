@@ -172,7 +172,7 @@ export default {
             //跳转页面
             this.$router.push({ path: "/examination/add" })
             } else {
-                console.log('error submit!!');
+                
                 return false;
             }
             });

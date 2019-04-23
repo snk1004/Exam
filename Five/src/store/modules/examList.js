@@ -45,7 +45,8 @@ const actions = {
     async PutCreate({ commit }, payload) {
         const { src, question_ids } = payload;
         console.log(src, question_ids)
-        var res = await PutCreate({ src: src, question_ids: question_ids })
+        var res = await PutCreate({ src: src, question_ids: question_ids });
+        console.log(res)
         return res
     },
 
@@ -60,8 +61,10 @@ const actions = {
 
     //试题列表
     Questions({ commit }, payload) {
+        console.log(payload)
         return new Promise(async(resolve, reject) => {
-            const res = await Questions(payload)
+            const res = await Questions(payload);
+            console.log(res)
             resolve(res)
         })
     }

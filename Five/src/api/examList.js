@@ -9,6 +9,7 @@ export const examType = parmas => {
     }
     //  考试列表
 export const examList = parmas => {
+
     return request.get('/exam/exam', parmas)
 }
 
@@ -22,7 +23,9 @@ export function create(data) {
 }
 // 创建试题
 export function PutCreate(data) {
-    const { src, question_ids } = data
+
+    const { src, question_ids } = data;
+    console.log(question_ids)
     return request({
         url: `/exam/exam/${src}`,
         method: 'put',

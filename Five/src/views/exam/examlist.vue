@@ -107,13 +107,13 @@
           </el-table-column>
         </el-table>  
         </div>
-        <div class="block">
+        <!-- <div class="block">
           
           <el-pagination
             layout="prev, pager, next"
             :total="50">
           </el-pagination>
-        </div>
+        </div> -->
 
       </div> 
   </div>
@@ -136,8 +136,11 @@ export default {
         examLists:[],
         //考试类型select中的值
         type:"",
+        //切换的下标
         TimerIndex:0,
+        //考试类型select中值的Id
         typeId:'',
+        //考试 科目select中值的Id
         coursesId:'',
         list:[]
 
@@ -155,6 +158,7 @@ export default {
       examList:"examList/examList",
       detailExam:'examList/detailExam'
     }),
+    //获取考试类型的值
     healeType(e){
       let name=e
       this.examTypes.map(item=>{
@@ -163,6 +167,7 @@ export default {
         }
       })
     },
+    //获取考试科目的值
     healeCourses(e){
       let name=e
       this.courses.map(item=>{
@@ -173,24 +178,40 @@ export default {
     },
     //点击搜索 调用按需加载
     onSubmit() {
-    this.listExams()
-    },
-    //按需加载
-    listExams(){
-        this.list=this.examLists.filter((item)=>{
+      this.list=this.examLists.filter((item)=>{
         if(item.exam_id==this.typeId&&item.subject_id==this.coursesId){
             return item
         }
       })
     },
+    //按需加载
+   
+     
+    
     //点击 时间类型
     headleTimer(index){
       this.TimerIndex=index;
-      var now = moment().unix()*1000;
-       console.log(moment(now*1).format('YYYY-MM-DD HH:MM:SS'))
-        
-      if(this.TimerIndex==1){
-      
+      let now = moment().unix()*1000;
+      // console.log(now)
+      //  console.log(moment(now*1).format('YYYY-MM-DD HH:MM:SS'))
+        //判断结束时间是否大于现在本地时间
+      if(this.TimerIndex==2){
+        this.list=this.examLists.filter(item=>{
+          let end_time= moment(item.end_time).unix()*1000;
+          if(end_time<now){
+            return item
+          }
+        })//判断本地时间在不在开始时间和结束时间之间
+      }else if(this.TimerIndex==1){
+        this.list=this.examLists.filter(item=>{
+          let end_time= moment(item.end_time).unix()*1000;
+          let start_time= moment(item.start_time).unix()*1000;
+          if(end_time>now&&start_time<now){
+           return item
+          }
+        })
+      }else{
+        this.list=this.examLists;
       }
     },
 
@@ -209,14 +230,14 @@ export default {
       })
       //获取的列表
       this.examList().then(res=>{
-       
+       console.log(res)
           if(res.code==1){  
             res.exam.map(item=>{
               item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
               item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
             })
               this.examLists=res.exam;
-              this.list=this.examLists
+              this.list=res.exam
           }
       })
     },
