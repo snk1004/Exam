@@ -49,6 +49,14 @@
         </li>
       </ul>
     </div>
+    <div class="block">
+      <el-pagination
+        :current-page.sync="currentPage1"
+        layout="prev, pager, next, jumper"
+        :total="60"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -56,6 +64,7 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
+      currentPage1: 1,
       value: '',
       value2: '',
       list: [],
@@ -66,7 +75,8 @@ export default {
       allflag: false,
       listflag: false,
       listindex: -1,
-      newlist: []
+      newlist: [],
+      limit: 6
     }
   },
   mounted() {
@@ -79,25 +89,35 @@ export default {
       titletype: 'questionManagement/getQuestionsType', // 题的类型---简单题
       condition: 'questionManagement/condition'// 所有的数据
     }),
+    handleCurrentChange(val) {
+      this.contentdata = this.alldata.slice(
+        this.limit * (val - 1),
+        this.limit * val
+      )
+      // this.contentdata = this.newlist.slice(
+      //   this.limit * (val - 1),
+      //   this.limit * val
+      // )
+    },
     getlist() { // 渲染对应列表数据
       this.subject().then(res => {
         if (res.code === 1) {
           this.list = res.data
         }
-      }),
+      })
       this.testtype().then(res => {
         if (res.code === 1) {
           this.testtypes = res.data
         }
-      }),
+      })
       this.titletype().then(res => {
         if (res.code === 1) {
           this.titletypes = res.data
         }
-      }),
+      })
       this.condition().then(res => {
         if (res.code === 1) {
-          this.contentdata = res.data
+          this.contentdata = res.data.slice(0, this.limit)
           this.alldata = res.data
         }
       })
@@ -126,14 +146,26 @@ export default {
       }
       if (this.value) {
         const datas = this.alldata.filter(item => item.exam_name === this.value)
-        this.contentdata = datas
+        if (datas.length > this.limit) {
+          this.contentdata = datas.slice(0, this.limit)
+        } else {
+          this.contentdata = datas
+        }
       }
       if (this.value2) {
         const dates = this.alldata.filter(item => item.questions_type_text === this.value2)
-        this.contentdata = dates
+        if (dates.length > this.limit) {
+          this.contentdata = dates.slice(0, this.limit)
+        } else {
+          this.contentdata = dates
+        }
       }
-      if (this.newlist.length) {
-        this.contentdata = this.newlist
+      if (this.newlist.length) { // 点击全部--搜索渲染所有数据
+        if (this.newlist.length > 10) {
+          this.contentdata = this.newlist.slice(0, this.limit)
+        } else {
+          this.contentdata = this.newlist
+        }
       }
     },
     detail(e, id) {
@@ -262,6 +294,14 @@ li.active{
 		background: #f7f9ff;
 	}
   }
+}
+.el-pagination {
+    white-space: nowrap;
+    padding: 2px 5px;
+    color: #303133;
+    font-weight: 700;
+    margin-left: 200px;
+    margin-top: 5px;
 }
 </style>
 
