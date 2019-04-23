@@ -1,0 +1,72 @@
+<template>
+  <div class="app-container">
+    <pan-thumb :image="avatar" />
+
+    <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
+      Change Avatar
+    </el-button>
+
+    <image-cropper
+      v-show="imagecropperShow"
+      :key="imagecropperKey"
+      :width="300"
+      :height="300"
+      lang-type="en"
+      url="http://123.206.55.50:11000/upload"
+      @close="close"
+      @crop-upload-success="cropSuccess"
+    />
+  </div>
+</template>
+<script>
+import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
+import { mapGetters, mapActions } from 'vuex'
+export default {
+  components: {
+    ImageCropper,
+    PanThumb
+  },
+  data() {
+    return {
+      imagecropperShow: false,
+      imagecropperKey: 0
+    }
+  },
+  methods: {
+    ...mapActions({
+      getreneval: 'usershow/getReneval'
+    }),
+    cropSuccess(e) {
+      const path = e[0].path
+      this.getreneval({
+        user_id: this.userInfo.user_id,
+        user_name: this.userInfo.user_name,
+        identity_id: this.userInfo.identity_id,
+        avatar: path
+      }).then(res => {
+        if (res.code === 1) {
+          alert(res.msg)
+        }
+      })
+      this.imagecropperShow = false
+    },
+    close() {
+      this.imagecropperShow = false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'avatar',
+      'userInfo'
+    ])
+  },
+  created() {
+    console.log(this.avatar)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -270,4 +270,7 @@ span.active {
   border: 1px solid #0139fd;
   color: #0139fd;
 }
+.el-table tr{
+  background: #eee;
+}
 </style>

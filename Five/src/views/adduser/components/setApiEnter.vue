@@ -3,7 +3,7 @@
     <div class="btn">
       <button>添加视图接口权限</button>
     </div>
-    <el-select v-model="viewvalue" placeholder="请选择">
+    <el-select v-model="viewvalue" placeholder="请选择已有视图">
       <el-option
         v-for="item in list"
         :key="item.value"
@@ -56,8 +56,6 @@ export default {
   },
   created() {
     this.setapi().then(res => {
-      console.log(res);
-
       if (res.code == 1) {
         this.list = res.data;
       }

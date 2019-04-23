@@ -48,6 +48,18 @@
         </tbody>
       </table>
     </div>
+    <div class="pages">
+      <el-pagination
+        background
+        layout="total, sizes, prev, pager, next"
+        :current-page.sync="currentPage3"
+        :total="len"
+        :page-sizes="[5, 8, 9, 10]"
+        :page-size="6"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -55,21 +67,24 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
-      alldata: []
+      alldata: [],
+      len: 0,
+      limit: 5,
+      currentPage3: 1
     }
   },
   mounted() {
-    this.getDate()
+    this.getDate(this.limit, 1)
   },
   methods: {
     ...mapActions({
-      list: 'swaitingClass/paperDetails', // 获取所有班级
-      studentDetail: 'swaitingClass/studentDetail'
+      list: 'swaitingClass/paperDetails'
     }),
-    getDate() {
+    getDate(limit, page) {
       this.list().then(res => {
         if (res.code === 1) {
-          this.alldata = res.data
+          this.alldata = res.data.slice((page - 1) * limit, limit * page)
+          this.len = res.data.length
           for (let i = 0; i < this.alldata.length; i++) {
             this.alldata[i].operation = '批卷'
           }
@@ -78,14 +93,16 @@ export default {
     },
     change(e, gradeid, gradename) {
       if (e.target.innerHTML === '批卷') {
-        this.studentDetail({
-          gradeid: gradeid
-        }).then(res => {
-          if (res.code === 1) {
-            this.$router.push(`/markingmanagement/awaitinglist?grade_id=${gradeid}&grad=${gradename}`)
-          }
-        })
+        this.$router.push(`/markingmanagement/awaitinglist?id=${gradeid}&grad=${gradename}`)
       }
+    },
+    handleCurrentChange(val) {
+      this.getDate(this.limit, val)
+    },
+    handleSizeChange(val) {
+      this.limit = val
+      this.getDate(val, 1)
+      this.currentPage3 = 1
     }
   }
 
@@ -160,6 +177,10 @@ export default {
       }
 tr:hover{
       background: #f7f9ff;
+  }
+  .pages{
+    float: right;
+    margin-top: 20px;
   }
 </style>
 

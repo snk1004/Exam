@@ -2,6 +2,7 @@
   <div class="bigbox">
     <div class="testtype_select">
       <span>状态:</span>
+      <span>考试类型:</span>
       <el-select v-model="value" placeholder="">
         <el-option
           v-for="item in statuslist"
@@ -11,6 +12,7 @@
         />
       </el-select>
       <span>班级:</span>
+      <span>题目类型:</span>
       <el-select v-model="value2" placeholder="">
         <el-option
           v-for="item in classlist"
@@ -74,9 +76,7 @@
               <span>成材率</span>
             </td>
             <td>
-              <span @click="pijuan(item.exam_student_id)">批卷
-                <!-- <router-link to="/markingmanagement/volume">批卷</router-link> -->
-              </span>
+              <span @click="pijuan(item.exam_student_id)">批卷</span>
             </td>
           </tr>
         </tbody>

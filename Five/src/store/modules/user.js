@@ -39,6 +39,7 @@ const mutations = {
 const actions = {
   // user login
   async login({ commit }, userInfo) {
+    console.log(userInfo)
     const { username, password } = userInfo
     var res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
@@ -49,6 +50,7 @@ const actions = {
   async getInfo({ commit, state }) {
     const data = await getInfo()
     commit('SET_USERINFO', data.data)
+    commit('SET_AVATAR', data.data.avatar)
     return data.data
   },
   // get use getViewAuthority

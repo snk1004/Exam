@@ -14,13 +14,13 @@ const Examinations = {
     path: 'addexamination',
     component: () => import('@/views/exam/addexam'),
     name: 'Addexaminationt',
-    meta: { title: 'addexamination', noCache: true }
+    meta: { title: 'addexamination', noCache: true, view_id: 'main-addExam' }
   },
   {
     path: 'examinationlist',
     component: () => import('@/views/exam/examlist'),
     name: 'Examinationlist',
-    meta: { title: 'examinationlist', noCache: true }
+    meta: { title: 'examinationlist', noCache: true, view_id: 'main-examList' }
   },
   {
     path: 'add',

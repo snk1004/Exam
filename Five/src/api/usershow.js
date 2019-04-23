@@ -90,3 +90,18 @@ export function addViewApi(data) {
     params: data
   })
 }
+
+export function setIdentityApi(data) {
+  return request({
+    url: '/user/setIdentityApi',
+    method: 'post',
+    data
+  })
+}
+export function setIdentityView(data) {
+  return request({
+    url: '/user/setIdentityView',
+    method: 'post',
+    data
+  })
+}
