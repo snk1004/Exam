@@ -1,53 +1,53 @@
 <template>
-     <div class="addUser_wrapper">
-        <div class="btn">
-          <button>添加api接口权限</button>
-        </div>
-        <input type="text" placeholder="请输入api接口权限名称" v-model="apinames">
-        <input type="text" placeholder="请输入api接口权限url" v-model="apiurl">
-        <input type="text" placeholder="请输入api接口权限方法" v-model="apimethods">
-        <div class="btnFotter">
-          <el-button :plain="true"  @click='handleSubmit'>确认</el-button>
-          <button class="resets" @click='resets'>重置</button>
-        </div>
-      </div>
+  <div class="addUser_wrapper">
+    <div class="btn">
+      <button>添加api接口权限</button>
+    </div>
+    <input v-model="apinames" type="text" placeholder="请输入api接口权限名称">
+    <input v-model="apiurl" type="text" placeholder="请输入api接口权限url">
+    <input v-model="apimethods" type="text" placeholder="请输入api接口权限方法">
+    <div class="btnFotter">
+      <el-button :plain="true" @click="handleSubmit">确认</el-button>
+      <button class="resets" @click="resets">重置</button>
+    </div>
+  </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-    data(){
-        return {
-            apinames:'',
-            apiurl:'',
-            apimethods:''
-        }
-    },
-    methods:{
-        ...mapActions({
-            addapi:'usershow/addApi'
-        }),
-        handleSubmit(){
-            if(this.apinames&&this.apiurl&&this.apimethods){
-                this.addapi({
-                'api_authority_text':this.apinames,
-                'api_authority_url':this.apiurl,
-                'api_authority_method':this.apimethods
-            }).then(res=>{
-                 this.$message({
-                    message: res.msg,
-                    type: 'success'
-                });
-            })
-            }else{
-                this.$message.error('参数有误')
-            }
-        },
-          resets(){
-              this.apinames=''
-              this.apiurl=''
-              this.apimethods=''
-      }
+  data() {
+    return {
+      apinames: '',
+      apiurl: '',
+      apimethods: ''
     }
+  },
+  methods: {
+    ...mapActions({
+      addapi: 'usershow/addApi'
+    }),
+    handleSubmit() {
+      if (this.apinames && this.apiurl && this.apimethods) {
+        this.addapi({
+          'api_authority_text': this.apinames,
+          'api_authority_url': this.apiurl,
+          'api_authority_method': this.apimethods
+        }).then(res => {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+        })
+      } else {
+        this.$message.error('参数有误')
+      }
+    },
+    resets() {
+      this.apinames = ''
+      this.apiurl = ''
+      this.apimethods = ''
+    }
+  }
 }
 </script>
 

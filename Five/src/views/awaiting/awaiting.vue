@@ -52,7 +52,7 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
-        :current-page="currentPage4"
+        :current-page.sync="currentPage3"
         :total="len"
         :page-sizes="[5, 8, 9, 10]"
         :page-size="6"
@@ -70,7 +70,7 @@ export default {
       alldata: [],
       len: 0,
       limit: 5,
-      currentPage4: 1
+      currentPage3: 1
     }
   },
   mounted() {
@@ -100,7 +100,9 @@ export default {
       this.getDate(this.limit, val)
     },
     handleSizeChange(val) {
+      this.limit = val
       this.getDate(val, 1)
+      this.currentPage3 = 1
     }
   }
 
@@ -175,6 +177,10 @@ export default {
       }
 tr:hover{
       background: #f7f9ff;
+  }
+  .pages{
+    float: right;
+    margin-top: 20px;
   }
 </style>
 
