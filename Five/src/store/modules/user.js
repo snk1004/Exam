@@ -49,7 +49,6 @@ const actions = {
   // get user info
   async getInfo({ commit, state }) {
     const data = await getInfo()
-    console.log(data)
     commit('SET_USERINFO', data.data)
     commit('SET_AVATAR', data.data.avatar)
     return data.data

@@ -15,19 +15,19 @@ const userRouter = {
       path: 'addUser',
       component: () => import('@/views/adduser/addUser'),
       name: 'Adduser',
-      meta: { title: 'Adduser', noCache: true }
+      meta: { title: 'Adduser', noCache: true, view_id: 'login' }
     },
     {
       path: 'usershow',
       component: () => import('@/views/userShow/userShow'),
       name: 'userShow',
-      meta: { title: 'UserShow', noCache: true }
+      meta: { title: 'UserShow', noCache: true, view_id: 'main-showUser' }
     },
     {
       path: 'addphoto',
       component: () => import('@/views/userShow/addphoto'),
       name: 'photo',
-      meta: { title: 'photo', noCache: true }
+      meta: { title: 'photo', noCache: true, view_id: 'main-showUser' }
     }
   ]
 }

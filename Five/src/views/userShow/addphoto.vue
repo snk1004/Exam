@@ -39,8 +39,6 @@ export default {
     }),
     cropSuccess(e) {
       const path = e[0].path
-      console.log(this.userInfo)
-      this.image = path
       this.getreneval({
         user_id: this.userInfo.user_id,
         user_name: this.userInfo.user_name,

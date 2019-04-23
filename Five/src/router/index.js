@@ -74,13 +74,35 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    redirect: 'dashboard',
+    name: 'Exam',
+    redirect: 'exam/addquest',
+    meta: {
+      title: 'textquest',
+      icon: 'tree'
+    },
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard'),
-        name: 'Dashboard',
-        meta: { title: '', icon: '', noCache: true, affix: true }
+        path: 'exam',
+        component: () => import('@/views/addquest/addtest/addtest.vue'),
+        name: 'Exam',
+        meta: { title: 'addquest', icon: '', noCache: true, affix: true }
+      }, {
+        path: 'questtype',
+        component: () => import('@/views/addquest/testtype/testtype.vue'),
+        name: 'Questtype',
+        meta: { title: 'questtype', noCache: true, view_id: 'main-questionsType' }
+      },
+      {
+        path: 'lookquest',
+        component: () => import('@/views/addquest/looktest/looktest.vue'),
+        name: 'Lookquest',
+        meta: { title: 'lookquest', noCache: true, view_id: 'main-watchQuestions' }
+      },
+      {
+        path: 'detail',
+        component: () => import('@/views/addquest/looktest/testDetail.vue'),
+        name: 'detail'
+      // meta: { title: 'detail', noCache: false }
       }
     ]
   }
@@ -90,7 +112,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  ExamRouter,
+
   userRouter,
   Examinations,
   classRouter,
