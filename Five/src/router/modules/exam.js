@@ -32,7 +32,6 @@ const ExamRouter = {
       path: 'detail',
       component: () => import('@/views/addquest/looktest/testDetail.vue'),
       name: 'detail'
-      // meta: { title: 'detail', noCache: false }
     }
   ]
 }

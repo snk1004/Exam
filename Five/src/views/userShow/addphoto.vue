@@ -2,7 +2,7 @@
   <div class="app-container">
     <pan-thumb :image="avatar" />
 
-    <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
+    <el-button class="sure" type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
       Change Avatar
     </el-button>
 
@@ -60,13 +60,15 @@ export default {
       'avatar',
       'userInfo'
     ])
-  },
-  created() {
-    console.log(this.avatar)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.sure{
+  top:120px;
+  left:300px;
+  width: 150px;
+  height: 50px;
+}
 </style>
