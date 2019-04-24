@@ -1,9 +1,9 @@
 <template>
   <div class="addUser_wrapper">
     <div class="btn">
-      <button v-for="(item,i) in userState" :key='item.id' :class="stateInd==i?'active':''" @click="handleState(i)">{{ item.states }}</button>
+      <button v-for="(item,i) in userState" :key="item.id" :class="stateInd==i?'active':''" @click="handleState(i)">{{ item.states }}</button>
     </div>
-    <el-select v-if='stateInd' v-model="values" placeholder="请选择身份id">
+    <el-select v-if="stateInd" v-model="values" placeholder="请选择身份id">
       <el-option
         v-for="item in list"
         :key="item.user_name"
@@ -38,77 +38,83 @@ export default {
         id: '2',
         states: '更新用户'
       }],
-      options: [],
       value: '',
       user_name: '',
       user_pwd: '',
       stateInd: 0,
       values: '',
-      list: []
+      list: [],
+      options: []
     }
   },
   methods: {
     ...mapActions({
-      getid: 'usershow/getIdentity',
       addSubmit: 'usershow/adduser',
-      getList: 'usershow/show',
-      getreneval: 'usershow/getReneval'
+      getreneval: 'usershow/getReneval',
+      getid: 'usershow/getIdentity',
+      getList: 'usershow/show'
     }),
+    getData() {
+      this.getid().then(res => {
+        this.options = res.data
+      })
+      this.getList().then(res => {
+        this.list = res.data
+      })
+    },
     handleState(i) {
       this.stateInd = i
     },
     handleSubmit() {
-      
       if (this.stateInd == 0) {
-        if (this.user_pwd && this.user_name&&this.value) {
+        if (this.user_pwd && this.user_name && this.value) {
           const user_id = this.options.find(item => item.identity_text == this.value)
           this.addSubmit({
             'user_name': this.user_name,
             'user_pwd': this.user_pwd,
-            'identity_id':user_id.identity_id
+            'identity_id': user_id.identity_id
           }).then(res => {
             this.$message({
               message: res.msg,
               type: 'success'
             })
+            this.getData()
           })
-        } else if(this.user_pwd && this.user_name&&!this.value){
-           this.addSubmit({
+        } else if (this.user_pwd && this.user_name && !this.value) {
+          this.addSubmit({
             'user_name': this.user_name,
-            'user_pwd': this.user_pwd,
+            'user_pwd': this.user_pwd
           }).then(res => {
             this.$message({
               message: res.msg,
               type: 'success'
             })
+            this.getData()
           })
-        }else{
+        } else {
           this.$message.error('参数有误')
         }
       } else if (this.stateInd == 1) {
-        
-
         this.list.find(item => {
           if (item.user_name == this.values) {
-            if (!this.value&&!this.user_name && !this.user_pwd ) {
-              this.$message.error('参数有误')            
+            if (!this.value && !this.user_name && !this.user_pwd) {
+              this.$message.error('参数有误')
             } else {
-                 if(this.value){
-                      const users = this.options.find(item => item.identity_text == this.value)
-                      this.getreneval({
-                          'user_id': item.user_id,
-                          'user_name': this.user_name == '' ? item.user_name : this.user_name,
-                          'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd,
-                          'identity_id':this.value?users.identity_id:''
-                        }).then(res => {
-                          this.$message({
-                            message: res.msg,
-                            type: 'success'
-                          })
-                        })
-
-             }  
-              
+              if (this.value) {
+                const users = this.options.find(item => item.identity_text == this.value)
+                this.getreneval({
+                  'user_id': item.user_id,
+                  'user_name': this.user_name == '' ? item.user_name : this.user_name,
+                  'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd,
+                  'identity_id': this.value ? users.identity_id : ''
+                }).then(res => {
+                  this.$message({
+                    message: res.msg,
+                    type: 'success'
+                  })
+                  this.getData()
+                })
+              }
             }
           }
         })
@@ -122,13 +128,9 @@ export default {
     }
   },
   created() {
-    this.getid().then(res => {
-      this.options = res.data
-    })
-    this.getList().then(res => {
-      this.list = res.data
-    })
+    this.getData()
   }
+
 }
 
 </script>

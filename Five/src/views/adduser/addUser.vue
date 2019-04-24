@@ -21,12 +21,10 @@ import addApi from './components/addApi'
 import setApiEnter from './components/setApiEnter'
 import addIdentityApi from './components/addIdentityApi'
 import setIdentityView from './components/setIdentityView'
+import { mapActions } from 'vuex'
 export default {
-  components: { addUserDel, addIdentity, addApi, setApiEnter, addIdentityApi, setIdentityView },
-  data() {
-    return {
-    }
-  }
+  components: { addUserDel, addIdentity, addApi, setApiEnter, addIdentityApi, setIdentityView }
+
 }
 </script>
 

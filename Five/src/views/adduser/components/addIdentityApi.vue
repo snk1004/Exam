@@ -1,85 +1,86 @@
 <template>
-    <div class="addUser_wrapper">
-        <div class="btn">
-          <button>给身份设置pi接口权限</button>
-        </div>
-        <el-select v-model="value" placeholder="请选择身份id">
-          <el-option
-            v-for="item in options"
-            :key="item.identity_text"
-            :value="item.identity_text"
-          />
-        </el-select>
-        <el-select v-model="apiView" placeholder="请选择api接口权限">
-          <el-option
-            v-for="item in api"
-            :key="item.api_authority_text"
-            :value="item.api_authority_text"
-          />
-        </el-select>
-        <div class="btnFotter">
-          <el-button :plain="true"  @click='handleSubmit'>确认</el-button>
-          <button class="resets" @click='resets'>重置</button>
-        </div>
-      </div>
+  <div class="addUser_wrapper">
+    <div class="btn">
+      <button>给身份设置pi接口权限</button>
+    </div>
+    <el-select v-model="value" placeholder="请选择身份id">
+      <el-option
+        v-for="item in options"
+        :key="item.identity_text"
+        :value="item.identity_text"
+      />
+    </el-select>
+    <el-select v-model="apiView" placeholder="请选择api接口权限">
+      <el-option
+        v-for="item in api"
+        :key="item.api_authority_text"
+        :value="item.api_authority_text"
+      />
+    </el-select>
+    <div class="btnFotter">
+      <el-button :plain="true" @click="handleSubmit">确认</el-button>
+      <button class="resets" @click="resets">重置</button>
+    </div>
+  </div>
 </template>
 <script>
-import {mapActions,mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
-    data(){
-        return {
-            options:[],
-            value:'',
-            api:[],
-            apiView:'',
-            identity_id:'',
-            api_id:''
-        }
-    },
-    methods:{
-        ...mapActions({
-            getid:'usershow/getIdentity',
-            getapi: 'usershow/getApi',
-            setapiidentity:'usershow/setIdentityApi'
-        }),
-       async handleSubmit(){
-          if(this.value!='请选择身份id'&&this.apiView!='请选择api接口权限'){
-            this.identity_id = this.options.find(item=>item.identity_text==this.value);
-            this.api_id = this.api.find(item=>item.api_authority_text==this.apiView)
-           await this.setapiidentity({
-              'identity_id':this.identity_id.identity_id,
-              'api_authority_id':this.api_id.api_authority_id
-            })
-            if(this.code==1){
-              this.$message({
-                message: this.msg,
-                type: 'success'
-                })
-            }else{
-              this.$message.error(this.msg)
-            }
-          }else{
-            this.$message.error('参数错误')
-          }
-        },
-        resets(){
-          this.value=''
-          this.apiView=''
-        }
-    },
-    created(){
-        this.getid().then(res=>{
-            this.options=res.data
+  data() {
+    return {
+      value: '',
+      api: [],
+      apiView: '',
+      identity_id: '',
+      api_id: '',
+      options: []
+    }
+  },
+  methods: {
+    ...mapActions({
+      getapi: 'usershow/getApi',
+      setapiidentity: 'usershow/setIdentityApi',
+      getId: 'usershow/getIdentity'
+
+    }),
+    async handleSubmit() {
+      if (this.value != '请选择身份id' && this.apiView != '请选择api接口权限') {
+        this.identity_id = this.options.find(item => item.identity_text == this.value)
+        this.api_id = this.api.find(item => item.api_authority_text == this.apiView)
+        await this.setapiidentity({
+          'identity_id': this.identity_id.identity_id,
+          'api_authority_id': this.api_id.api_authority_id
         })
-        this.getapi().then(res=>{
-            this.api = res.data
-        })
+        if (this.code == 1) {
+          this.$message({
+            message: this.msg,
+            type: 'success'
+          })
+        } else {
+          this.$message.error(this.msg)
+        }
+      } else {
+        this.$message.error('参数错误')
+      }
     },
-     computed: {
-      ...mapState({
-        code: state => state.usershow.code,
-        msg: state => state.usershow.msg
-      })
+    resets() {
+      this.value = ''
+      this.apiView = ''
+    }
+  },
+  created() {
+    this.getapi().then(res => {
+      this.api = res.data
+    })
+    this.getId().then(res => {
+      this.options = res.data
+    })
+  },
+  computed: {
+    ...mapState({
+      code: state => state.usershow.code,
+      msg: state => state.usershow.msg
+    })
   }
 }
 </script>

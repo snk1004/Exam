@@ -1,16 +1,14 @@
 <template>
   <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
+    <h2>北京八维研修学院</h2>
+    <p>考试管理系统</p>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import adminDashboard from './admin'
-import editorDashboard from './editor'
 
 export default {
   name: 'Dashboard',
-  components: { adminDashboard, editorDashboard },
   data() {
     return {
       currentRole: 'adminDashboard'
@@ -28,3 +26,16 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+    h2{
+      margin: 10px 50px;
+      font-size: 30px;
+    }
+    p{
+      position: absolute;
+      bottom:70px;
+      right:30px;
+      font-size: 20px;
+    }
+</style>
+
