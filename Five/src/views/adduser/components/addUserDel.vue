@@ -3,7 +3,7 @@
     <div class="btn">
       <button v-for="(item,i) in userState" :key='item.id' :class="stateInd==i?'active':''" @click="handleState(i)">{{ item.states }}</button>
     </div>
-    <el-select v-if='stateInd' v-model="values" placeholder="请选择">
+    <el-select v-if='stateInd' v-model="values" placeholder="请选择身份id">
       <el-option
         v-for="item in list"
         :key="item.user_name"
@@ -12,7 +12,7 @@
     </el-select>
     <input v-model="user_name" type="text" placeholder="请输入用户名">
     <input v-model="user_pwd" type="password" placeholder="请输入密码">
-    <el-select v-model="value" placeholder="请选择">
+    <el-select v-model="value" placeholder="请选择身份id">
       <el-option
         v-for="item in options"
         :key="item.identity_text"
@@ -39,11 +39,11 @@ export default {
         states: '更新用户'
       }],
       options: [],
-      value: '请选择身份id',
+      value: '',
       user_name: '',
       user_pwd: '',
       stateInd: 0,
-      values: '请选择身份id',
+      values: '',
       list: []
     }
   },
@@ -58,51 +58,67 @@ export default {
       this.stateInd = i
     },
     handleSubmit() {
+      
       if (this.stateInd == 0) {
-        if (this.user_pwd && this.user_name) {
+        if (this.user_pwd && this.user_name&&this.value) {
           const user_id = this.options.find(item => item.identity_text == this.value)
-          console.log(user_id)
           this.addSubmit({
             'user_name': this.user_name,
             'user_pwd': this.user_pwd,
-            'identity_id': user_id.identity_id
+            'identity_id':user_id.identity_id
           }).then(res => {
             this.$message({
               message: res.msg,
               type: 'success'
             })
           })
-        } else {
+        } else if(this.user_pwd && this.user_name&&!this.value){
+           this.addSubmit({
+            'user_name': this.user_name,
+            'user_pwd': this.user_pwd,
+          }).then(res => {
+            this.$message({
+              message: res.msg,
+              type: 'success'
+            })
+          })
+        }else{
           this.$message.error('参数有误')
         }
       } else if (this.stateInd == 1) {
-        const user_id = this.options.find(item => item.identity_id == this.values)
+        
+
         this.list.find(item => {
           if (item.user_name == this.values) {
-            if (this.user_name || this.user_pwd || this.value != '请选择身份id') {
-              this.getreneval({
-                'user_id': item.user_id,
-                'user_name': this.user_name == '' ? item.user_name : this.user_name,
-                'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd,
-                'identity_id': user_id.identity_id
-              }).then(res => {
-                this.$message({
-                  message: res.msg,
-                  type: 'success'
-                })
-              })
+            if (!this.value&&!this.user_name && !this.user_pwd ) {
+              this.$message.error('参数有误')            
             } else {
-              this.$message.error('参数有误')
+                 if(this.value){
+                      const users = this.options.find(item => item.identity_text == this.value)
+                      this.getreneval({
+                          'user_id': item.user_id,
+                          'user_name': this.user_name == '' ? item.user_name : this.user_name,
+                          'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd,
+                          'identity_id':this.value?users.identity_id:''
+                        }).then(res => {
+                          this.$message({
+                            message: res.msg,
+                            type: 'success'
+                          })
+                        })
+
+             }  
+              
             }
           }
         })
       }
     },
     resets() {
-      this.value = '请选择身份id'
+      this.value = ''
       this.user_name = ''
       this.user_pwd = ''
-      this.values = '请选择身份id'
+      this.values = ''
     }
   },
   created() {

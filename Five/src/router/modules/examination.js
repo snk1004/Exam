@@ -4,11 +4,12 @@ import Layout from '@/layout'
 const Examinations = {
   path: '/examination',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: 'examination/addexamination',
   name: 'Examination',
   meta: {
     title: 'examination',
-    icon: 'tab'
+    icon: 'tab',
+    view_id: 'main-addExam'
   },
   children: [{ // 跳转考试管理
     path: 'addexamination',
@@ -24,11 +25,15 @@ const Examinations = {
   },
   {
     path: 'add',
-    component: () => import('@/views/exam/add')
+    component: () => import('@/views/exam/add'),
+    hidden: true,
+    meta: { view_id: 'main-examEdit' }
   },
   {
     path: 'detail',
-    component: () => import('@/views/exam/detail')
+    component: () => import('@/views/exam/detail'),
+    hidden: true,
+    meta: { view_id: 'main-questionsDetail'}
   }]
 }
 

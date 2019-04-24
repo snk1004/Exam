@@ -32,9 +32,10 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           // 1.如果没有用户信息就去获取用户信息
-          await store.dispatch('user/getInfo')
+          const userInfo = await store.dispatch('user/getInfo')
+
           // 2.通过身份获取权限
-          const viewAuthority = await store.dispatch('user/getViewAuthority')
+          const viewAuthority = await store.dispatch('user/getViewAuthority', userInfo)
           // console.log(viewAuthority, 'ssssss')
           // 3.通过权限生成路由
           const newrouter = await store.dispatch('permission/generateRoutes', viewAuthority)

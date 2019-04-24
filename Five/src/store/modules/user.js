@@ -39,7 +39,6 @@ const mutations = {
 const actions = {
   // user login
   async login({ commit }, userInfo) {
-    console.log(userInfo)
     const { username, password } = userInfo
     var res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
@@ -55,7 +54,8 @@ const actions = {
   },
   // get use getViewAuthority
   async getViewAuthority({ commit }, payload) {
-    const userAuthority = await getViewAuthority()
+    const userAuthority = await getViewAuthority({ user_id: payload.user_id })
+    console.log(userAuthority)
     if (userAuthority.code === 1) {
       commit('SET_VIEWAUTHORITY', userAuthority.data)
       return userAuthority.data
