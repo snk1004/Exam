@@ -6,11 +6,11 @@
         <p class="testusername">出题人：<span>{{ username }}</span></p>
         <h6 class="title">题目信息</h6>
         <p class="minlist">
-          <span>代码补全</span>
-          <span>javascript上</span>
-          <span>周考1</span>
+          <span>{{questions_type_text}}</span>
+          <span>{{subject_text}}</span>
+          <span>{{exam_name}}</span>
         </p>
-        <p>机器人归位</p>
+        <p>{{title}}</p>
         <markdown-editor v-model="content" />
       </div>
       <div>
@@ -30,7 +30,11 @@ export default {
       datas: [],
       content: '',
       aswer: '',
-      username: ''
+      username: '',
+      questions_type_text:'',
+      subject_text:'',
+      exam_name:'',
+      title:''
     }
   },
   mounted() {
@@ -48,6 +52,10 @@ export default {
           this.content = obj.questions_stem
           this.username = obj.user_name
           this.aswer = obj.questions_answer
+          this.questions_type_text=obj.questions_type_text;//代码阅读
+          this.subject_text=obj.subject_text;//node基础
+          this.exam_name =obj.exam_name;//周考一
+          this.title=obj.title
         }
       })
     }
@@ -92,18 +100,28 @@ export default {
     padding: 10px 0;
 }
 .minlist{
-    width: 100%;
-    margin: 0;
-    padding: 10px 0;
-
-    >span{
-        background: yellow;
-        padding: 2px 4px;
-        font-size: 14px;
-    }
+  font-size: 14px;
+  >span{
+    padding: 3px 5px;
+  }
+  >span:nth-child(1){
+    color: #1890ff;
+    background: #e6f7ff;
+    border-color: #91d5ff;
+  }
+  >span:nth-child(2){
+    color: #2f54eb;
+    background: #f0f5ff;
+    border-color: #2f54eb;
+  }
+  >span:nth-child(3){
+    color: #fa8c16;
+    background: #fff7e6;
+    border-color: #fa8c16;
+  }
 }
-.tui-editor-contents pre{
-    white-space: initial!important
-}
+// .tui-editor-contents pre{
+//     white-space: initial!important
+// }
 
 </style>

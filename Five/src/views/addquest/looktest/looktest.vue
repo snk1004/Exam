@@ -49,11 +49,11 @@
         </li>
       </ul>
     </div>
-    <div class="block">
+    <div class="block" v-if="allselect">
       <el-pagination
         :current-page.sync="currentPage1"
         layout="prev, pager, next, jumper"
-        :total="60"
+        :total="page"
         @current-change="handleCurrentChange"
       />
     </div>
@@ -76,7 +76,9 @@ export default {
       listflag: false,
       listindex: -1,
       newlist: [],
-      limit: 6
+      limit: 7,
+      page:0,
+      allselect:true
     }
   },
   mounted() {
@@ -90,7 +92,7 @@ export default {
       condition: 'questionManagement/condition'// 所有的数据
     }),
     handleCurrentChange(val) {
-      this.contentdata = this.alldata.slice(
+        this.contentdata = this.alldata.slice(
         this.limit * (val - 1),
         this.limit * val
       )
@@ -114,7 +116,8 @@ export default {
       this.condition().then(res => { // 所有的数据
         if (res.code === 1) {
           this.alldata = res.data
-          this.contentdata = res.data
+          this.page=Math.ceil(this.alldata.length/this.limit)*10
+          // this.contentdata = res.data
           this.contentdata = this.alldata.slice(0, this.limit)
         }
       })
@@ -123,43 +126,48 @@ export default {
       this.allflag = !this.allflag
       if (this.allflag) {
         this.listflag = true
+        this.allselect=true
       } else {
         this.listflag = false
+        this.allselect=false
       }
     },
     selechecklist(index, id) { // 单选筛选对应数据
       this.listindex = index
-      this.newlist = this.contentdata.filter(item => item.subject_id === id)// 通过对应的课程类型筛选对应的课程类型
+      this.newlist = this.alldata.filter(item => item.subject_id === id)// 通过对应的课程类型筛选对应的课程类型
       if (this.listflag) {
         this.listflag = !this.listflag
       }
       if (!this.listflag) {
         this.allflag = false
+        this.allselect=false
       }
     },
     search() { // 查询的时候渲染对应的列表
       if (this.allflag) { // 如果全选状态---渲染所有的数据
         this.getlist()
       }
-      if (this.value) {
-        this.contentdata = this.alldata.filter(item => item.exam_name === this.value)
+      if (this.value) {//通过周考月考渲染数据
+       this.contentdata= this.alldata.filter(item => item.exam_name === this.value)
       }
-      if (this.listindex !== -1) {
-        this.contentdata = this.alldata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
-      }
-      if (this.value2) {
+      if (this.listindex !== -1) {//通过课程类型渲染数据
+        this.contentdata= this.alldata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+    }
+      if (this.value2) {//通过题目类型渲染数据
         this.contentdata = this.alldata.filter(item => item.questions_type_text === this.value2)
       }
       if (this.listindex !== -1 && this.value) { // 判断---周考-月考 +  js上下
-        const datas = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
-        this.contentdata = datas.filter(item => item.exam_name === this.value)
+        this.contentdata =this.contentdata.filter(item =>item.exam_name===this.value)
       }
-      if (this.listindex !== -1 && this.value2) {
+      if (this.listindex !== -1 && this.value2) {//通过js上下  题目类型 判断
         this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
       }
-      if (this.listindex !== -1 && this.value && this.value2) {
-        this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+      if(this.value && this.value2){//通过考试类型+题目类型判断
+        this.contentdata=this.contentdata.filter(item=>item.exam_name===this.value)
       }
+      if (this.listindex !== -1 && this.value && this.value2) {//三个一起判断
+        this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+      } 
       if (this.contentdata.length > 10) {
         this.contentdata = this.contentdata.slice(0, this.limit)
       }
@@ -224,7 +232,7 @@ li.active{
 }
 .contentbox_looktest{
   background: #fff;
-  padding: 30px 20px 50px 20px;
+  padding: 20px 35px 50px 35px;
   border-radius: 10px;
 }
 .testtype_ullist{
@@ -253,7 +261,7 @@ li.active{
   }
  >button{
   display: inline-block;
-  padding: 8px 30px;
+  padding: 8px 20px;
   background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
   border: none;
   color: #fff;
@@ -272,7 +280,7 @@ li.active{
 	>li{
 		width: 100%;
 		list-style: none;
-		padding:10px 0;
+		padding:10px 30px;
 		border-bottom: 1px solid #ccc;
     >p:nth-child(1){
       padding: 10px 0;

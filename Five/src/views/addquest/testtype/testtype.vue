@@ -206,7 +206,11 @@ export default {
         }
         td:nth-child(3){
           flex: 1;
-
+        }
+        td:last-child{
+          span{
+            color: #0139fd;
+          }
         }
       }
     }
