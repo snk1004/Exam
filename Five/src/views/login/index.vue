@@ -42,7 +42,7 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%;"
         @click.native.prevent="handleLogin"
       >
         {{ $t('login.logIn') }}
