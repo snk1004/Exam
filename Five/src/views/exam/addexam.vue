@@ -58,7 +58,7 @@
                     <el-form-item prop="date1">
                         <div class="block">
                             <el-date-picker
-                             size='small'
+                             
                             v-model="ruleForm.date1"
                             type="datetime"
                             placeholder="选择日期时间">
@@ -66,7 +66,7 @@
                         </div>
                     </el-form-item>
                     </el-col>
-                    <el-col class="line" :span="2">-</el-col>
+                    
                     <el-col :span="11">
                     <el-form-item prop="date2">
                         <div class="block">
@@ -140,8 +140,6 @@ export default {
             }
         }
     },
-    created(){
-    },
     mounted(){
         //调用获取课程和类型列表函数
         this.getList()
@@ -159,7 +157,6 @@ export default {
             if (valid) {
                 //将时间对象转为时间戳
                 let start_time =moment(this.ruleForm.date1).unix()*1000;
-               
                 let end_time =moment(this.ruleForm.date2).unix()*1000;
                 //将时间戳放入ruleForm数组
                 let ruleForm ={

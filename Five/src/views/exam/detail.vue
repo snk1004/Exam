@@ -9,11 +9,9 @@
               <div class="list">
                 <div class="style_questionitem__3ETlC">
                   <h4>{{ index+1 }}:  {{ item.title }} </h4>
-                  <div class="markdown">
-                    <pre>
-                      {{ item.questions_stem }}
-                    </pre>
-                  </div>
+                   
+                    <markdown-editor v-model="item.questions_stem" />
+               
                 </div>
               </div>
             </div>
@@ -26,6 +24,7 @@
           <!-- <p class="message">答案信息</p>  -->
           <div class="content-list">
             <div class="list">
+              
               <!-- <div class="style_questionitem__3ETlC">
                   <div class="markdown">
                   <pre>
@@ -46,8 +45,12 @@
 </template>
 
 <script>
+import MarkdownEditor from '@/components/MarkdownEditor';
 import { mapActions } from 'vuex';
 export default {
+  components:{
+MarkdownEditor
+  },
   data() {
     return {
       detailList: []
@@ -150,28 +153,6 @@ h2 {
   border: 1px solid #ccc;
   padding: 10px;
   
-}
-.markdown,
-pre,
-code {
-  margin: 0;
-  padding: 0;
-}
-.markdown pre {
-  margin-top: 5px;
-  // height: 100%;
-  display: block;
-  padding: 2em;
-  line-height: 1.2;
-  // max-height: 35em;
-  color: #657b83;
-  background: #f6f6f6;
-  background-size: 30px 30px;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 14px;
-  white-space: normal;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
 .message {
   font-size: 18px;

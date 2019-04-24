@@ -61,10 +61,8 @@ const actions = {
 
     //试题列表
     Questions({ commit }, payload) {
-        console.log(payload)
         return new Promise(async(resolve, reject) => {
             const res = await Questions(payload);
-            console.log(res)
             resolve(res)
         })
     }

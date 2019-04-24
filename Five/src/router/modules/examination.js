@@ -29,14 +29,18 @@ const Examinations = {
             path: 'add', //添加试题
             component: () =>
                 import ('@/views/exam/add'),
-            name: 'add'
+            name: 'add',
+            hidden: true,
+            meta: { view_id: "main-examEdit" }
 
         },
         {
             path: 'detail', //列表详情
             component: () =>
                 import ('@/views/exam/detail'),
-            name: 'detail'
+            name: 'detail',
+            hidden: true,
+            meta: { view_id: "main-questionsDetail" }
         },
 
     ]

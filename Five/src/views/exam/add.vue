@@ -12,9 +12,10 @@
           <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList" :key="index">
             <h4>{{item.title}} <el-button type="text" @click="delmask(index)" style="float: right;"><a href="javascript:;" >删除</a></el-button></h4>
             <div class="markdown">
-              <pre>
-               {{item.questions_answer}}             
-              </pre>
+              <!-- <pre>
+               {{item.questions_stem}}             
+              </pre> -->
+              <markdown-editor v-model="item.questions_stem" />
             </div>
           </div>
         </div>
@@ -36,8 +37,12 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions} from 'vuex';
+import MarkdownEditor from '@/components/MarkdownEditor';
 export default {
+  components:{
+    MarkdownEditor
+  },
   data() {
     return {
       //标题
@@ -48,7 +53,8 @@ export default {
       questionList:[],
       //跳转页面要用的 试题Id
       src:'',
-      NewQuestion:[]
+      NewQuestion:[],
+      items:{}
     };
   },
   created() {
@@ -85,16 +91,17 @@ export default {
 
     //点击添加试题
     headleAdd(id,index){
-      console.log(id)
+      
       //遍历所有的试题
-    let items=this.NewQuestion.map(item=>{
+    this.NewQuestion.map(item=>{
         //判断id是否一致
         if(item.questions_id==id){
           //返回该数据
-        return item
+        this.items=item;
+        
         }
       })
-     this.questionList.push(items[index])
+     this.questionList.push(this.items)
     },
      //点击收起试题列表
     hisdDialog(){
@@ -245,25 +252,25 @@ export default {
     padding: 20px;
     margin-bottom: 20px;
   }
-  .markdown,pre,code{
-    margin: 0;
-    padding: 0;
-  }
-  .markdown pre {
-    margin-top: 5px;
-    height: auto;
-    display: block;
-    padding: 1em;
-    overflow: auto;
-    line-height: 1.3;
-    max-height: 35em;
-    color: #657b83;
-    background:#f6f6f6;
-    background-size: 30px 30px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 1em;
-    white-space:normal;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
+  // .markdown,pre,code{
+  //   margin: 0;
+  //   padding: 0;
+  // }
+  // .markdown pre {
+  //   margin-top: 5px;
+  //   height: auto;
+  //   display: block;
+  //   padding: 1em;
+  //   overflow: auto;
+  //   line-height: 1.3;
+  //   max-height: 35em;
+  //   color: #657b83;
+  //   background:#f6f6f6;
+  //   background-size: 30px 30px;
+  //   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  //   font-size: 1em;
+  //   white-space:normal;
+  //   white-space: pre-wrap;
+  //   word-wrap: break-word;
+  // }
 </style>

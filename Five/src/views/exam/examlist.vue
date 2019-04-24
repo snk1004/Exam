@@ -145,9 +145,13 @@ export default {
         typeId:'',
         //考试 科目select中值的Id
         coursesId:'',
+        //定义一个要渲染的数组
         list:[],
+        //当前页数
         dftPage:1,
-        limit:4,
+        //一页几条
+        limit:10,
+        //定义一个可以slice的数组
         listMist:[]
     }
   },
@@ -223,6 +227,7 @@ export default {
        
       }
     },
+    // 分页器
       handleCurrentChange(val) {
         this.list=this.listMist.slice(
           this.limit*(val-1),
