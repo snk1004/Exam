@@ -76,7 +76,7 @@ export default {
       listflag: false,
       listindex: -1,
       newlist: [],
-      limit: 7,
+      limit: 5,
       page:0,
       allselect:true
     }
@@ -145,16 +145,19 @@ export default {
     },
     search() { // 查询的时候渲染对应的列表
       if (this.allflag) { // 如果全选状态---渲染所有的数据
-        this.getlist()
-      }
-      if (this.value) {//通过周考月考渲染数据
-       this.contentdata= this.alldata.filter(item => item.exam_name === this.value)
+        this.contentdata= this.alldata
       }
       if (this.listindex !== -1) {//通过课程类型渲染数据
         this.contentdata= this.alldata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
-    }
+        console.log(this.contentdata,'15152')
+      }
+      if (this.value) {//通过周考月考渲染数据
+       this.contentdata= this.alldata.filter(item => item.exam_name === this.value)
+       this.allselect=false
+      }
       if (this.value2) {//通过题目类型渲染数据
         this.contentdata = this.alldata.filter(item => item.questions_type_text === this.value2)
+        this.allselect=false
       }
       if (this.listindex !== -1 && this.value) { // 判断---周考-月考 +  js上下
         this.contentdata =this.contentdata.filter(item =>item.exam_name===this.value)
@@ -164,19 +167,13 @@ export default {
       }
       if(this.value && this.value2){//通过考试类型+题目类型判断
         this.contentdata=this.contentdata.filter(item=>item.exam_name===this.value)
+        this.allselect=false
       }
       if (this.listindex !== -1 && this.value && this.value2) {//三个一起判断
         this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
       } 
       if (this.contentdata.length > 10) {
         this.contentdata = this.contentdata.slice(0, this.limit)
-      }
-      if (this.newlist.length) { // 点击全部--搜索渲染所有数据
-        if (this.newlist.length > 10) {
-          this.contentdata = this.newlist.slice(0, this.limit)
-        } else {
-          this.contentdata = this.newlist
-        }
       }
     },
     detail(e, id) {

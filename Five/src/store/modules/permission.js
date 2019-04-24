@@ -6,11 +6,11 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param route
  */
 function hasPermission(view_ids, route) {
-    if (route.meta && route.meta.view_id) {
-        return view_ids.some(item => item === route.meta.view_id)
-    } else {
-        return true
-    }
+  if (route.meta && route.meta.view_id) {
+    return view_ids.some(item => item === route.meta.view_id)
+  } else {
+    return true
+  }
 }
 
 /**
@@ -19,46 +19,46 @@ function hasPermission(view_ids, route) {
  * @param roles
  */
 export function filterAsyncRoutes(routes, view_ids) {
-    const res = []
-    routes.forEach(route => {
-        const tmp = {...route }
-        if (hasPermission(view_ids, tmp)) {
-            if (tmp.children) {
-                tmp.children = filterAsyncRoutes(tmp.children, view_ids)
-            }
-            res.push(tmp)
-        }
-    })
-    return res
+  const res = []
+  routes.forEach(route => {
+    const tmp = { ...route }
+    if (hasPermission(view_ids, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutes(tmp.children, view_ids)
+      }
+      res.push(tmp)
+    }
+  })
+  return res
 }
 
 const state = {
-    routes: [],
-    addRoutes: []
+  routes: [],
+  addRoutes: []
 }
 
 const mutations = {
-    SET_ROUTES: (state, routes) => {
-        state.addRoutes = routes
-        state.routes = constantRoutes.concat(routes)
-    }
+  SET_ROUTES: (state, routes) => {
+    state.addRoutes = routes
+    state.routes = constantRoutes.concat(routes)
+  }
 }
 
 const actions = {
-    async generateRoutes({ commit }, view_authority) {
-        //获取用户所拥有的view_ids
-        const view_ids = view_authority.map(item => item.view_id)
-            //在动态路由里面过滤一遍，得到用户能访问的路由
-        const accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids)
-            //更新路由
-        commit('SET_ROUTES', accessedRoutes)
-        return accessedRoutes
-    }
+  async generateRoutes({ commit }, view_authority) {
+    // 获取用户所拥有的view_ids
+    const view_ids = view_authority.map(item => item.view_id)
+    // 在动态路由里面过滤一遍，得到用户能访问的路由
+    const accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids)
+    // 更新路由
+    commit('SET_ROUTES', accessedRoutes)
+    return accessedRoutes
+  }
 }
 
 export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
+  namespaced: true,
+  state,
+  mutations,
+  actions
 }
