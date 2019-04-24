@@ -1,11 +1,11 @@
 import { subject, examType, create, examList, PutCreate, detailExam, Questions } from '@/api/examList';
 import moment from 'moment';
-const state = {
-    courseList: []
-}
-const mutations = {
+// const state = {
+//     courseList: []
+// }
+// const mutations = {
 
-}
+// }
 const actions = {
     //创建考试
     async createExam({ commit }, examList) {
@@ -71,7 +71,7 @@ const actions = {
 }
 export default {
     namespaced: true,
-    state,
-    mutations,
+    // state,
+    // mutations,
     actions
 }

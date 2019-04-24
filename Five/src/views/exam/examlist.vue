@@ -107,14 +107,17 @@
           </el-table-column>
         </el-table>  
         </div>
-        <!-- <div class="block">
-          
+        
+          <div class="pagetion">
           <el-pagination
+            background
             layout="prev, pager, next"
-            :total="50">
-          </el-pagination>
-        </div> -->
-
+            :total="listMist.length"
+            :page-size="limit"
+            @current-change="handleCurrentChange"
+            :current-page.sync="dftPage"
+          ></el-pagination>
+    </div>
       </div> 
   </div>
 </template>
@@ -142,14 +145,16 @@ export default {
         typeId:'',
         //考试 科目select中值的Id
         coursesId:'',
-        list:[]
-
-       
+        list:[],
+        dftPage:1,
+        limit:4,
+        listMist:[]
     }
   },
 
   mounted(){
       this.getList();  
+
   },
   methods:{
     ...mapActions({
@@ -158,6 +163,7 @@ export default {
       examList:"examList/examList",
       detailExam:'examList/detailExam'
     }),
+
     //获取考试类型的值
     healeType(e){
       let name=e
@@ -178,43 +184,52 @@ export default {
     },
     //点击搜索 调用按需加载
     onSubmit() {
-      this.list=this.examLists.filter((item)=>{
+      this.listMist=this.examLists.filter((item)=>{
         if(item.exam_id==this.typeId&&item.subject_id==this.coursesId){
             return item
         }
       })
+     this.list=this.listMist.slice(0,this.limit)
+
     },
-    //按需加载
-   
-     
-    
     //点击 时间类型
     headleTimer(index){
       this.TimerIndex=index;
       let now = moment().unix()*1000;
-      // console.log(now)
-      //  console.log(moment(now*1).format('YYYY-MM-DD HH:MM:SS'))
         //判断结束时间是否大于现在本地时间
       if(this.TimerIndex==2){
-        this.list=this.examLists.filter(item=>{
+        this.listMist=this.examLists.filter(item=>{
           let end_time= moment(item.end_time).unix()*1000;
           if(end_time<now){
             return item
           }
+          
         })//判断本地时间在不在开始时间和结束时间之间
+        
+          this.list=this.listMist.slice(0,this.limit)
+        
       }else if(this.TimerIndex==1){
-        this.list=this.examLists.filter(item=>{
+        this.listMist=this.examLists.filter(item=>{
           let end_time= moment(item.end_time).unix()*1000;
           let start_time= moment(item.start_time).unix()*1000;
           if(end_time>now&&start_time<now){
            return item
           }
         })
+      this.list=this.listMist.slice(0,this.limit)
       }else{
-        this.list=this.examLists;
+        this.listMist=this.examLists;
+        this.list=this.listMist.slice(0,this.limit)
+       
       }
     },
-
+      handleCurrentChange(val) {
+        this.list=this.listMist.slice(
+          this.limit*(val-1),
+          this.limit*val
+        )
+        
+      },
     getList(){
       //考试类型
       this.examType().then(res=>{
@@ -230,14 +245,15 @@ export default {
       })
       //获取的列表
       this.examList().then(res=>{
-       console.log(res)
+     
           if(res.code==1){  
             res.exam.map(item=>{
               item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
               item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
             })
               this.examLists=res.exam;
-              this.list=res.exam
+              this.listMist=res.exam;
+              this.list=this.listMist.slice(0,this.limit)
           }
       })
     },
