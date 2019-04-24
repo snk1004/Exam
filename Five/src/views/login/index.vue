@@ -16,6 +16,7 @@
           name="username"
           type="text"
           auto-complete="on"
+          style="color:#000"
         />
       </el-form-item>
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
@@ -163,6 +164,9 @@ $cursor: #fff;
   }
 }
 
+  .login-container .el-input input{
+    color: #000!important;
+  }
 /* reset element-ui css */
 .login-container {
   .el-input {
@@ -289,6 +293,17 @@ $light_gray:#eee;
    padding: 20px 40px!important;
    background: linear-gradient(-90deg,#4e75ff,#0139fd)!important
   }
-
+  .el-button{
+    height: 40px!important;
+    line-height: 3px;
+    margin-top: 15px;
+  }
+  .users,
+  .pwds{
+    background:  #e8f0fe!important;
+    border: 1px solid #ddd!important;
+    height: 50px!important;
+    align-items: center;
+  }
 }
 </style>
