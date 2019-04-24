@@ -1,7 +1,7 @@
 <template>
   <div class="add-layout">
     <h2>试卷详情</h2>
-    <div v-if='detailList' class="content">
+    <div v-if='detailList.length>0' class="content">
       <div class="left-content">
         <div v-for="(item,index) in detailList" :key="index" class="add-layout-content">
           <div class="add-layout-question">
@@ -9,11 +9,9 @@
               <div class="list">
                 <div class="style_questionitem__3ETlC">
                   <h4>{{ index+1 }}:  {{ item.title }} </h4>
-                  <div class="markdown">
-                    <pre>
-                      {{ item.questions_stem }}
-                    </pre>
-                  </div>
+                   
+                    <markdown-editor v-model="item.questions_stem" />
+               
                 </div>
               </div>
             </div>
@@ -21,55 +19,47 @@
         
         </div>
       </div>
-       <div class="right-content">
-         
-          <div class="add-layout-answer"  v-for="(item,index) in detailList" :key="index" >
-           <!-- <p class="message">答案信息</p>  -->
-            <div class="content-list">
-              <div class="list">
-                <!-- <div class="style_questionitem__3ETlC">
-                   <div class="markdown">
-                    <pre>
-                       {{ item.questions_answer }} 
-                    </pre>
-                  </div> 
-                </div> -->
-              </div>
+      <div class="right-content">
+        <div class="add-layout-answer"  v-for="(item,index) in detailList" :key="index" >
+          <!-- <p class="message">答案信息</p>  -->
+          <div class="content-list">
+            <div class="list">
+              
+              <!-- <div class="style_questionitem__3ETlC">
+                  <div class="markdown">
+                  <pre>
+                      {{ item.questions_answer }} 
+                  </pre>
+                </div> 
+              </div> -->
             </div>
-        </div> 
-         
-       </div>
-         
+          </div>
+        </div>  
+      </div>    
     </div>
-    <div v-else class="cont">
-      <div class="left-cont">
-
-      </div>
-      <div class="right-cont"></div>
+    <div class="cont" v-else>
+      <div class="left-content"></div>
+      <div class="right-content"></div>
     </div>
-
-
-
-
-   
-   </div>
-  </div>
-
+ </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import MarkdownEditor from '@/components/MarkdownEditor';
+import { mapActions } from 'vuex';
 export default {
+  components:{
+MarkdownEditor
+  },
   data() {
     return {
       detailList: []
     }
   },
   async created() {
-    const id = this.$route.query.id
+    const id = this.$route.query.id;
     const result = await this.detailExam(id).then(res=>{
-
-       this.detailList=res.data.questions
+       this.detailList=res.data.questions;
     })
    
   },
@@ -89,7 +79,7 @@ export default {
   background: #f0f2f5;
   min-height: 0;
   flex: 1;
-
+  
 }
 h4{
   font-weight: 400;
@@ -106,20 +96,20 @@ h2 {
   font-weight: 500;
   font-size: 1.5em;
 }
-
+.cont{
+  width: 95%;
+  margin: 10px 2.5%;
+  display: flex;
+  flex: 1;
+}
 .content{
   width: 95%;
   margin: 10px 2.5%;
   display: flex;
 }
-.cont{
-  width: 95%;
-  flex: 1;
-  background: blue;
-}
 .left-content{
   width: 65%;
-  height: 100%;
+  // height: 100%;
   background: #fff;
   border-radius: 15px;
   padding: 20px 0;
@@ -163,28 +153,6 @@ h2 {
   border: 1px solid #ccc;
   padding: 10px;
   
-}
-.markdown,
-pre,
-code {
-  margin: 0;
-  padding: 0;
-}
-.markdown pre {
-  margin-top: 5px;
-  height: 100%;
-  display: block;
-  padding: 2em;
-  line-height: 1.2;
-  // max-height: 35em;
-  color: #657b83;
-  background: #f6f6f6;
-  background-size: 30px 30px;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 14px;
-  white-space: normal;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
 .message {
   font-size: 18px;

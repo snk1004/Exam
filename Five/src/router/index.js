@@ -85,12 +85,11 @@ export const constantRoutes = [
         meta: { title: 'dashboard', icon: '', noCache: true, affix: true, view_id: 'main' }
       }
     ]
-  }
-]
+  }]
 /**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
+     * asyncRoutes
+     * the routes that need to be dynamically loaded based on user roles
+     */
 export const asyncRoutes = [
   ExamRouter,
   userRouter,

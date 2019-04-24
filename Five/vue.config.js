@@ -3,7 +3,7 @@ const path = require('path')
 const pkg = require('./package.json')
 
 function resolve(dir) {
-  return path.join(__dirname, dir) 
+  return path.join(__dirname, dir)
 }
 
 const name = pkg.name || 'vue-element-admin' // page title
@@ -97,7 +97,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()
