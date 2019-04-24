@@ -12,9 +12,6 @@
           <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList" :key="index">
             <h4>{{item.title}} <el-button type="text" @click="delmask(index)" style="float: right;"><a href="javascript:;" >删除</a></el-button></h4>
             <div class="markdown">
-              <!-- <pre>
-               {{item.questions_stem}}             
-              </pre> -->
               <markdown-editor v-model="item.questions_stem" />
             </div>
           </div>
@@ -174,11 +171,11 @@ export default {
     border: 0;
     background-clip: padding-box;
     z-index: 1;
-    overflow: hidden;
+     overflow-y: auto;
   }
    .add-drawer-right ul{
      width: 100%;
-     overflow-y: none;
+    
    }
   .add-drawer-right li{
     line-height: 35px;
