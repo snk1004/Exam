@@ -202,8 +202,6 @@ export default {
     },
     // 筛选
     Search() {
-      this.dataList = []
-      this.newList = []
       const nameList = [] // 姓名暂存数组
       // const newRoomList = [] // 教室号暂存数组
       // const classList = [] // 班级暂存数组
@@ -256,14 +254,16 @@ export default {
           }
         }
       })
-      this.dataList = []
+      this.newClassList = []
       this.dataList = this.newList
+      this.newList = []
     },
     // 重置
     Reset() {
       this.input = ''
       this.roomValue = ''
       this.classValue = ''
+      this.dataList = this.newData
     },
     handleCurrentChange(cpage) {
       this.currpage = cpage
