@@ -74,9 +74,8 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    redirect: 'dashaboard',
-    // hidden: true,
-    name: 'dashaboard',
+    redirect: 'dashboard',
+    name: 'dashboard',
     meta: {
       title: 'textquest',
       icon: 'tree',
