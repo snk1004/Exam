@@ -3,7 +3,7 @@ const path = require('path')
 const pkg = require('./package.json')
 
 function resolve(dir) {
-  return path.join(__dirname, dir) 
+  return path.join(__dirname, dir)
 }
 
 const name = pkg.name || 'vue-element-admin' // page title
@@ -12,12 +12,12 @@ const port = 9527 // dev port
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
-   * You will need to set publicPath if you plan to deploy your site under a sub path,
-   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-   * then publicPath should be set to "/bar/".
-   * In most cases please use '/' !!!
-   * Detail: https://cli.vuejs.org/config/#publicpath
-   */
+     * You will need to set publicPath if you plan to deploy your site under a sub path,
+     * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
+     * then publicPath should be set to "/bar/".
+     * In most cases please use '/' !!!
+     * Detail: https://cli.vuejs.org/config/#publicpath
+     */
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
@@ -97,7 +97,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

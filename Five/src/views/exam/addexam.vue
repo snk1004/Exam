@@ -4,7 +4,6 @@
         <div class='ant'>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item
-                 
                   prop="name">
                    <span class="demonstration">
                     <b>*</b> 试卷名称：
@@ -59,7 +58,7 @@
                     <el-form-item prop="date1">
                         <div class="block">
                             <el-date-picker
-                             size='small'
+                             
                             v-model="ruleForm.date1"
                             type="datetime"
                             placeholder="选择日期时间">
@@ -67,7 +66,7 @@
                         </div>
                     </el-form-item>
                     </el-col>
-                    <el-col class="line" :span="2">-</el-col>
+                    
                     <el-col :span="11">
                     <el-form-item prop="date2">
                         <div class="block">
@@ -116,8 +115,7 @@ export default {
             rules: {
                 //名称的规则
                 name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                   
+                    { required: true, message: '请输入活动名称', trigger: 'blur' },           
                 ],
                 //考试类型的规则
                 courseExamId: [
@@ -142,8 +140,6 @@ export default {
             }
         }
     },
-    created(){
-    },
     mounted(){
         //调用获取课程和类型列表函数
         this.getList()
@@ -161,9 +157,6 @@ export default {
             if (valid) {
                 //将时间对象转为时间戳
                 let start_time =moment(this.ruleForm.date1).unix()*1000;
-                console.log(start_time)
-            //    let start=moment(start_time*1).format('YYYY-MM-DD HH:MM:SS')
-            //     console.log(start)
                 let end_time =moment(this.ruleForm.date2).unix()*1000;
                 //将时间戳放入ruleForm数组
                 let ruleForm ={
@@ -176,7 +169,7 @@ export default {
             //跳转页面
             this.$router.push({ path: "/examination/add" })
             } else {
-                console.log('error submit!!');
+                
                 return false;
             }
             });
@@ -198,10 +191,8 @@ export default {
                     this.course=res.data;
                 }
             })
-        }
-        
+        }  
     }
- 
 }
 </script>
 

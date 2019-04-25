@@ -204,14 +204,12 @@ export default {
       }
     },
     handleCurrentChange(val) {
-      console.log((this.limit - 1) * (val - 1))
       this.newList = this.dataList.slice(
         this.limit * (val - 1),
         this.limit * val
       )
     }
   },
-  components: { Tab },
   created() {
     this.getList().then(res => {
       if (res.code === 1) {

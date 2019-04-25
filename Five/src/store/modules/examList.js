@@ -1,11 +1,11 @@
-import { subject, examType, create, examList, PutCreate, detailExam } from '@/api/examList';
+import { subject, examType, create, examList, PutCreate, detailExam, Questions } from '@/api/examList';
 import moment from 'moment';
-const state = {
-    courseList: []
-}
-const mutations = {
+// const state = {
+//     courseList: []
+// }
+// const mutations = {
 
-}
+// }
 const actions = {
     //创建考试
     async createExam({ commit }, examList) {
@@ -21,10 +21,12 @@ const actions = {
     //考试列表
     examList({ commit }, payload) {
         return new Promise(async(resolve, reject) => {
-            const examLists = await examList(payload)
+            const examLists = await examList(payload);
+
             resolve(examLists)
         })
     },
+
     //考试科目
     subject({ commit }, payload) {
         return new Promise(async(resolve, reject) => {
@@ -43,7 +45,8 @@ const actions = {
     async PutCreate({ commit }, payload) {
         const { src, question_ids } = payload;
         console.log(src, question_ids)
-        var res = await PutCreate({ src: src, question_ids: question_ids })
+        var res = await PutCreate({ src: src, question_ids: question_ids });
+        console.log(res)
         return res
     },
 
@@ -54,10 +57,19 @@ const actions = {
             resolve(typeData)
         })
     },
+
+
+    //试题列表
+    Questions({ commit }, payload) {
+        return new Promise(async(resolve, reject) => {
+            const res = await Questions(payload);
+            resolve(res)
+        })
+    }
 }
 export default {
     namespaced: true,
-    state,
-    mutations,
+    // state,
+    // mutations,
     actions
 }
