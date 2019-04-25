@@ -7,7 +7,8 @@ const ExamRouter = {
   name: 'Exam',
   meta: {
     title: 'textquest',
-    icon: 'tree'
+    icon: 'tree',
+    view_id: 'main-addQuestions'
   },
   children: [{
     path: 'addquest',

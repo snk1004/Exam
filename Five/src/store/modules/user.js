@@ -49,7 +49,8 @@ const actions = {
   async getInfo({ commit, state }) {
     const data = await getInfo()
     commit('SET_USERINFO', data.data)
-    commit('SET_AVATAR', data.data.avatar)
+    const avatar = data.data.avatar == null ? 'https://cdn.nlark.com/yuque/0/2019/png/anonymous/1547609339813-e4e49227-157c-452d-be7e-408ca8654ffe.png?x-oss-process=image/resize,m_fill,w_48,h_48/format,png' : data.data.avatar
+    commit('SET_AVATAR', avatar)
     return data.data
   },
   // get use getViewAuthority
@@ -69,6 +70,7 @@ const actions = {
         commit('SET_ROLES', [])
         removeToken()
         resetRouter()
+        commit('SET_USERINFO', '')
         resolve()
       }).catch(error => {
         reject(error)

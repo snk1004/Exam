@@ -28,7 +28,7 @@ const userRouter = {
       path: 'addphoto',
       component: () => import('@/views/userShow/addphoto'),
       name: 'photo',
-      meta: { title: 'photo', noCache: true, view_id: 'main-showUser' }
+      meta: { title: 'photo', noCache: true, view_id: 'main' }
     }
   ]
 }

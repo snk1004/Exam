@@ -47,7 +47,8 @@ export default {
   methods: {
     fetchData() {
       transactionList().then(response => {
-        this.list = response.data.items.slice(0, 8)
+        console.log(response)
+        // this.list = response.data.items.slice(0, 8)
       })
     }
   }

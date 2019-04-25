@@ -74,11 +74,11 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    redirect: 'dashaboard',
-    name: 'dashaboard',
+    redirect: 'dashboard',
+    name: 'dashboard',
     meta: {
       title: 'textquest',
-      icon: 'tree',
+      icon: 'zip',
       view_id: 'main'
     },
     children: [
