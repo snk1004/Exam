@@ -50,3 +50,7 @@ export const resetStudent = params => {
 export const deleteStudent = params => {
   return request.delete('/manger/student/' + params.id, params)
 }
+// 上传头像
+export const upHead = params => {
+  return request.delete('/user/user', params)
+}
