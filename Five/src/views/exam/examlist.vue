@@ -47,65 +47,58 @@
           </div>
         </div>
         <div class="ant-table-body">    
-       <el-table
-          :data="list"
-          style="width: 100%">
-          <el-table-column
-            label="试卷信息"
-            style="width: 2.0em"
-            
-            >
-            <template slot-scope="scope">
-              <p class="examName"> 
-                  <span style="margin-left: 10px">{{scope.row.title}}</span>
-              </p>
-              <p class="examMass">
-                <span>考试时间:{{scope.row.number}}</span>
-                <span>{{scope.row.number}}道题</span>
-                <span>作弊{{scope.row.status}}</span>
-              </p>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="班级"
-           style="width:3em"
-            >
-            <template slot-scope="scope">
-                <div slot="reference" class="name-wrapper">
-                  <p>考试班级</p>
-                <p>
-                  <span v-for=" (item,index) in scope.row.grade_name" :key="index">{{ item }}</span>
+          <el-table
+            :data="list"
+            style="width: 100%">
+            <el-table-column
+              label="试卷信息"
+              style="width: 2.0em">
+              <template slot-scope="scope">
+                <p class="examName"> 
+                    <span style="margin-left: 10px">{{scope.row.title}}</span>
                 </p>
-                </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="创始人"
-          style="width: 1.5em"
-          >
-            <template slot-scope="scope">
-              <p>
-               {{scope.row.user_name}}
-              </p>
-            </template>
-          </el-table-column>
-          <el-table-column label="开始时间">
-            <template slot-scope="scope">
+                <p class="examMass">
+                  <span>考试时间:{{scope.row.number}}</span>
+                  <span>{{scope.row.number}}道题</span>
+                  <span>作弊{{scope.row.status}}</span>
+                </p>
+              </template>
+            </el-table-column>
+            <el-table-column label="班级"  style="width:3em">
+              <template slot-scope="scope">
+                  <div slot="reference" class="name-wrapper">
+                    <p>考试班级</p>
+                  <p>
+                    <span v-for=" (item,index) in scope.row.grade_name" :key="index">{{ item }}</span>
+                  </p>
+                  </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="创始人" style="width: 1.5em">
+              <template slot-scope="scope">
+                <p>
+                {{scope.row.user_name}}
+                </p>
+              </template>
+            </el-table-column>
+            <el-table-column label="开始时间">
+              <template slot-scope="scope">
+                  <span> {{scope.row.start_time}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="结束时间">
+              <template slot-scope="scope">
                 <span> {{scope.row.start_time}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="结束时间">
-            <template slot-scope="scope">
-              <span> {{scope.row.start_time}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row.exam_exam_id)">详情</el-button>
-            </template>
-          </el-table-column>
-        </el-table>  
+              </template>
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  @click="handleEdit(scope.$index, scope.row.exam_exam_id)">详情</el-button>
+              </template>
+            </el-table-column>
+          </el-table>  
         </div>
         
           <div class="pagetion">
@@ -207,11 +200,9 @@ export default {
           if(end_time<now){
             return item
           }
-          
-        })//判断本地时间在不在开始时间和结束时间之间
-        
+        })
           this.list=this.listMist.slice(0,this.limit)
-        
+        //判断本地时间在不在开始时间和结束时间之间
       }else if(this.TimerIndex==1){
         this.listMist=this.examLists.filter(item=>{
           let end_time= moment(item.end_time).unix()*1000;

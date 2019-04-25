@@ -171,11 +171,14 @@ export default {
     border: 0;
     background-clip: padding-box;
     z-index: 1;
-     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    
   }
    .add-drawer-right ul{
      width: 100%;
-    
+    flex: 1;
+    overflow-y: auto;
    }
   .add-drawer-right li{
     line-height: 35px;
@@ -249,25 +252,4 @@ export default {
     padding: 20px;
     margin-bottom: 20px;
   }
-  // .markdown,pre,code{
-  //   margin: 0;
-  //   padding: 0;
-  // }
-  // .markdown pre {
-  //   margin-top: 5px;
-  //   height: auto;
-  //   display: block;
-  //   padding: 1em;
-  //   overflow: auto;
-  //   line-height: 1.3;
-  //   max-height: 35em;
-  //   color: #657b83;
-  //   background:#f6f6f6;
-  //   background-size: 30px 30px;
-  //   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  //   font-size: 1em;
-  //   white-space:normal;
-  //   white-space: pre-wrap;
-  //   word-wrap: break-word;
-  // }
 </style>
