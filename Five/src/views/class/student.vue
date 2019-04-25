@@ -204,12 +204,11 @@ export default {
     Search() {
       this.dataList = []
       this.newList = []
-      console.log(this.input, this.roomValue, this.classValue)
       const nameList = [] // 姓名暂存数组
       // const newRoomList = [] // 教室号暂存数组
       // const classList = [] // 班级暂存数组
       this.newRoomList = []
-      const lastRoomList = []
+
       this.newData.forEach(item => {
         // 对空判断
         if (this.input === '' && this.roomValue === '' && this.classValue === '') {
@@ -225,10 +224,12 @@ export default {
             this.newRoomList.push(item)
             if (this.input !== '') {
               this.newRoomList = []
+              const lastRoomList = []
               this.newList.forEach(it => {
                 if (it.student_name === this.input) {
                   this.newRoomList = []
                   lastRoomList.push(it)
+                  this.newRoomList = lastRoomList
                 }
               })
             }
@@ -236,17 +237,18 @@ export default {
               this.showNoData = true
             } */
             this.newList = this.newRoomList
-            console.log('last', lastRoomList)
-            
           }
           // 筛选 班级
           if (this.classValue === item.grade_id) {
             this.newClassList.push(item)
             if (this.input !== '') {
-              this.newClassList.forEach(it => {
+              this.newClassList = []
+              const lastClassList = []
+              this.newList.forEach(it => {
                 if (it.student_name === this.input) {
                   this.newClassList = []
-                  this.newClassList.push(it)
+                  lastClassList.push(it)
+                  this.newClassList = lastClassList
                 }
               })
             }
