@@ -31,22 +31,6 @@
             <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
             <el-button type="primary" size="medium" @click="ExportExcel">导出表格</el-button>
         </el-form-item>
-        <el-form-item label="课程">
-          <el-select v-model="course" placeholder="请选择" @change="healeCourses">
-            <el-option
-              v-for="item in courses"
-              :key="item.subject_text"
-              :label="item.subject_text"
-              :value="item.subject_text"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item size="medium">
-          <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
-        </el-form-item>
-        <el-form-item size="medium">
-          <el-button type="primary" size="medium" @click="exportExecl">导出试卷列表</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="ant-layout-content">
@@ -184,7 +168,7 @@ export default {
     healeType(e) {
       const name = e
       this.examTypes.map(item => {
-        if (item.exam_name == name) {
+        if (item.exam_name === name) {
           this.typeId = item.exam_id
         }
       })
@@ -193,37 +177,49 @@ export default {
     healeCourses(e) {
       const name = e
       this.courses.map(item => {
-        if (item.subject_text == name) {
+        if (item.subject_text === name) {
           this.coursesId = item.subject_id
         }
       })
     },
     // 点击搜索 调用按需加载
     onSubmit() {
-      this.listMist = this.examLists.filter((item) => {
-        if (item.exam_id == this.typeId && item.subject_id == this.coursesId) {
-          return item
-        }
+      if(this.type!==''&&this.course!==''){
+        this.listMist = this.examLists.filter((item) => {
+          if (item.exam_id === this.typeId && item.subject_id === this.coursesId) {
+            return item
+          }
       })
       this.list = this.listMist.slice(0, this.limit)
+      }
+      return 
+      
     },
     //导出表格
     ExportExcel(){
-      console.log(this.list)
-      import('@/vendor/Export2Excel').then(excel => {
-        // const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
-        // const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
-        // const list = this.list
-        // const data = this.formatJson(filterVal, list)
-        excel.export_json_to_excel({
-          header: [试卷信息,班级,创始人,开始时间,结束时间],
-          data:this.list,
-          filename: this.filename,
-          autoWidth: this.autoWidth,
-          bookType: 'xlsx'
+       let navList=this.list.map(item=>{
+          return {
+            "考试信息":item.title,
+            "考试名称":item.exam_name,
+            "出题人":item.user_name,
+            "考试科目":item.subject_text,
+           "开始时间":item.start_time,
+            "结束时间":item.end_time
+          } 
+        });
+        let excelList=navList.map(item=>{
+            let arr=Object.values(item);
+          return arr.map(item=>JSON.stringify(item))
+        })   
+        let header=Object.keys(navList[0])
+        import('@/vendor/Export2Excel').then(excel => {
+          excel.export_json_to_excel({
+            header: header,
+            data:excelList,
+            filename: "考试列表",
+            bookType: 'xlsx'
+          }) 
         })
-    
-      })
     },
     //点击 时间类型
     headleTimer(index){
@@ -299,8 +295,6 @@ export default {
 </script>
 <style scoped lang="scss">
   *{
-    margin: 0;
-    padding: 0;
     list-style: none;
     box-sizing: border-box;
   }
@@ -312,8 +306,7 @@ export default {
     flex-direction: column;
     h3{
         width: 100%;
-        padding: 20px 0px;
-        margin-top: 10px;
+        padding: 10px 0px;
         color: rgba(0, 0, 0, 0.85);
         font-weight: 500;
         font-size: 1.5em;
@@ -321,7 +314,7 @@ export default {
       }
       .ant-layout-top{
         width: 100%;
-        height:10em;
+        height:80px;
         box-sizing: border-box;
         padding: 20px;
         background: #fff;

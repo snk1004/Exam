@@ -206,8 +206,6 @@ export default {
 
  <style lang="scss" scoped>
     *{
-        padding: 0;
-        margin: 0;
         list-style: none;
         box-sizing: border-box;
     }
