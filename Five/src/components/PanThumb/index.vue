@@ -1,6 +1,6 @@
 <template>
   <div :style="{zIndex:zIndex,height:height,width:width}" class="pan-item">
-    <div class="pan-info">
+    <div v-if="image" class="pan-info">
       <div class="pan-info-roles-container">
         <slot />
       </div>

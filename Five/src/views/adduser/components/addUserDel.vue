@@ -29,6 +29,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  props: ['options', 'list'],
   data() {
     return {
       userState: [{
@@ -42,9 +43,8 @@ export default {
       user_name: '',
       user_pwd: '',
       stateInd: 0,
-      values: '',
-      list: [],
-      options: []
+      values: ''
+
     }
   },
   created() {
@@ -54,17 +54,8 @@ export default {
     ...mapActions({
       addSubmit: 'usershow/adduser',
       getreneval: 'usershow/getReneval',
-      getid: 'usershow/getIdentity',
-      getList: 'usershow/show'
+      getid: 'usershow/getIdentity'
     }),
-    getdata() {
-      this.getid().then(res => {
-        this.options = res.data
-      })
-      this.getList().then(res => {
-        this.list = res.data
-      })
-    },
     handleState(i) {
       this.stateInd = i
     },
@@ -81,7 +72,9 @@ export default {
               message: res.msg,
               type: 'success'
             })
-            this.getdata()
+            if (res.code === 1) {
+              this.$emit('finish', 'wancheng')
+            }
           })
         } else if (this.user_pwd && this.user_name && !this.value) {
           this.addSubmit({
@@ -92,7 +85,9 @@ export default {
               message: res.msg,
               type: 'success'
             })
-            this.getData()
+            if (res.code === 1) {
+              this.$emit('finish', 'wancheng')
+            }
           })
         } else {
           this.$message.error('参数有误')
@@ -110,6 +105,17 @@ export default {
                   'user_name': this.user_name === '' ? item.user_name : this.user_name,
                   'user_pwd': this.user_pwd === '' ? item.user_pwd : this.user_pwd,
                   'identity_id': this.value ? users.identity_id : ''
+                }).then(res => {
+                  this.$message({
+                    message: res.msg,
+                    type: 'success'
+                  })
+                })
+              } else {
+                this.getreneval({
+                  'user_id': item.user_id,
+                  'user_name': this.user_name == '' ? item.user_name : this.user_name,
+                  'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd
                 }).then(res => {
                   this.$message({
                     message: res.msg,

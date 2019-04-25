@@ -1,45 +1,48 @@
 <template>
-    <div class="addUser_wrapper">
-        <div class="btn">
-          <button>添加身份</button>
-        </div>
-        <input type="text" placeholder="请输入身份名称" v-model="value">
-        <div class="btnFotter">
-          <el-button :plain="true"  @click='handleSubmit'>确认</el-button>
-          <button class="resets" @click='resets'>重置</button>
-        </div>
-      </div>
+  <div class="addUser_wrapper">
+    <div class="btn">
+      <button>添加身份</button>
+    </div>
+    <input v-model="value" type="text" placeholder="请输入身份名称">
+    <div class="btnFotter">
+      <el-button :plain="true" @click="handleSubmit">确认</el-button>
+      <button class="resets" @click="resets">重置</button>
+    </div>
+  </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-    data(){
-        return {
-            value:''
-        }
-    },
-    methods:{
-        ...mapActions({
-            addidentity:'usershow/setIdentity'
-        }),
-        handleSubmit(){
-           if(this.value){
-              this.addidentity({
-                'identity_text':this.value
-            }).then(res=>{
-               this.$message({
-                message: res.msg,
-                type: 'success'
-              });
-            })
-           }else{
-               this.$message.error('参数有误');
-           }
-        },
-         resets(){
-          this.value=''
-      }
+  data() {
+    return {
+      value: ''
     }
+  },
+  methods: {
+    ...mapActions({
+      addidentity: 'usershow/setIdentity'
+    }),
+    handleSubmit() {
+      if (this.value) {
+        this.addidentity({
+          'identity_text': this.value
+        }).then(res => {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+          if (res.code === 1) {
+            this.$emit('finish', 'wancheng')
+          }
+        })
+      } else {
+        this.$message.error('参数有误')
+      }
+    },
+    resets() {
+      this.value = ''
+    }
+  }
 }
 </script>
 

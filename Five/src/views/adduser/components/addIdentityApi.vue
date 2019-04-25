@@ -26,21 +26,18 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
+  props: ['options', 'api'],
   data() {
     return {
       value: '',
-      api: [],
       apiView: '',
       identity_id: '',
-      api_id: '',
-      options: []
+      api_id: ''
     }
   },
   methods: {
     ...mapActions({
-      getapi: 'usershow/getApi',
-      setapiidentity: 'usershow/setIdentityApi',
-      getId: 'usershow/getIdentity'
+      setapiidentity: 'usershow/setIdentityApi'
 
     }),
     async handleSubmit() {
@@ -67,14 +64,6 @@ export default {
       this.value = ''
       this.apiView = ''
     }
-  },
-  created() {
-    this.getapi().then(res => {
-      this.api = res.data
-    })
-    this.getId().then(res => {
-      this.options = res.data
-    })
   },
   computed: {
     ...mapState({

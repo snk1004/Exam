@@ -27,8 +27,9 @@
         </el-form-item>
         <el-form-item size="medium">
           <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
-          <el-button type="primary" size="medium" @click="exportExcel">导出Excel</el-button>
-
+        </el-form-item>
+        <el-form-item size="medium">
+          <el-button type="primary" size="medium" @click="exportExecl">导出试卷列表</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -228,19 +229,19 @@ export default {
     getList() {
       // 考试类型
       this.examType().then(res => {
-        if (res.code === 1) {
+        if (res.code == 1) {
           this.examTypes = res.data
         }
       })
       // 考试科目
       this.subject().then(res => {
-        if (res.code === 1) {
+        if (res.code == 1) {
           this.courses = res.data
         }
       })
       // 获取的列表
       this.examList().then(res => {
-        if (res.code === 1) {
+        if (res.code == 1) {
           res.exam.map(item => {
             item.start_time = moment(item.start_time * 1).format('YYYY-MM-DD HH:MM:SS')
             item.end_time = moment(item.end_time * 1).format('YYYY-MM-DD HH:MM:SS')
@@ -251,19 +252,13 @@ export default {
         }
       })
     },
+
     handleEdit(index, id) {
       this.$router.push({ path: '/examination/detail', query: { id: id }})
     },
-    exportExcel() {
-      console.log(this.list, 'lsit')
-      import('@/vendor/Export2Excel').then(excel => {
-        excel.export_json_to_excel({
-          header: ['试卷信息', '班级', '创始人', '开始时间', '结束时间', '操作'],
-          data: this.list,
-          filename: '试卷列表',
-          bookType: 'xlsx'
-        })
-      })
+    // 导出试卷列表
+    exportExecl() {
+
     }
   }
 }

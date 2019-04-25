@@ -6,6 +6,7 @@
         <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
           <div class="avatar-wrapper">
             <img :src="avatar" class="user-avatar">
+
             <span>{{ userInfo.user_name }}</span>
           </div>
           <el-dropdown-menu slot="dropdown">
@@ -104,7 +105,7 @@ header{
   left:0;
   z-index: 1050;
   background: #fff;
-  >img{
+  img{
     width: 120px;
   }
     .right-menu {
