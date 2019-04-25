@@ -21,9 +21,8 @@ const Markingmanagement = {
     {
       path: 'volume',
       component: () => import('@/views/awaiting/volume'),
-      hidden: true,
-      name: 'volume',
-      meta: { view_id: 'main-examinationPapers' }
+      name: 'volume'
+      // meta: { title: 'awaitingclass333333', view_id: 'main-examinationPapers' }
     }, {
       path: 'awaitingclasstwo',
       component: () => import('@/views/charts/keyboard'),

@@ -27,29 +27,29 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  props: ['options'],
   data() {
     return {
       viewvalue: '',
       idvalue: '',
-      list: [],
-      options: []
+      list: []
 
     }
   },
   methods: {
     ...mapActions({
       setview: 'usershow/getView',
-      setidentityview: 'usershow/setIdentityView',
-      getId: 'usershow/getIdentity'
+      setidentityview: 'usershow/setIdentityView'
 
     }),
-    handleSubmit() {
+    async handleSubmit() {
       if (this.idvalue && this.viewvalue) {
-        const identity_id = this.list.find(item => item.identity_text == this.idvalue)
-        const identity_view = this.options.find(item => item.view_authority_text == this.viewvalue)
-        this.setidentityview({
+        const identity_id = this.options.find(item => item.identity_text == this.idvalue)
+        const identity_view = this.list.find(item => item.view_authority_text == this.viewvalue)
+        console.log(identity_id, identity_view)
+        await this.setidentityview({
           identity_id: identity_id.identity_id,
-          api_authority_id: identity_view.api_authority_id
+          view_authority_id: identity_view.view_authority_id
         })
         if (this.code == 1) {
           this.$message({
@@ -71,10 +71,6 @@ export default {
   created() {
     this.setview().then(res => {
       this.list = res.data
-    })
-    this.getId().then(res => {
-      console.log(res)
-      this.options = res.data
     })
   },
   computed: {

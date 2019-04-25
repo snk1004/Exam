@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
-    <pan-thumb :image="avatar" />
-
+    <div v-if="avatar">
+      <pan-thumb :image="avatar" />
+    </div>
     <el-button class="sure" type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
       Change Avatar
     </el-button>
@@ -39,6 +40,7 @@ export default {
     }),
     cropSuccess(e) {
       const path = e[0].path
+      console.log(path, 'path...')
       this.getreneval({
         user_id: this.userInfo.user_id,
         user_name: this.userInfo.user_name,
@@ -55,6 +57,7 @@ export default {
       this.imagecropperShow = false
     }
   },
+
   computed: {
     ...mapGetters([
       'avatar',

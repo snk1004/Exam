@@ -54,6 +54,7 @@ export default {
       this.imagecropperShow = false
     }
   }
+
 }
 </script>
 

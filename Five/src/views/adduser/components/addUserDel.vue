@@ -29,6 +29,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  props: ['options', 'list'],
   data() {
     return {
       userState: [{
@@ -42,31 +43,24 @@ export default {
       user_name: '',
       user_pwd: '',
       stateInd: 0,
-      values: '',
-      list: [],
-      options: []
+      values: ''
+
     }
+  },
+  created() {
+    // this.getdata()
   },
   methods: {
     ...mapActions({
       addSubmit: 'usershow/adduser',
       getreneval: 'usershow/getReneval',
-      getid: 'usershow/getIdentity',
-      getList: 'usershow/show'
+      getid: 'usershow/getIdentity'
     }),
-    getdata() {
-      this.getid().then(res => {
-        this.options = res.data
-      })
-      this.getList().then(res => {
-        this.list = res.data
-      })
-    },
     handleState(i) {
       this.stateInd = i
     },
     handleSubmit() {
-      if (this.stateInd == 0) {
+      if (this.stateInd === 0) {
         if (this.user_pwd && this.user_name && this.value) {
           const user_id = this.options.find(item => item.identity_text == this.value)
           this.addSubmit({
@@ -78,7 +72,9 @@ export default {
               message: res.msg,
               type: 'success'
             })
-            this.getdata()
+            if (res.code === 1) {
+              this.$emit('finish', 'wancheng')
+            }
           })
         } else if (this.user_pwd && this.user_name && !this.value) {
           this.addSubmit({
@@ -89,30 +85,42 @@ export default {
               message: res.msg,
               type: 'success'
             })
-            this.getData()
+            if (res.code === 1) {
+              this.$emit('finish', 'wancheng')
+            }
           })
         } else {
           this.$message.error('参数有误')
         }
-      } else if (this.stateInd == 1) {
+      } else if (this.stateInd === 1) {
         this.list.find(item => {
-          if (item.user_name == this.values) {
+          if (item.user_name === this.values) {
             if (!this.value && !this.user_name && !this.user_pwd) {
               this.$message.error('参数有误')
             } else {
               if (this.value) {
-                const users = this.options.find(item => item.identity_text == this.value)
+                const users = this.options.find(item => item.identity_text === this.value)
                 this.getreneval({
                   'user_id': item.user_id,
-                  'user_name': this.user_name == '' ? item.user_name : this.user_name,
-                  'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd,
+                  'user_name': this.user_name === '' ? item.user_name : this.user_name,
+                  'user_pwd': this.user_pwd === '' ? item.user_pwd : this.user_pwd,
                   'identity_id': this.value ? users.identity_id : ''
                 }).then(res => {
                   this.$message({
                     message: res.msg,
                     type: 'success'
                   })
-                  this.getData()
+                })
+              } else {
+                this.getreneval({
+                  'user_id': item.user_id,
+                  'user_name': this.user_name == '' ? item.user_name : this.user_name,
+                  'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd
+                }).then(res => {
+                  this.$message({
+                    message: res.msg,
+                    type: 'success'
+                  })
                 })
               }
             }
@@ -126,11 +134,7 @@ export default {
       this.user_pwd = ''
       this.values = ''
     }
-  },
-  created() {
-    this.getdata()
   }
-
 }
 
 </script>
