@@ -47,9 +47,6 @@ export default {
       options: []
     }
   },
-  created() {
-    this.getData()
-  },
   methods: {
     ...mapActions({
       addSubmit: 'usershow/adduser',
@@ -57,7 +54,7 @@ export default {
       getid: 'usershow/getIdentity',
       getList: 'usershow/show'
     }),
-    getData() {
+    getdata() {
       this.getid().then(res => {
         this.options = res.data
       })
@@ -81,7 +78,7 @@ export default {
               message: res.msg,
               type: 'success'
             })
-            this.getData()
+            this.getdata()
           })
         } else if (this.user_pwd && this.user_name && !this.value) {
           this.addSubmit({
@@ -129,8 +126,13 @@ export default {
       this.user_pwd = ''
       this.values = ''
     }
+  },
+  created() {
+    this.getdata()
   }
+
 }
+
 </script>
 
 <style lang="scss" scoped>

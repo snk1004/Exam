@@ -12,21 +12,12 @@ const port = 9527 // dev port
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
-<<<<<<< HEAD
    * You will need to set publicPath if you plan to deploy your site under a sub path,
    * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
    * then publicPath should be set to "/bar/".
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-=======
-     * You will need to set publicPath if you plan to deploy your site under a sub path,
-     * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-     * then publicPath should be set to "/bar/".
-     * In most cases please use '/' !!!
-     * Detail: https://cli.vuejs.org/config/#publicpath
-     */
->>>>>>> aacf322680b7e22e86aebe35cdac3876b6ed55f1
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',

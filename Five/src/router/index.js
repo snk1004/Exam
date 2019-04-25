@@ -12,11 +12,7 @@ import Examinations from './modules/examination'
 import Markingmanagement from './modules/Markingmanagement'
 import userRouter from './modules/user'
 import classRouter from './modules/class'
-<<<<<<< HEAD
 // import UploadRouter from './modules/upload'
-=======
-// import updataRouter from './modules/updata'
->>>>>>> aacf322680b7e22e86aebe35cdac3876b6ed55f1
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -79,6 +75,7 @@ export const constantRoutes = [
     path: '',
     component: Layout,
     redirect: 'dashaboard',
+    // hidden: true,
     name: 'dashaboard',
     meta: {
       title: 'textquest',
