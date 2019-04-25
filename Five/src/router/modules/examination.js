@@ -33,7 +33,7 @@ const Examinations = {
     path: 'detail',
     component: () => import('@/views/exam/detail'),
     hidden: true,
-    meta: { view_id: 'main-questionsDetail'}
+    meta: { view_id: 'main-questionsDetail' }
   }]
 }
 

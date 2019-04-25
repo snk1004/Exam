@@ -1,22 +1,22 @@
 <template>
-     <div class="addUser_wrapper">
+  <div class="addUser_wrapper">
     <div class="btn">
       <button>给身份设置视图权限</button>
     </div>
     <el-select v-model="idvalue" placeholder="请选择身份id">
       <el-option
-        v-for="item in list"
+        v-for="item in options"
         :key="item.identity_text"
         :value="item.identity_text"
       />
     </el-select>
-      <el-select v-model="viewvalue" placeholder="请选择视图权限id">
-          <el-option
-            v-for="item in options"
-            :key="item.view_authority_text"
-            :value="item.view_authority_text"
-          />
-        </el-select>
+    <el-select v-model="viewvalue" placeholder="请选择视图权限id">
+      <el-option
+        v-for="item in list"
+        :key="item.view_authority_text"
+        :value="item.view_authority_text"
+      />
+    </el-select>
     <div class="btnFotter">
       <el-button :plain="true" @click="handleSubmit">确认</el-button>
       <button class="resets" @click="resets">重置</button>
@@ -24,63 +24,65 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from 'vuex'
 
 export default {
-    data(){
-        return {
-            viewvalue:'',
-            idvalue:'',
-            list:[],
-            options:[]
-        }
-    },
-    methods: {
-        ...mapActions({
-         getid:'usershow/getIdentity',
-         setview:'usershow/getView',
-         setidentityview:'usershow/setIdentityView'
-        }),
-        handleSubmit(){
-            if(this.idvalue&&this.viewvalue){
-                 let identity_id = this.list.find(item=>item.identity_text==this.idvalue);
-                 let identity_view = this.options.find(item=>item.view_authority_text==this.viewvalue)
-                 this.setidentityview({
-                     identity_id:identity_id.identity_id,
-                     api_authority_id:identity_view.api_authority_id
-                 })
-                  if(this.code==1){
-                    this.$message({
-                        message: this.msg,
-                        type: 'success'
-                        })
-                }else{
-                    this.$message.error(this.msg)
-                    }
-            }else{
-            this.$message.error('参数错误')
-          }
-        },
-        resets(){
-            this.idvalue='',
-            this.viewvalue=''
-        }
-    },
-    created(){
-        this.getid().then(res=>{
-            this.list=res.data
+  data() {
+    return {
+      viewvalue: '',
+      idvalue: '',
+      list: [],
+      options: []
+
+    }
+  },
+  methods: {
+    ...mapActions({
+      setview: 'usershow/getView',
+      setidentityview: 'usershow/setIdentityView',
+      getId: 'usershow/getIdentity'
+
+    }),
+    handleSubmit() {
+      if (this.idvalue && this.viewvalue) {
+        const identity_id = this.list.find(item => item.identity_text == this.idvalue)
+        const identity_view = this.options.find(item => item.view_authority_text == this.viewvalue)
+        this.setidentityview({
+          identity_id: identity_id.identity_id,
+          api_authority_id: identity_view.api_authority_id
         })
-        this.setview().then(res=>{
-            this.options=res.data
-        })
-      
+        if (this.code == 1) {
+          this.$message({
+            message: this.msg,
+            type: 'success'
+          })
+        } else {
+          this.$message.error(this.msg)
+        }
+      } else {
+        this.$message.error('参数错误')
+      }
     },
-   computed: {
-      ...mapState({
-        code: state => state.usershow.code,
-        msg: state => state.usershow.msg
-      })
-   }
+    resets() {
+      this.idvalue = ''
+      this.viewvalue = ''
+    }
+  },
+  created() {
+    this.setview().then(res => {
+      this.list = res.data
+    })
+    this.getId().then(res => {
+      console.log(res)
+      this.options = res.data
+    })
+  },
+  computed: {
+    ...mapState({
+      code: state => state.usershow.code,
+      msg: state => state.usershow.msg
+    })
+  }
 }
 </script>
 

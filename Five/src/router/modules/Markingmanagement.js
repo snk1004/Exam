@@ -21,18 +21,21 @@ const Markingmanagement = {
     {
       path: 'volume',
       component: () => import('@/views/awaiting/volume'),
+      hidden: true,
       name: 'volume',
       meta: { view_id: 'main-examinationPapers' }
     }, {
       path: 'awaitingclasstwo',
       component: () => import('@/views/charts/keyboard'),
       name: 'Awaitingclassttwo',
-      meta: {view_id: 'main-examPaperClassmate' }
+      hidden: true,
+      meta: { view_id: 'main-examPaperClassmate' }
 
     }, {
       path: 'awaitinglist',
       component: () => import('@/views/awaiting/awaitlist'),
       name: 'awaitinglist',
+      hidden: true,
       meta: { view_id: 'main-examPaperClassList' }
 
     }

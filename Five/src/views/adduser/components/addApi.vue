@@ -25,6 +25,7 @@ export default {
   methods: {
     ...mapActions({
       addapi: 'usershow/addApi'
+
     }),
     handleSubmit() {
       if (this.apinames && this.apiurl && this.apimethods) {

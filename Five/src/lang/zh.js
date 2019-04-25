@@ -80,6 +80,7 @@ export default {
     Manage: '班级管理',
     classRoom: '教室管理',
     Student: '学生管理',
+    updata: '图片上传',
     photo: '上传头像'
   },
   navbar: {

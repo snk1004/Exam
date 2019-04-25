@@ -3,11 +3,10 @@
     <p>阅卷</p>
     <div class="content">
       <div v-if="answerlist.length" class="leftbox">
-         <div v-for="(item,index) in answerlist" :key="index">
-           <p>
-             <span>{{index+1}}.{{ item.title }}</span><span>{{ item.questions_type_text }}</span>
-           </p>
-          
+        <div v-for="(item,index) in answerlist" :key="index">
+          <p>
+            <span>{{ index+1 }}.{{ item.title }}</span><span>{{ item.questions_type_text }}</span>
+          </p>
           <markdown-editor v-model="item.questions_stem" />
           <div class="contentTopbox">
             <div>
@@ -108,7 +107,7 @@ export default {
             margin-left: 5px;
             }
           }
-          
+
           >p:nth-child(3){
             font-size: 24px;
           }
