@@ -1,41 +1,35 @@
 <template>
   <div class="dashboard-container">
-    <h2>北京八维研修学院</h2>
-    <p>考试管理系统</p>
+    <component :is="currentRole" />
   </div>
 </template>
-<script>
-import { mapGetters } from 'vuex'
 
+<script>
+import { mapGetters,mapState } from 'vuex'
+import adminDashboard from './admin'
+import editorDashboard from './editor'
 export default {
   name: 'Dashboard',
+  components: { adminDashboard, editorDashboard },
   data() {
     return {
       currentRole: 'adminDashboard'
     }
   },
   computed: {
+    ...mapState({
+       identity_text:state=>state.user.userInfo.identity_text
+    }),
     ...mapGetters([
       'roles'
     ])
   },
   created() {
-    if (!this.roles.includes('admin')) {
+    
+    if (this.identity_text==='管理员') {
       this.currentRole = 'editorDashboard'
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-    h2{
-      margin: 10px 50px;
-      font-size: 30px;
-    }
-    p{
-      position: absolute;
-      bottom:70px;
-      right:30px;
-      font-size: 20px;
-    }
-</style>
 

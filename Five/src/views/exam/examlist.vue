@@ -29,6 +29,7 @@
           </el-form-item>
           <el-form-item size='medium' >
             <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
+            <el-button type="primary" size="medium" @click="ExportExcel">导出表格</el-button>
         </el-form-item>
         </el-form>
       </div>
@@ -188,6 +189,24 @@ export default {
       })
      this.list=this.listMist.slice(0,this.limit)
 
+    },
+    //导出表格
+    ExportExcel(){
+      console.log(this.list)
+      import('@/vendor/Export2Excel').then(excel => {
+        // const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
+        // const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
+        // const list = this.list
+        // const data = this.formatJson(filterVal, list)
+        excel.export_json_to_excel({
+          header: [试卷信息,班级,创始人,开始时间,结束时间],
+          data:this.list,
+          filename: this.filename,
+          autoWidth: this.autoWidth,
+          bookType: 'xlsx'
+        })
+    
+      })
     },
     //点击 时间类型
     headleTimer(index){
