@@ -117,6 +117,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { log } from 'util'
 export default {
   data() {
     return {
@@ -137,7 +138,9 @@ export default {
       // 新的数据
       newData: '',
       // 显示隐藏 暂无数据
-      showNodata: ''
+      showNodata: '',
+      newRoomList: [],
+      newClassList: []
     }
   },
   mounted() {
@@ -199,9 +202,14 @@ export default {
     },
     // 筛选
     Search() {
+      this.dataList = []
+      this.newList = []
+      console.log(this.input, this.roomValue, this.classValue)
       const nameList = [] // 姓名暂存数组
-      const roomList = [] // 教室号暂存数组
-      const classList = [] // 班级暂存数组
+      // const newRoomList = [] // 教室号暂存数组
+      // const classList = [] // 班级暂存数组
+      this.newRoomList = []
+      const lastRoomList = []
       this.newData.forEach(item => {
         // 对空判断
         if (this.input === '' && this.roomValue === '' && this.classValue === '') {
@@ -214,27 +222,40 @@ export default {
           }
           // 筛选 教室号
           if (this.roomValue === item.room_id) {
-            roomList.push(item)
-            if (this.input !== '' && roomList.length > 0) {
-              roomList.forEach(it => {
+            this.newRoomList.push(item)
+            if (this.input !== '') {
+              this.newRoomList = []
+              this.newList.forEach(it => {
                 if (it.student_name === this.input) {
-                  roomList.push(it)
-                  this.newList = []
-                  this.newList.push(it)
+                  this.newRoomList = []
+                  lastRoomList.push(it)
                 }
               })
             }
-            this.newList = roomList
+            /* if (this.classValue !== '' && item.grade_id !== this.classValue) {
+              this.showNoData = true
+            } */
+            this.newList = this.newRoomList
+            console.log('last', lastRoomList)
+            
           }
           // 筛选 班级
           if (this.classValue === item.grade_id) {
-            classList.push(item)
-            this.newList = classList
+            this.newClassList.push(item)
+            if (this.input !== '') {
+              this.newClassList.forEach(it => {
+                if (it.student_name === this.input) {
+                  this.newClassList = []
+                  this.newClassList.push(it)
+                }
+              })
+            }
+            this.newList = this.newClassList
           }
         }
       })
+      this.dataList = []
       this.dataList = this.newList
-      this.newList = []
     },
     // 重置
     Reset() {
