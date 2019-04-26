@@ -4,11 +4,17 @@
       <h2>添加用户</h2>
     </div>
     <div v-if="options.length" class="addUser_grid">
+      <!-- 添加用户 -->
       <addUserDel :options="options" :list="list" @finish="handleFinish" />
+      <!-- 添加身份 -->
       <addIdentity @finish="handleFinish" />
+      <!-- 添加api权限 -->
       <addApi @finish="handleFinish" />
+      <!-- 添加视图权限 -->
       <setApiEnter />
+      <!-- 给身份添加api权限 -->
       <addIdentityApi :options="options" :api="api" />
+      <!-- 给身份添加视图权限 -->
       <setIdentityView :options="options" />
     </div>
   </div>
@@ -31,6 +37,9 @@ export default {
       api: []
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
     ...mapActions({
       getid: 'usershow/getIdentity',
@@ -39,12 +48,15 @@ export default {
 
     }),
     getData() {
+      // 获取身份id
       this.getid().then(res => {
         this.options = res.data
       })
+      // 获取用户列表
       this.getList().then(res => {
         this.list = res.data
-      }),
+      })
+      // 获取api列表
       this.getapi().then(res => {
         this.api = res.data
       })
@@ -55,9 +67,6 @@ export default {
         this.getData()
       }
     }
-  },
-  created() {
-    this.getData()
   }
 
 }

@@ -271,6 +271,7 @@ export default {
       })
       // 获取的列表
       this.examList().then(res => {
+        console.log(res)
         if (res.code == 1) {
           res.exam.map(item => {
             item.start_time = moment(item.start_time * 1).format('YYYY-MM-DD HH:MM:SS')

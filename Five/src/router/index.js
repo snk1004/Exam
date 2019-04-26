@@ -78,19 +78,17 @@ export const constantRoutes = [
             path: '',
             component: Layout,
             redirect: 'dashboard',
-            // hidden: true,
             name: 'dashboard',
             meta: {
-                title: 'textquest',
-                icon: 'tree',
-                view_id: 'main'
+                title: 'dashboard',
+                icon: 'zip'
             },
             children: [{
                 path: 'dashboard',
                 component: () =>
                     import ('@/views/dashboard'),
                 name: 'Dashboard',
-                meta: { title: 'dashboard', icon: '', noCache: true, affix: true, view_id: 'main' }
+                meta: { title: 'dashboard', icon: '', noCache: true, affix: true }
             }]
         }
     ]

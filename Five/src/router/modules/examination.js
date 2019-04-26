@@ -9,31 +9,31 @@ const Examinations = {
   meta: {
     title: 'examination',
     icon: 'tab',
-    view_id: 'main-addExam'
+    view_id: ['main-addExam', 'main-examList', 'main-examEdit', 'main-questionsDetail']
   },
   children: [{ // 跳转考试管理
     path: 'addexamination',
     component: () => import('@/views/exam/addexam'),
     name: 'Addexaminationt',
-    meta: { title: 'addexamination', noCache: true, view_id: 'main-addExam' }
+    meta: { title: 'addexamination', noCache: true, view_id: ['main-addExam'] }
   },
   {
     path: 'examinationlist',
     component: () => import('@/views/exam/examlist'),
     name: 'Examinationlist',
-    meta: { title: 'examinationlist', noCache: true, view_id: 'main-examList' }
+    meta: { title: 'examinationlist', noCache: true, view_id: ['main-examList'] }
   },
   {
     path: 'add',
     component: () => import('@/views/exam/add'),
     hidden: true,
-    meta: { view_id: 'main-examEdit' }
+    meta: { view_id: ['main-examEdit'] }
   },
   {
     path: 'detail',
     component: () => import('@/views/exam/detail'),
     hidden: true,
-    meta: { view_id: 'main-questionsDetail' }
+    meta: { view_id: ['main-questionsDetail'] }
   }]
 }
 
