@@ -8,28 +8,35 @@ const Markingmanagement = {
   name: 'Markingmanagement',
   meta: {
     title: 'markingmanagement',
-    icon: 'edit'
+    icon: 'edit',
+    view_id: 'main-examinationPapers'
   },
   children: [
     {
       path: 'awaitingclass',
       component: () => import('@/views/awaiting/awaiting'),
       name: 'Awaitingclasst',
-      meta: { title: 'awaitingclass', noCache: true }
+      meta: { title: 'awaitingclass', noCache: true, view_id: 'main-examinationPapers' }
     },
     {
       path: 'volume',
       component: () => import('@/views/awaiting/volume'),
       name: 'volume'
-      // meta: { title: 'volume', noCache: true }
+      // meta: { title: 'awaitingclass333333', view_id: 'main-examinationPapers' }
     }, {
       path: 'awaitingclasstwo',
       component: () => import('@/views/charts/keyboard'),
-      name: 'Awaitingclassttwo'
+      name: 'Awaitingclassttwo',
+      hidden: true,
+      meta: { view_id: 'main-examPaperClassmate' }
+
     }, {
       path: 'awaitinglist',
       component: () => import('@/views/awaiting/awaitlist'),
-      name: 'awaitinglist'
+      name: 'awaitinglist',
+      hidden: true,
+      meta: { view_id: 'main-examPaperClassList' }
+
     }
   ]
 }

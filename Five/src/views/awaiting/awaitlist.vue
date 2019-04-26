@@ -1,8 +1,7 @@
 <template>
   <div class="bigbox">
     <div class="testtype_select">
-      <span>状态:</span>
-      <span>考试类型:</span>
+      <span class="status">状态:</span>
       <el-select v-model="value" placeholder="">
         <el-option
           v-for="item in statuslist"
@@ -11,8 +10,7 @@
           :value="item.exam_id"
         />
       </el-select>
-      <span>班级:</span>
-      <span>题目类型:</span>
+      <span class="status">班级:</span>
       <el-select v-model="value2" placeholder="">
         <el-option
           v-for="item in classlist"
@@ -32,26 +30,8 @@
         </colgroup>
         <thead>
           <tr>
-            <th>
-              <div>班级</div>
-            </th>
-            <th>
-              <div>姓名</div>
-            </th>
-            <th>
-              <div>阅卷状态</div>
-            </th>
-            <th>
-              <div>开始时间</div>
-            </th>
-            <th>
-              <div>结束时间</div>
-            </th>
-            <th>
-              <div>成材率</div>
-            </th>
-            <th>
-              <div>操作</div>
+            <th v-for="item in titlelists" :key="item.id">
+              <div>{{item.title}}</div>
             </th>
           </tr>
         </thead>
@@ -67,10 +47,10 @@
               <span>{{ item.status===0?'未阅':'已阅' }}</span>
             </td>
             <td>
-              <span>{{ item.start_time }}</span>
+              <span>{{ item.start_time}}</span>
             </td>
             <td>
-              <span>{{ item.end_time }}</span>
+              <span>{{ item.end_time}}</span>
             </td>
             <td>
               <span>成材率</span>
@@ -85,6 +65,7 @@
   </div>
 </template>
 <script>
+import moment from "moment"
 import { mapActions } from 'vuex'
 export default {
   data() {
@@ -94,7 +75,29 @@ export default {
       value: '',
       value2: '',
       classlist: [],
-      statuslist: []
+      statuslist: [],
+      titlelists:[{
+        title:'班级',
+        id:10
+      },{
+        title:'姓名',
+        id:11
+      },{
+        title:'阅卷状态',
+        id:12
+      },{
+        title:'开始时间',
+        id:13
+      },{
+        title:'结束时间',
+        id:14
+      },{
+        title:'成材率',
+        id:15
+      },{
+        title:'操作',
+        id:16
+      }]
     }
   },
   mounted() {
@@ -113,6 +116,10 @@ export default {
         gradeid: this.$route.query.grade_id
       }).then(res => {
         if (res.code === 1) {
+          res.exam.map(item=>{
+            item.start_time=moment(item.start_time*1).format('YYYY-MM-DD HH:MM:SS')
+            item.end_time=moment(item.end_time*1).format('YYYY-MM-DD HH:MM:SS')
+          })
           this.list = res.exam
         }
       })
@@ -126,7 +133,6 @@ export default {
       console.log(this.value2)
     },
     pijuan(studid) {
-      console.log(studid)
       this.$router.push(`/markingmanagement/volume?id=${studid}`)
     }
   }
@@ -141,6 +147,7 @@ export default {
       background: #fff;
       padding:30px 30px;
       border-radius: 20px;
+      margin-top: 20px;
     }
       table{
         width: 100%;
@@ -167,6 +174,12 @@ export default {
             font-weight: 500;
           }
         }
+         th:nth-child(4){
+          flex: 2;
+        }
+        th:nth-child(5){
+          flex: 2;
+        }
       }
       tbody>tr{
         transition: all 0.3s, height 0s;
@@ -187,6 +200,12 @@ export default {
             display: inline-block;
           }
         }
+        td:nth-child(4){
+          flex: 2;
+        }
+        td:nth-child(5){
+          flex: 2;
+        }
         td:last-child>span{
           color: blue;
         }
@@ -195,20 +214,25 @@ export default {
     background: #f7f9ff;
   }
   .testtype_select{
-  padding: 15px 0;
-  >select{
-    width: 150px;
-    height: 35px;
-    margin-right: 20px;
+    padding: 30px 0;
+    background: #fff;
+    border-radius: 20px;
+    >select{
+      width: 150px;
+      height: 35px;
+      margin-right: 20px;
+    }
+  >button{
+    display: inline-block;
+    padding: 8px 30px;
+    background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+    border: none;
+    color: #fff;
+    margin-left: 80px;
+    border-radius: 5px;
   }
- >button{
-  display: inline-block;
-  padding: 8px 30px;
-  background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
-  border: none;
-  color: #fff;
-  margin-left: 80px;
-  border-radius: 5px;
 }
+.status{
+  margin-left: 80px;
 }
 </style>

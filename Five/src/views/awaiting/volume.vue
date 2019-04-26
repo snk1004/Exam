@@ -2,13 +2,12 @@
   <div class="box">
     <p>阅卷</p>
     <div class="content">
-      <div class="leftbox">
-        <div>
-          <span>1.{{ answerlist[0].title }}</span>
-          <span>{{ answerlist[0].questions_type_text }}</span>
-          <p>{{ answerlist[0].questions_stem.split("!")[0].split("#")[1] }}</p>
-          <img class="imgs" :src="imgs" alt="">
-          <p>{{ answerlist[0].questions_stem.split(")")[1] }}</p>
+      <div v-if="answerlist.length" class="leftbox">
+        <div v-for="(item,index) in answerlist" :key="index">
+          <p>
+            <span>{{ index+1 }}.{{ item.title }}</span><span>{{ item.questions_type_text }}</span>
+          </p>
+          <markdown-editor v-model="item.questions_stem" />
           <div class="contentTopbox">
             <div>
               <p>学生答案</p>
@@ -16,56 +15,7 @@
             </div>
             <div>
               <p>标准答案</p>
-              <span>{{ answerlist[0].questions_answer.split(/[0-9]/).join("").split(',.').join("").split(".").join('') }}</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <span>2.{{ answerlist[1].title }}</span>
-          <span>{{ answerlist[1].questions_type_text }}</span>
-          <p>{{ answerlist[1].questions_stem.split("!")[0].split("#")[1] }}</p>
-          <p class="questtitle">{{ answerlist[1].questions_stem }}</p>
-          <div class="contentTopbox">
-            <div>
-              <p>学生答案</p>
-              <span>请输入您的答案</span>
-            </div>
-            <div>
-              <p>标准答案</p>
-              <markdown-editor v-model="aswertwo" />
-            </div>
-          </div>
-        </div>
-        <div>
-          <span>3.{{ answerlist[2].title }}</span>
-          <span>{{ answerlist[2].questions_type_text }}</span>
-          <p>{{ answerlist[2].questions_stem.split("!")[0].split("#")[1] }}</p>
-          <h3>{{ answerlist[2].questions_stem.split("##")[1] }}</h3>
-          <div class="contentTopbox">
-            <div>
-              <p>学生答案</p>
-              <span>请输入您的答案</span>
-            </div>
-            <div>
-              <p>标准答案</p>
-              <span>{{ answerlist[2].questions_answer.split(/[0-9]/).join("").split(',.').join("").split(".").join('') }}</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <span>4.{{ answerlist[3].title }}</span>
-          <span>{{ answerlist[3].questions_type_text }}</span>
-          <p>{{ answerlist[3].questions_stem.split("!")[0].split("#")[1] }}</p>
-          <h3>{{ answerlist[3].questions_stem.split("```js")[0].split("##")[1] }}</h3>
-          <markdown-editor v-model="content" />
-          <div class="contentTopbox">
-            <div>
-              <p>学生答案</p>
-              <span>请输入您的答案</span>
-            </div>
-            <div>
-              <p>标准答案</p>
-              <markdown-editor v-model="aswerfore" />
+              <markdown-editor v-model="item.questions_answer" />
             </div>
           </div>
         </div>
@@ -91,10 +41,7 @@ export default {
       value1: 0,
       score: 0,
       data: [],
-      answerlist: [],
-      content: '',
-      aswerfore: '',
-      aswertwo: ''
+      answerlist: []
     }
   },
   watch: {
@@ -120,10 +67,6 @@ export default {
         if (res.code === 1) {
           this.data = res.data
           this.answerlist = res.data.questions
-          this.imgs = this.answerlist[0].questions_stem.split('(')[1].split(')')[0]
-          this.content = this.answerlist[3].questions_stem.split('promise')[1]
-          this.aswerfore = this.answerlist[3].questions_answer
-          this.aswertwo = this.answerlist[1].questions_answer
         }
       })
     }
@@ -131,7 +74,7 @@ export default {
 
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .box{
     width: 100%;
     height: 100%;
@@ -154,13 +97,17 @@ export default {
           font-size: 16px;
           border-bottom: 1px solid #ccc;
           margin: 20px 0;
-          >span:nth-child(2){
+          >p:nth-child(1){
+            >span:nth-child(2){
             background: #87ceeb9c;
             padding: 3px 5px;
             color: #2196f3;
             border:1px solid #ccc;
             font-size: 14px;
+            margin-left: 5px;
+            }
           }
+
           >p:nth-child(3){
             font-size: 24px;
           }
@@ -205,10 +152,6 @@ export default {
             margin-top: 25px;
         }
     }
-}
-.imgs{
-  width: 100%;
-  height: 400px;
 }
 .questtitle{
   color:#999;

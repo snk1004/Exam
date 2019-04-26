@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-editor-container">
     <div class=" clearfix">
-      <pan-thumb v-if="identity.avatar" :image="identity.avatar" style="float: left">
+      <pan-thumb :image="userInfo.avatar" style="float: left">
         Your roles:
-        <span class="pan-info-roles">{{ identity.identity_text }}</span>
+        <span class="pan-info-roles">{{ userInfo.identity_text }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">
-        <span class="display_name">{{ identity.user_name }}</span>
+        <span class="display_name">{{ userInfo.user_name }}</span>
         <span style="font-size:20px;padding-top:20px;display:inline-block;">Editor's Dashboard</span>
       </div>
     </div>
@@ -32,11 +32,8 @@ export default {
   },
   computed: {
     ...mapState({
-      identity: state => state.user.userInfo
+      userInfo: state => state.user.userInfo
     })
-  },
-  created() {
-    console.log(this.identity)
   }
 }
 </script>

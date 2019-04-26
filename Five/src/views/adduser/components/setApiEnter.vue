@@ -18,48 +18,47 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
       list: [],
-      viewvalue: ""
-    };
+      viewvalue: ''
+    }
   },
   methods: {
     ...mapActions({
-      setapi: "usershow/setApiEnter",
-      addviewapi: "usershow/addViewApi"
+      setapi: 'usershow/setApiEnter',
+      addviewapi: 'usershow/addViewApi'
     }),
     async handleSubmit() {
       if (this.viewvalue) {
         await this.addviewapi({
           view_authority_text: this.viewvalue,
           view_id: this.viewvalue
-        });
-         if(this.code==1){
-            this.$message({
-             message: this.msg,
-             type: 'success'
         })
-        }else{
-             this.$message.error(this.msg);
+        if (this.code == 1) {
+          this.$message({
+            message: this.msg,
+            type: 'success'
+          })
+        } else {
+          this.$message.error(this.msg)
         }
-       
       } else {
-        this.$message.error("参数有误");
+        this.$message.error('参数有误')
       }
     },
     resets() {
-      this.viewvalue = "";
+      this.viewvalue = ''
     }
   },
   created() {
     this.setapi().then(res => {
       if (res.code == 1) {
-        this.list = res.data;
+        this.list = res.data
       }
-    });
+    })
   },
   computed: {
     ...mapState({
@@ -67,9 +66,8 @@ export default {
       msg: state => state.usershow.msg
     })
   }
-};
+}
 </script>
-
 
 <style scoped lang='scss'>
 .addUser_grid {

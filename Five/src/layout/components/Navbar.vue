@@ -17,15 +17,6 @@ export default {
       'sidebar'
     ])
   },
-  watch: {
-    userInfo(news, old) {
-      console.log(1111)
-    }
-  },
-  created() {
-    this.img = this.userInfo
-  },
-
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')

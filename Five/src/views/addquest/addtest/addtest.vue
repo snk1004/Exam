@@ -6,7 +6,7 @@
       <p>题干</p>
       <input v-model="queststem" type="text" placeholder="请输入题目要求，不超过20个字" class="topic">
       <p>题目主题</p>
-      <markdown-editor v-model="theme" />
+      <markdown-editor v-model="themes" />
       <div class="testtype_select">
         <p>请选择考试类型:</p>
         <el-select v-model="value" placeholder="请选择">
@@ -55,7 +55,7 @@ export default {
       value2: '',
       value3: '',
       queststem: '', // 获取题干
-      theme: '', // 题目主题
+      themes: '', // 题目主题
       answer: '', // 答案
       testtype: [], // 考试类型-周考-月考
       subjecttype: [], // 考试课程
@@ -97,13 +97,14 @@ export default {
           this.alllist = res.data
           if (this.$route.query.id) {
             const obj = this.alllist.filter(item => item.questions_id === this.$route.query.id)[0]
-            this.queststem = obj.title
+           console.log(obj.questions_stem,'lalalallal')
+           this.queststem = obj.title
             this.answer = obj.questions_answer
-            this.theme = obj.questions_stem
+            this.themes = obj.questions_stem
             this.value = obj.exam_name
             this.value2 = obj.subject_text
             this.value3 = obj.questions_type_text
-            this.title = '更改试题'
+            this.title = '编辑试题'
           }
         }
       })
@@ -150,7 +151,7 @@ export default {
             'subject_id': this.value2,
             'exam_id': this.value,
             'questions_answer': this.answer,
-            'title': this.theme
+            'title': '编辑试题'
           })
           this.$message({
             type: 'success',

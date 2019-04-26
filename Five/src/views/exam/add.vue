@@ -12,9 +12,7 @@
           <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList" :key="index">
             <h4>{{item.title}} <el-button type="text" @click="delmask(index)" style="float: right;"><a href="javascript:;" >删除</a></el-button></h4>
             <div class="markdown">
-              <pre>
-               {{item.questions_answer}}             
-              </pre>
+              <markdown-editor v-model="item.questions_stem" />
             </div>
           </div>
         </div>
@@ -26,8 +24,8 @@
       <div class="add-drawer-right">
         <p>所有试题</p>
         <ul>
-          <li>
-            aaaaa
+          <li v-for="(item,index) in NewQuestion" @click="headleAdd(item.questions_id,index)">
+            {{item.title}}
           </li>
         </ul>
       </div>
@@ -36,14 +34,24 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions} from 'vuex';
+import MarkdownEditor from '@/components/MarkdownEditor';
 export default {
+  components:{
+    MarkdownEditor
+  },
   data() {
     return {
+      //标题
       title:'',
+      // 遮罩的显示与否
       flag: false,
+      //所有要渲染的题
       questionList:[],
-      src:''
+      //跳转页面要用的 试题Id
+      src:'',
+      NewQuestion:[],
+      items:{}
     };
   },
   created() {
@@ -51,19 +59,46 @@ export default {
     //从本地存储取出来 渲染页面
     let data = JSON.parse(window.localStorage.getItem("exam"));
     this.src=data.exam_exam_id;
-   
     this.title=data.title;
-    this.questionList = data.questions;
+     this.questionList = data.questions;
    
   },
   methods: {
     ...mapActions({
+      //创建试题
       PutCreate:"examList/PutCreate",
+      //获取试题列表
+      Questions:"examList/Questions"
     }),
    
     //点击弹出试题列表
     showDialog() {
       this.flag = !this.flag;
+      this.gitQuestion()
+    },
+      //获取试题列表
+     gitQuestion(){
+      this.Questions().then(res=>{
+        if(res.code==1){
+          this.NewQuestion=res.data
+        }
+
+      })
+    },
+
+    //点击添加试题
+    headleAdd(id,index){
+      
+      //遍历所有的试题
+    this.NewQuestion.map(item=>{
+        //判断id是否一致
+        if(item.questions_id==id){
+          //返回该数据
+        this.items=item;
+        
+        }
+      })
+     this.questionList.push(this.items)
     },
      //点击收起试题列表
     hisdDialog(){
@@ -85,7 +120,6 @@ export default {
     },
     //点击删除的弹出框
     delmask(index) {
-  
       this.$confirm('是否要删除该题目?', '确认提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -110,6 +144,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  *{
+    list-style: none;
+  }
   .add-drawer {
     position: fixed;
     top: 0;
@@ -123,6 +160,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.65);
+    overflow-y: none;
   }
   .add-drawer-right {
     width: 40%;
@@ -133,6 +171,17 @@ export default {
     border: 0;
     background-clip: padding-box;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    
+  }
+   .add-drawer-right ul{
+     width: 100%;
+    flex: 1;
+    overflow-y: auto;
+   }
+  .add-drawer-right li{
+    line-height: 35px;
   }
   .add-layout {
     box-sizing: border-box;
@@ -202,26 +251,5 @@ export default {
     border: 1px solid #ccc;
     padding: 20px;
     margin-bottom: 20px;
-  }
-  .markdown,pre,code{
-    margin: 0;
-    padding: 0;
-  }
-  .markdown pre {
-    margin-top: 5px;
-    height: auto;
-    display: block;
-    padding: 1em;
-    overflow: auto;
-    line-height: 1.3;
-    max-height: 35em;
-    color: #657b83;
-    background:#f6f6f6;
-    background-size: 30px 30px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 1em;
-    white-space:normal;
-    white-space: pre-wrap;
-    word-wrap: break-word;
   }
 </style>

@@ -3,11 +3,11 @@
     <component :is="currentRole" />
   </div>
 </template>
+
 <script>
 import { mapState } from 'vuex'
 import adminDashboard from './admin'
 import editorDashboard from './editor'
-
 export default {
   name: 'Dashboard',
   components: { adminDashboard, editorDashboard },
@@ -22,9 +22,6 @@ export default {
     })
   },
   created() {
-    /* if (!this.roles.includes('admin')) {
-      this.currentRole = 'editorDashboard'
-    } */
     if (this.identity_text === '管理员') {
       this.currentRole = 'editorDashboard'
     }

@@ -9,7 +9,8 @@ const classRoom = {
   name: 'classManage',
   meta: {
     title: 'classManage',
-    icon: 'chart'
+    icon: 'chart',
+    view_id: 'main-grade'
   },
   children: [
     {

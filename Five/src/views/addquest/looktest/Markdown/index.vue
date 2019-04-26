@@ -35,11 +35,11 @@ export default {
       type: String,
       default: 'wysiwyg'
     },
-    // height: {
-    //   type: String,
-    //   required: false,
-    //   default: '900px'
-    // },
+    height: {
+      type: String,
+      required: false,
+      // default: '400px'
+    },
     language: {
       type: String,
       required: false,

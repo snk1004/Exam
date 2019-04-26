@@ -9,8 +9,10 @@ export const examType = parmas => {
 }
 //  考试列表
 export const examList = parmas => {
+
   return request.get('/exam/exam', parmas)
 }
+
 // 创建考试
 export function create(data) {
   return request({
@@ -22,6 +24,7 @@ export function create(data) {
 // 创建试题
 export function PutCreate(data) {
   const { src, question_ids } = data
+  console.log(question_ids)
   return request({
     url: `/exam/exam/${src}`,
     method: 'put',
@@ -38,4 +41,9 @@ export function detailExam(data) {
     url: `/exam/exam/${data}`,
     method: 'get'
   })
+}
+
+// 选择试题
+export const Questions = parmas => {
+  return request.get('/exam/questions/new', parmas)
 }

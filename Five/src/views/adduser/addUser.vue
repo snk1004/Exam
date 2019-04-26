@@ -3,13 +3,13 @@
     <div class="lay-out">
       <h2>添加用户</h2>
     </div>
-    <div class="addUser_grid">
-      <addUserDel />
-      <addIdentity />
-      <addApi />
+    <div v-if="options.length" class="addUser_grid">
+      <addUserDel :options="options" :list="list" @finish="handleFinish" />
+      <addIdentity @finish="handleFinish" />
+      <addApi @finish="handleFinish" />
       <setApiEnter />
-      <addIdentityApi />
-      <setIdentityView />
+      <addIdentityApi :options="options" :api="api" />
+      <setIdentityView :options="options" />
     </div>
   </div>
 </template>
@@ -21,12 +21,45 @@ import addApi from './components/addApi'
 import setApiEnter from './components/setApiEnter'
 import addIdentityApi from './components/addIdentityApi'
 import setIdentityView from './components/setIdentityView'
+import { mapActions } from 'vuex'
 export default {
   components: { addUserDel, addIdentity, addApi, setApiEnter, addIdentityApi, setIdentityView },
   data() {
     return {
+      options: [],
+      list: [],
+      api: []
     }
+  },
+  methods: {
+    ...mapActions({
+      getid: 'usershow/getIdentity',
+      getList: 'usershow/show',
+      getapi: 'usershow/getApi'
+
+    }),
+    getData() {
+      this.getid().then(res => {
+        this.options = res.data
+      })
+      this.getList().then(res => {
+        this.list = res.data
+      }),
+      this.getapi().then(res => {
+        this.api = res.data
+      })
+    },
+
+    handleFinish(res) {
+      if (res === 'wancheng') {
+        this.getData()
+      }
+    }
+  },
+  created() {
+    this.getData()
   }
+
 }
 </script>
 

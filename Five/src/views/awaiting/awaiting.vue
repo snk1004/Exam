@@ -10,20 +10,8 @@
         </colgroup>
         <thead>
           <tr>
-            <th>
-              <div>班级名</div>
-            </th>
-            <th>
-              <div>课程名称</div>
-            </th>
-            <th>
-              <div>阅卷状态</div>
-            </th>
-            <th>
-              <div>教室号</div>
-            </th>
-            <th>
-              <div>操作</div>
+            <th v-for="item in titlelist" :key="item.id">
+              <div>{{item.title}}</div>
             </th>
           </tr>
         </thead>
@@ -70,7 +58,23 @@ export default {
       alldata: [],
       len: 0,
       limit: 5,
-      currentPage3: 1
+      currentPage3: 1,
+      titlelist:[{
+        title:'班级名',
+        id:0
+      },{
+        title:'课程名称',
+        id:1
+      },{
+        title:'阅卷状态',
+        id:2
+      },{
+        title:'教室号',
+        id:3
+      },{
+        title:'操作',
+        id:4
+      }]
     }
   },
   mounted() {

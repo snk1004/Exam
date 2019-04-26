@@ -45,9 +45,12 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, view_authority) {
+  async generateRoutes({ commit }, view_authority) {
+    // 获取用户所拥有的view_ids
     const view_ids = view_authority.map(item => item.view_id)
+    // 在动态路由里面过滤一遍，得到用户能访问的路由
     const accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids)
+    // 更新路由
     commit('SET_ROUTES', accessedRoutes)
     return accessedRoutes
   }

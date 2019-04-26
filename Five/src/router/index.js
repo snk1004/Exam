@@ -12,7 +12,7 @@ import Examinations from './modules/examination'
 import Markingmanagement from './modules/Markingmanagement'
 import userRouter from './modules/user'
 import classRouter from './modules/class'
-// import updataRouter from './modules/updata'
+// import UploadRouter from './modules/upload'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -75,21 +75,25 @@ export const constantRoutes = [
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    hidden: true,
+    name: 'dashboard',
+    meta: {
+      title: 'textquest',
+      icon: 'zip',
+      view_id: 'main'
+    },
     children: [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard'),
         name: 'Dashboard',
-        meta: { title: '', icon: '', noCache: true, affix: true }
+        meta: { title: 'dashboard', icon: '', noCache: true, affix: true, view_id: 'main' }
       }
     ]
-  }
-]
+  }]
 /**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
+     * asyncRoutes
+     * the routes that need to be dynamically loaded based on user roles
+     */
 export const asyncRoutes = [
   ExamRouter,
   userRouter,

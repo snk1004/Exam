@@ -25,6 +25,7 @@ export default {
   methods: {
     ...mapActions({
       addapi: 'usershow/addApi'
+
     }),
     handleSubmit() {
       if (this.apinames && this.apiurl && this.apimethods) {
@@ -37,6 +38,9 @@ export default {
             message: res.msg,
             type: 'success'
           })
+          if (res.code === 1) {
+            this.$emit('finish', 'wancheng')
+          }
         })
       } else {
         this.$message.error('参数有误')
