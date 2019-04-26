@@ -44,7 +44,6 @@
               :class="TimerIndex==index?'active':null"
               @click="headleTimer(index)"
             >{{ item.title }}</span>
-
           </div>
         </div>
       </div>
@@ -152,7 +151,6 @@ export default {
       listMist: []
     }
   },
-
   mounted() {
     this.getList()
   },
@@ -163,12 +161,11 @@ export default {
       examList: 'examList/examList',
       detailExam: 'examList/detailExam'
     }),
-
     // 获取考试类型的值
     healeType(e) {
       const name = e
       this.examTypes.map(item => {
-        if (item.exam_name == name) {
+        if (item.exam_name === name) {
           this.typeId = item.exam_id
         }
       })
@@ -177,7 +174,7 @@ export default {
     healeCourses(e) {
       const name = e
       this.courses.map(item => {
-        if (item.subject_text == name) {
+        if (item.subject_text === name) {
           this.coursesId = item.subject_id
         }
       })
@@ -185,7 +182,7 @@ export default {
     // 点击搜索 调用按需加载
     onSubmit() {
       this.listMist = this.examLists.filter((item) => {
-        if (item.exam_id == this.typeId && item.subject_id == this.coursesId) {
+        if (item.exam_id === this.typeId && item.subject_id === this.coursesId) {
           return item
         }
       })
@@ -196,7 +193,7 @@ export default {
       this.TimerIndex = index
       const now = moment().unix() * 1000
       // 判断结束时间是否大于现在本地时间
-      if (this.TimerIndex == 2) {
+      if (this.TimerIndex === 2) {
         this.listMist = this.examLists.filter(item => {
           const end_time = moment(item.end_time).unix() * 1000
           if (end_time < now) {
@@ -205,7 +202,7 @@ export default {
         })
         this.list = this.listMist.slice(0, this.limit)
         // 判断本地时间在不在开始时间和结束时间之间
-      } else if (this.TimerIndex == 1) {
+      } else if (this.TimerIndex === 1) {
         this.listMist = this.examLists.filter(item => {
           const end_time = moment(item.end_time).unix() * 1000
           const start_time = moment(item.start_time).unix() * 1000
@@ -229,19 +226,19 @@ export default {
     getList() {
       // 考试类型
       this.examType().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.examTypes = res.data
         }
       })
       // 考试科目
       this.subject().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.courses = res.data
         }
       })
       // 获取的列表
       this.examList().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           res.exam.map(item => {
             item.start_time = moment(item.start_time * 1).format('YYYY-MM-DD HH:MM:SS')
             item.end_time = moment(item.end_time * 1).format('YYYY-MM-DD HH:MM:SS')
