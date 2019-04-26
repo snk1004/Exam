@@ -235,7 +235,7 @@ export default {
         })
         this.list = this.listMist.slice(0, this.limit)
         // 判断本地时间在不在开始时间和结束时间之间
-      } else if (this.TimerIndex == 1) {
+      } else if (this.TimerIndex === 1) {
         this.listMist = this.examLists.filter(item => {
           const end_time = moment(item.end_time).unix() * 1000
           const start_time = moment(item.start_time).unix() * 1000
@@ -259,13 +259,13 @@ export default {
     getList() {
       // 考试类型
       this.examType().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.examTypes = res.data
         }
       })
       // 考试科目
       this.subject().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.courses = res.data
         }
       })
@@ -285,10 +285,6 @@ export default {
 
     handleEdit(index, id) {
       this.$router.push({ path: '/examination/detail', query: { id: id }})
-    },
-    // 导出试卷列表
-    exportExecl() {
-
     }
   }
 }
