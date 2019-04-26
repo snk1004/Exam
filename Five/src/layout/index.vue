@@ -10,7 +10,8 @@
             <span>{{ userInfo.user_name }}</span>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <router-link to="/">
+            <!--点击首页  -->
+            <router-link to="/dashboard">
               <el-dropdown-item>
                 {{ $t('navbar.dashboard') }}
               </el-dropdown-item>
@@ -21,6 +22,7 @@
               </el-dropdown-item>
             </a>
             <el-dropdown-item divided>
+              <!--退出登录  -->
               <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -127,7 +129,7 @@ header{
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        // transition: background .3s;
 
         &:hover {
           background: rgba(0, 0, 0, .025)

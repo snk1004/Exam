@@ -45,51 +45,54 @@ export const constantRoutes = [
     path: '/redirect',
     component: Layout,
     hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
+    children: [{
+      path: '/redirect/:path*',
+      component: () =>
+                    import('@/views/redirect/index')
+    }]
   }, {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () =>
+                import('@/views/login/index'),
     hidden: true
   },
   {
     path: '/auth-redirect',
-    component: () => import('@/views/login/authRedirect'),
+    component: () =>
+                import('@/views/login/authRedirect'),
     hidden: true
   },
   {
     path: '/404',
-    component: () => import('@/views/errorPage/404'),
+    component: () =>
+                import('@/views/errorPage/404'),
     hidden: true
   },
   {
     path: '/401',
-    component: () => import('@/views/errorPage/401'),
+    component: () =>
+                import('@/views/errorPage/401'),
     hidden: true
   },
   {
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    name: 'dashboard',
     hidden: true,
+    name: 'dashboard',
     meta: {
-      title: 'dashboard',
-      icon: 'zip'
+      title: 'textquest',
+      icon: 'tree',
+      view_id: 'main'
     },
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard'),
-        name: 'Dashboard',
-        meta: { title: 'dashboard', icon: '', noCache: true, affix: true }
-      }
-    ]
-  }]
+    children: [{
+      path: 'dashboard',
+      component: () => import('@/views/dashboard'),
+      name: 'Dashboard',
+      meta: { title: 'dashboard', icon: '', noCache: true, affix: true, view_id: 'main' }
+    }]
+  }
+]
 /**
      * asyncRoutes
      * the routes that need to be dynamically loaded based on user roles

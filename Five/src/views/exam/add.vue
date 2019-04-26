@@ -50,7 +50,9 @@ export default {
       questionList: [],
       // 跳转页面要用的 试题Id
       src: '',
+      // 获取所有的新题
       NewQuestion: [],
+
       items: {}
     }
   },
@@ -88,11 +90,12 @@ export default {
       // 遍历所有的试题
       this.NewQuestion.map(item => {
         // 判断id是否一致
-        if (item.questions_id == id) {
+        if (item.questions_id === id) {
           // 返回该数据
           this.items = item
         }
       })
+      console.log(this.items)
       this.questionList.push(this.items)
     },
     // 点击收起试题列表

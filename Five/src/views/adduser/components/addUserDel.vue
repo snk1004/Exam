@@ -61,7 +61,7 @@ export default {
       if (this.stateInd === 0) {
         // 判断身份id是否传入
         if (this.user_pwd && this.user_name && this.value) {
-          const user_id = this.options.find(item => item.identity_text == this.value)
+          const user_id = this.options.find(item => item.identity_text === this.value)
           this.addSubmit({
             'user_name': this.user_name,
             'user_pwd': this.user_pwd,
@@ -117,8 +117,8 @@ export default {
               } else {
                 this.getreneval({
                   'user_id': item.user_id,
-                  'user_name': this.user_name == '' ? item.user_name : this.user_name,
-                  'user_pwd': this.user_pwd == '' ? item.user_pwd : this.user_pwd
+                  'user_name': this.user_name === '' ? item.user_name : this.user_name,
+                  'user_pwd': this.user_pwd === '' ? item.user_pwd : this.user_pwd
                 }).then(res => {
                   this.$message({
                     message: res.msg,
