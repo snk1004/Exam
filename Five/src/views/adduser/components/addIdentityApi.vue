@@ -41,7 +41,7 @@ export default {
 
     }),
     async handleSubmit() {
-      if (this.value != '请选择身份id' && this.apiView != '请选择api接口权限') {
+      if (this.value != '' && this.apiView != '') {
         this.identity_id = this.options.find(item => item.identity_text == this.value)
         this.api_id = this.api.find(item => item.api_authority_text == this.apiView)
         await this.setapiidentity({

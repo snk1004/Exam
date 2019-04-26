@@ -47,9 +47,7 @@ export default {
 
     }
   },
-  created() {
-    this.getdata()
-  },
+
   methods: {
     ...mapActions({
       addSubmit: 'usershow/adduser',
@@ -60,7 +58,9 @@ export default {
       this.stateInd = i
     },
     handleSubmit() {
+      // 判断是添加用户
       if (this.stateInd === 0) {
+        // 判断身份id是否传入
         if (this.user_pwd && this.user_name && this.value) {
           const user_id = this.options.find(item => item.identity_text == this.value)
           this.addSubmit({
@@ -77,6 +77,7 @@ export default {
             }
           })
         } else if (this.user_pwd && this.user_name && !this.value) {
+          // 判断是否将身份id传入
           this.addSubmit({
             'user_name': this.user_name,
             'user_pwd': this.user_pwd
@@ -93,11 +94,14 @@ export default {
           this.$message.error('参数有误')
         }
       } else if (this.stateInd === 1) {
+        // 更新用户
         this.list.find(item => {
           if (item.user_name === this.values) {
             if (!this.value && !this.user_name && !this.user_pwd) {
+              // 没有传入参数
               this.$message.error('参数有误')
             } else {
+              // 改变身份id
               if (this.value) {
                 const users = this.options.find(item => item.identity_text === this.value)
                 this.getreneval({
