@@ -258,18 +258,24 @@ export default {
     },
     // 导出试卷列表
     exportExecl() {
-
+      const header = Object.keys(this.list[0])
+      const list = this.list.map(item => {
+        const arr = Object.values(item)
+        return arr.map(item => JSON.stringify(item))
+      })
+        import('@/vendor/Export2Excel').then(excel => {
+          excel.export_json_to_excel({
+            header: header,
+            data: list,
+            filename: '',
+            bookType: 'xlsx'
+          })
+        })
     }
   }
 }
 </script>
 <style scoped lang="scss">
-  *{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    box-sizing: border-box;
-  }
   .examlist{
     width: 95%;
     margin:0 2.5%;

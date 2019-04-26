@@ -97,7 +97,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 import moment from 'moment'
 export default {
   data() {
@@ -190,12 +190,12 @@ export default {
     // 获取课程和类型列表
     getList() {
       this.examType().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.examTypes = res.data
         }
       })
       this.subject().then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.course = res.data
         }
       })
@@ -205,12 +205,6 @@ export default {
 </script>
 
  <style lang="scss" scoped>
-    *{
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        box-sizing: border-box;
-    }
     .addexam{
         width: 95%;
         margin:0 2.5%;

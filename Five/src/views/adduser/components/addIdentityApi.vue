@@ -26,7 +26,10 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
-  props: ['options', 'api'],
+  props: {
+    options: Array,
+    api: Array
+  },
   data() {
     return {
       value: '',
@@ -35,20 +38,26 @@ export default {
       api_id: ''
     }
   },
+  computed: {
+    ...mapState({
+      code: state => state.usershow.code,
+      msg: state => state.usershow.msg
+    })
+  },
   methods: {
     ...mapActions({
       setapiidentity: 'usershow/setIdentityApi'
 
     }),
     async handleSubmit() {
-      if (this.value != '请选择身份id' && this.apiView != '请选择api接口权限') {
-        this.identity_id = this.options.find(item => item.identity_text == this.value)
-        this.api_id = this.api.find(item => item.api_authority_text == this.apiView)
+      if (this.value !== '' && this.apiView !== '') {
+        this.identity_id = this.options.find(item => item.identity_text === this.value)
+        this.api_id = this.api.find(item => item.api_authority_text === this.apiView)
         await this.setapiidentity({
           'identity_id': this.identity_id.identity_id,
           'api_authority_id': this.api_id.api_authority_id
         })
-        if (this.code == 1) {
+        if (this.code === 1) {
           this.$message({
             message: this.msg,
             type: 'success'
@@ -64,12 +73,6 @@ export default {
       this.value = ''
       this.apiView = ''
     }
-  },
-  computed: {
-    ...mapState({
-      code: state => state.usershow.code,
-      msg: state => state.usershow.msg
-    })
   }
 }
 </script>

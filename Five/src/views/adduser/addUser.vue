@@ -31,12 +31,14 @@ export default {
       api: []
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
     ...mapActions({
       getid: 'usershow/getIdentity',
       getList: 'usershow/show',
       getapi: 'usershow/getApi'
-
     }),
     getData() {
       this.getid().then(res => {
@@ -44,22 +46,17 @@ export default {
       })
       this.getList().then(res => {
         this.list = res.data
-      }),
+      })
       this.getapi().then(res => {
         this.api = res.data
       })
     },
-
     handleFinish(res) {
       if (res === 'wancheng') {
         this.getData()
       }
     }
-  },
-  created() {
-    this.getData()
   }
-
 }
 </script>
 

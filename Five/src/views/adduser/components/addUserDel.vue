@@ -47,9 +47,6 @@ export default {
 
     }
   },
-  created() {
-    this.getdata()
-  },
   methods: {
     ...mapActions({
       addSubmit: 'usershow/adduser',
