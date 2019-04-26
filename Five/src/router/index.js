@@ -77,7 +77,7 @@ export const constantRoutes = [
     redirect: 'dashboard',
     name: 'dashboard',
     meta: {
-      title: 'textquest',
+      title: 'dashboard',
       icon: 'zip'
     },
     children: [
