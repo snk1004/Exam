@@ -51,8 +51,8 @@ export default {
     }),
     async handleSubmit() {
       if (this.value !== '' && this.apiView !== '') {
-        this.identity_id = this.options.find(item => item.identity_text === this.value)
-        this.api_id = this.api.find(item => item.api_authority_text === this.apiView)
+        this.identity_id = this.options.find(item => item.identity_text == this.value)
+        this.api_id = this.api.find(item => item.api_authority_text == this.apiView)
         await this.setapiidentity({
           'identity_id': this.identity_id.identity_id,
           'api_authority_id': this.api_id.api_authority_id

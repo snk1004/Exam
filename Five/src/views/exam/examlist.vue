@@ -258,19 +258,20 @@ export default {
     },
     // 导出试卷列表
     exportExecl() {
-      const header = Object.keys(this.list[0])
-      const list = this.list.map(item => {
+      const headData = Object.keys(this.list[0])
+      const newList = this.list.map(item => {
         const arr = Object.values(item)
-        return arr.map(item => JSON.stringify(item))
+        return arr.map(items => JSON.stringify(items))
       })
-        import('@/vendor/Export2Excel').then(excel => {
-          excel.export_json_to_excel({
-            header: header,
-            data: list,
-            filename: '',
-            bookType: 'xlsx'
-          })
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: headData,
+          data: newList,
+          filename: ''
         })
+        this.$refs.multipleTable.clearSelection()
+        this.downloadLoading = false
+      })
     }
   }
 }

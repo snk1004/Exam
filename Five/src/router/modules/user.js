@@ -9,26 +9,26 @@ const userRouter = {
   meta: {
     title: 'user',
     icon: 'user',
-    view_id: 'main-addUser'
+    view_id: ['main-addUser', 'main-showUser', 'main']
   },
   children: [
     {
       path: 'addUser',
       component: () => import('@/views/adduser/addUser'),
       name: 'Adduser',
-      meta: { title: 'Adduser', noCache: true, view_id: 'main-addUser' }
+      meta: { title: 'Adduser', noCache: true, view_id: ['main-addUser'] }
     },
     {
       path: 'usershow',
       component: () => import('@/views/userShow/userShow'),
       name: 'userShow',
-      meta: { title: 'UserShow', noCache: true, view_id: 'main-showUser' }
+      meta: { title: 'UserShow', noCache: true, view_id: ['main-showUser'] }
     },
     {
       path: 'addphoto',
       component: () => import('@/views/userShow/addphoto'),
       name: 'photo',
-      meta: { title: 'photo', noCache: true, view_id: 'main' }
+      meta: { title: 'photo', noCache: true, view_id: ['main'] }
     }
   ]
 }

@@ -10,26 +10,26 @@ const classRoom = {
   meta: {
     title: 'classManage',
     icon: 'chart',
-    view_id: 'main-grade'
+    view_id: ['main-grade', 'main-room', 'main-student']
   },
   children: [
     {
       path: 'manage',
       component: () => import('@/views/class/manage'),
       name: 'KeyboardChart',
-      meta: { title: 'Manage', noCache: true, view_id: 'main-grade' }
+      meta: { title: 'Manage', noCache: true, view_id: ['main-grade'] }
     },
     {
       path: 'classroom',
       component: () => import('@/views/class/classroom'),
       name: 'LineChart',
-      meta: { title: 'classRoom', noCache: true, view_id: 'main-room' }
+      meta: { title: 'classRoom', noCache: true, view_id: ['main-room'] }
     },
     {
       path: 'student',
       component: () => import('@/views/class/student'),
       name: 'MixChart',
-      meta: { title: 'Student', noCache: true, view_id: 'main-student' }
+      meta: { title: 'Student', noCache: true, view_id: ['main-student'] }
     }
   ]
 }
