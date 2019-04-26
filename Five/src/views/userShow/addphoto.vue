@@ -36,7 +36,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getreneval: 'usershow/getReneval'
+      getreneval: 'usershow/getReneval',
+      getInfo: 'user/getInfo'
     }),
     cropSuccess(e) {
       const path = e[0].path
@@ -49,6 +50,7 @@ export default {
       }).then(res => {
         if (res.code === 1) {
           alert(res.msg)
+          this.getInfo()
         }
       })
       this.imagecropperShow = false

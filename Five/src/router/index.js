@@ -78,7 +78,7 @@ export const constantRoutes = [
     name: 'dashboard',
     hidden: true,
     meta: {
-      title: 'textquest',
+      title: 'dashboard',
       icon: 'zip'
     },
     children: [
