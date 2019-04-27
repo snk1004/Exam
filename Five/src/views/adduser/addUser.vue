@@ -45,7 +45,6 @@ export default {
       getid: 'usershow/getIdentity',
       getList: 'usershow/show',
       getapi: 'usershow/getApi'
-
     }),
     getData() {
       // 获取身份id
@@ -61,14 +60,12 @@ export default {
         this.api = res.data
       })
     },
-
     handleFinish(res) {
       if (res === 'wancheng') {
         this.getData()
       }
     }
   }
-
 }
 </script>
 

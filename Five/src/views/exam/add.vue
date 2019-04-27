@@ -5,12 +5,12 @@
       <el-button plain @click="showDialog">添加新题</el-button>
       <div class="content-list">
         <div class="top-title">
-          <h3>{{title}}</h3>
+          <h3>{{ title }}</h3>
           <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
         </div>
         <div class="list">
-          <div class="style_questionitem__3ETlC" v-for="(item,index) in questionList" :key="index">
-            <h4>{{item.title}} <el-button type="text" @click="delmask(index)" style="float: right;"><a href="javascript:;" >删除</a></el-button></h4>
+          <div v-for="(item,index) in questionList" :key="index" class="style_questionitem__3ETlC">
+            <h4>{{ item.title }} <el-button type="text" style="float: right;" @click="delmask(index)"><a href="javascript:;">删除</a></el-button></h4>
             <div class="markdown">
               <markdown-editor v-model="item.questions_stem" />
             </div>
@@ -20,12 +20,12 @@
       <el-button type="primary" @click="hendleCreate">创建试卷</el-button>
     </div>
     <div v-show="flag" class="add-drawer">
-      <div class="mask" @click="hisdDialog"/>
+      <div class="mask" @click="hisdDialog" />
       <div class="add-drawer-right">
         <p>所有试题</p>
         <ul>
           <li v-for="(item,index) in NewQuestion" :key="index" @click="headleAdd(item.questions_id,index)">
-            {{item.title}}
+            {{ item.title }}
           </li>
         </ul>
       </div>
@@ -34,43 +34,41 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
-import MarkdownEditor from '@/components/MarkdownEditor';
+import { mapActions } from 'vuex'
+import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
-  components:{
+  components: {
     MarkdownEditor
   },
   data() {
     return {
-      //标题
-      title:'',
+      // 标题
+      title: '',
       // 遮罩的显示与否
       flag: false,
-      //所有要渲染的题
-      questionList:[],
-      //跳转页面要用的 试题Id
-      src:'',
-      //获取所有的新题
-      NewQuestion:[],
+      // 所有要渲染的题
+      questionList: [],
+      // 跳转页面要用的 试题Id
+      src: '',
+      // 获取所有的新题
+      NewQuestion: [],
 
-      items:{}
-    };
+      items: {}
+    }
   },
   created() {
-    
-    //从本地存储取出来 渲染页面
-    let data = JSON.parse(window.localStorage.getItem("exam"));
-    this.src=data.exam_exam_id;
-    this.title=data.title;
-     this.questionList = data.questions;
-   
+    // 从本地存储取出来 渲染页面
+    const data = JSON.parse(window.localStorage.getItem('exam'))
+    this.src = data.exam_exam_id
+    this.title = data.title
+    this.questionList = data.questions
   },
   methods: {
     ...mapActions({
-      //创建试题
-      PutCreate:"examList/PutCreate",
-      //获取试题列表
-      Questions:"examList/Questions"
+      // 创建试题
+      PutCreate: 'examList/PutCreate',
+      // 获取试题列表
+      Questions: 'examList/Questions'
     }),
     //点击创建试题
     async hendleCreate(){
@@ -89,37 +87,33 @@ export default {
     },
     //点击弹出试题列表
     showDialog() {
-      this.flag = !this.flag;
+      this.flag = !this.flag
       this.gitQuestion()
     },
-      //获取试题列表
-     gitQuestion(){
-      this.Questions().then(res=>{
-        if(res.code==1){
-          this.NewQuestion=res.data
+    // 获取试题列表
+    gitQuestion() {
+      this.Questions().then(res => {
+        if (res.code == 1) {
+          this.NewQuestion = res.data
         }
-
       })
     },
 
-    //点击添加试题
-    headleAdd(id,index){
-      
-      //遍历所有的试题
-     this.NewQuestion.map(item=>{
-        //判断id是否一致
-        if(item.questions_id===id){
-          //返回该数据
-      this.items=item;
-        
+    // 点击添加试题
+    headleAdd(id, index) {
+      // 遍历所有的试题
+      this.NewQuestion.map(item => {
+        // 判断id是否一致
+        if (item.questions_id === id) {
+          // 返回该数据
+          this.items = item
         }
       })
-      console.log(this.items)
-     this.questionList.push(this.items)
+      this.questionList.push(this.items)
     },
-     //点击收起试题列表
-    hisdDialog(){
-        this.flag = !this.flag;
+    // 点击收起试题列表
+    hisdDialog() {
+      this.flag = !this.flag
     },
    
     //点击删除的弹出框
@@ -130,21 +124,20 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-      this.questionList.splice(index,1)
-        this.$message({   
+        this.questionList.splice(index, 1)
+        this.$message({
           type: 'success',
           message: '删除成功!'
-        });
+        })
       }).catch(() => {
         this.$message({
           type: 'info',
           message: '已取消删除'
-        });
-      });
-     
+        })
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -177,7 +170,7 @@ export default {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    
+
   }
    .add-drawer-right ul{
      width: 100%;

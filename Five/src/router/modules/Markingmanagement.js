@@ -30,14 +30,12 @@ const Markingmanagement = {
       name: 'Awaitingclassttwo',
       hidden: true,
       meta: { view_id: ['main-examPaperClassmate'] }
-
     }, {
       path: 'awaitinglist',
       component: () => import('@/views/awaiting/awaitlist'),
       name: 'awaitinglist',
       hidden: true,
       meta: { view_id: ['main-examPaperClassList'] }
-
     }
   ]
 }

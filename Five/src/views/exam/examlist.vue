@@ -1,35 +1,33 @@
 <template>
   <div class="examlist">
-      <h3>
-        试卷列表
-      </h3>
-      <div class="ant-layout-top">
-          <el-form :inline="true"  class="demo-form-inline">
-          <el-form-item label="考试类型">
-             <el-select v-model="type" placeholder="请选择" @change="healeType">
-                    <el-option
-                    v-for="item in examTypes"
-                    :key="item.exam_name"
-                    :label="item.exam_name"
-                    :value="item.exam_name"
-                  
-                    >
-                    </el-option>
-                </el-select>
-          </el-form-item>
-          <el-form-item label="课程">
-            <el-select v-model="course"  placeholder="请选择" @change="healeCourses">
-                    <el-option
-                    v-for="item in courses"
-                    :key="item.subject_text"
-                    :label="item.subject_text"
-                    :value="item.subject_text">
-                    </el-option>
-                </el-select>
-          </el-form-item>
-          <el-form-item size='medium' >
-            <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
-            <el-button type="primary" size="medium" @click="ExportExcel">导出表格</el-button>
+    <h3>
+      试卷列表
+    </h3>
+    <div class="ant-layout-top">
+      <el-form :inline="true" class="demo-form-inline">
+        <el-form-item label="考试类型">
+          <el-select v-model="type" placeholder="请选择" @change="healeType">
+            <el-option
+              v-for="item in examTypes"
+              :key="item.exam_name"
+              :label="item.exam_name"
+              :value="item.exam_name"
+/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="课程">
+          <el-select v-model="course" placeholder="请选择" @change="healeCourses">
+            <el-option
+              v-for="item in courses"
+              :key="item.subject_text"
+              :label="item.subject_text"
+              :value="item.subject_text"
+/>
+          </el-select>
+        </el-form-item>
+        <el-form-item size="medium">
+          <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
+          <el-button type="primary" size="medium" @click="ExportExcel">导出表格</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -44,7 +42,6 @@
               :class="TimerIndex==index?'active':null"
               @click="headleTimer(index)"
             >{{ item.title }}</span>
-
           </div>
         </div>
       </div>
@@ -149,10 +146,10 @@ export default {
       // 一页几条
       limit: 10,
       // 定义一个可以slice的数组
-      listMist: []
+      listMist: [],
+      now:'',
     }
   },
-
   mounted() {
     this.getList()
   },
@@ -163,7 +160,6 @@ export default {
       examList: 'examList/examList',
       detailExam: 'examList/detailExam'
     }),
-
     // 获取考试类型的值
     healeType(e) {
       const name = e
@@ -184,52 +180,55 @@ export default {
     },
     // 点击搜索 调用按需加载
     onSubmit() {
-      if(this.type!==''&&this.course!==''){
+      if (this.type !== '' && this.course !== '') {
         this.listMist = this.examLists.filter((item) => {
           if (item.exam_id === this.typeId && item.subject_id === this.coursesId) {
             return item
           }
-      })
-      this.list = this.listMist.slice(0, this.limit)
+        })
+        this.list = this.listMist.slice(0, this.limit)
       }
-      return 
-      
+      return
+
     },
-    //导出表格
-    ExportExcel(){
-       let navList=this.list.map(item=>{
-          return {
-            "考试信息":item.title,
-            "考试名称":item.exam_name,
-            "出题人":item.user_name,
-            "考试科目":item.subject_text,
-           "开始时间":item.start_time,
-            "结束时间":item.end_time
-          } 
-        });
-        let excelList=navList.map(item=>{
-            let arr=Object.values(item);
-          return arr.map(item=>JSON.stringify(item))
-        })   
-        let header=Object.keys(navList[0])
+    // 导出表格
+    ExportExcel() {
+      const navList = this.list.map(item => {
+        return {
+          '考试信息': item.title,
+          '考试名称': item.exam_name,
+          '出题人': item.user_name,
+          '考试科目': item.subject_text,
+          '开始时间': item.start_time,
+          '结束时间': item.end_time
+        }
+      })
+        let excelList = navList.map(item => {
+        const arr = Object.values(item)
+          return arr.map(item => JSON.stringify(item))
+      })
+      const header = Object.keys(navList[0])
         import('@/vendor/Export2Excel').then(excel => {
           excel.export_json_to_excel({
             header: header,
-            data:excelList,
-            filename: "考试列表",
+            data: excelList,
+            filename: '考试列表',
             bookType: 'xlsx'
-          }) 
+          })
         })
     },
-    //点击 时间类型
-    headleTimer(index){
-      this.TimerIndex=index;
-      let now = moment().unix()*1000;
+    // 点击 时间类型
+    headleTimer(index) {
+      this.TimerIndex = index
+      this.now = moment().unix()*1000;
+      let nom=moment(this.now).format('YYYY-MM-DD HH:MM:SS')
+      // console.log(nom)
         //判断结束时间是否大于现在本地时间
-      if(this.TimerIndex==2){
-        this.listMist=this.examLists.filter(item=>{
-          let end_time= moment(item.end_time).unix()*1000;
-          if(end_time<now){
+      if (this.TimerIndex == 2) {
+        console.log(this.now)
+        this.listMist = this.examLists.filter(item => {
+          const end_time = moment(item.end_time).unix() * 1000;
+          if (end_time < this.now) {
             return item
           }
         })
@@ -237,13 +236,15 @@ export default {
         // 判断本地时间在不在开始时间和结束时间之间
       } else if (this.TimerIndex === 1) {
         this.listMist = this.examLists.filter(item => {
-          const end_time = moment(item.end_time).unix() * 1000
-          const start_time = moment(item.start_time).unix() * 1000
-          if (end_time > now && start_time < now) {
+          const end_time = moment(item.end_time).unix() * 1000;
+          const start_time = moment(item.start_time).unix() * 1000;
+            console.log(end_time,this.now,start_time )
+          if (start_time <= this.now && end_time >= this.now  ) {
+            console.log(item)
             return item
           }
         })
-        this.list = this.listMist.slice(0, this.limit)
+        this.list = this.listMist.slice(0, this.limit) 
       } else {
         this.listMist = this.examLists
         this.list = this.listMist.slice(0, this.limit)
@@ -271,8 +272,7 @@ export default {
       })
       // 获取的列表
       this.examList().then(res => {
-        console.log(res)
-        if (res.code == 1) {
+        if (res.code === 1) {
           res.exam.map(item => {
             item.start_time = moment(item.start_time * 1).format('YYYY-MM-DD HH:MM:SS')
             item.end_time = moment(item.end_time * 1).format('YYYY-MM-DD HH:MM:SS')
@@ -291,10 +291,6 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  *{
-    list-style: none;
-    box-sizing: border-box;
-  }
   .examlist{
     width: 95%;
     margin:0 2.5%;

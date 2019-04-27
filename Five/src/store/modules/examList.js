@@ -1,11 +1,5 @@
 import { subject, examType, create, examList, PutCreate, detailExam, Questions } from '@/api/examList'
-import moment from 'moment'
-// const state = {
-//     courseList: []
-// }
-// const mutations = {
-
-// }
+import moment from 'moment';
 const actions = {
     // 创建考试
     async createExam({ commit }, examList) {
@@ -22,7 +16,6 @@ const actions = {
     examList({ commit }, payload) {
         return new Promise(async(resolve, reject) => {
             const examLists = await examList(payload)
-
             resolve(examLists)
         })
     },
@@ -66,7 +59,5 @@ const actions = {
 }
 export default {
     namespaced: true,
-    // state,
-    // mutations,
     actions
 }
