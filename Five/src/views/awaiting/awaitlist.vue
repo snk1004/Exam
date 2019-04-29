@@ -1,6 +1,7 @@
 <template>
   <div class="bigbox">
     <div class="testtype_select">
+      <div>
       <span class="status">状态:</span>
       <el-select v-model="value" placeholder="">
         <el-option
@@ -10,7 +11,9 @@
           :value="item.exam_id"
         />
       </el-select>
-      <span class="status">班级:</span>
+      </div>
+      <div>
+        <span class="status">班级:</span>
       <el-select v-model="value2" placeholder="">
         <el-option
           v-for="item in classlist"
@@ -19,7 +22,11 @@
           :value="item.grade_name"
         />
       </el-select>
+      </div>
+      <p>
       <button @click="searchs()">查询</button>
+
+      </p>
     </div>
     <div class="tablebox">
       <table>
@@ -217,22 +224,32 @@ export default {
     padding: 30px 0;
     background: #fff;
     border-radius: 20px;
-    >select{
-      width: 150px;
+    display: flex;
+    >div{
+      flex: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      >span{
+        margin-right: 10px;
+      }
+      >select{
       height: 35px;
       margin-right: 20px;
     }
-  >button{
-    display: inline-block;
-    padding: 8px 30px;
-    background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
-    border: none;
-    color: #fff;
-    margin-left: 80px;
-    border-radius: 5px;
-  }
-}
-.status{
-  margin-left: 80px;
+    }
+    p{
+      flex: 6;
+        >button{
+        flex:6;
+        display: inline-block;
+        padding: 8px 35px;
+        background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+        border: none;
+        color: #fff; 
+        border-radius: 5px;
+        margin-left: 20px;
+      }
+    }
 }
 </style>
