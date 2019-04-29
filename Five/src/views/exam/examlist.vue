@@ -89,7 +89,7 @@
           </el-table-column>
           <el-table-column label="结束时间">
             <template slot-scope="scope">
-              <span> {{ scope.row.start_time }}</span>
+              <span> {{ scope.row.end_time }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -146,7 +146,8 @@ export default {
       // 一页几条
       limit: 10,
       // 定义一个可以slice的数组
-      listMist: []
+      listMist: [],
+      now:'',
     }
   },
   mounted() {
@@ -219,12 +220,13 @@ export default {
     // 点击 时间类型
     headleTimer(index) {
       this.TimerIndex = index
-      let now = moment().unix() * 1000
+      this.now = moment().unix()*1000;
+      let nom=moment(this.now).format('YYYY-MM-DD HH:MM:SS')
         //判断结束时间是否大于现在本地时间
-      if (this.TimerIndex == 2) {
+      if (this.TimerIndex === 2) {
         this.listMist = this.examLists.filter(item => {
-          const end_time = moment(item.end_time).unix() * 1000
-          if (end_time < now) {
+          const end_time = moment(item.end_time).unix() * 1000;
+          if (end_time < this.now) {
             return item
           }
         })
@@ -232,13 +234,13 @@ export default {
         // 判断本地时间在不在开始时间和结束时间之间
       } else if (this.TimerIndex === 1) {
         this.listMist = this.examLists.filter(item => {
-          const end_time = moment(item.end_time).unix() * 1000
-          const start_time = moment(item.start_time).unix() * 1000
-          if (end_time > now && start_time < now) {
+          const end_time = moment(item.end_time).unix() * 1000;
+          const start_time = moment(item.start_time).unix() * 1000;
+          if (start_time <= this.now && end_time >= this.now  ) {
             return item
           }
         })
-        this.list = this.listMist.slice(0, this.limit)
+        this.list = this.listMist.slice(0, this.limit) 
       } else {
         this.listMist = this.examLists
         this.list = this.listMist.slice(0, this.limit)
@@ -269,7 +271,7 @@ export default {
         if (res.code === 1) {
           res.exam.map(item => {
             item.start_time = moment(item.start_time * 1).format('YYYY-MM-DD HH:MM:SS')
-            item.end_time = moment(item.end_time * 1).format('YYYY-MM-DD HH:MM:SS')
+            item.end_time = moment(+ item.end_time).format('YYYY-MM-DD HH:MM:SS')
           })
           this.examLists = res.exam
           this.listMist = res.exam

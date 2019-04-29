@@ -165,8 +165,10 @@ export default {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           // 将时间对象转为时间戳
-          const start_time = moment(this.ruleForm.date1).unix() * 1000
-          const end_time = moment(this.ruleForm.date2).unix() * 1000
+          const start_time = moment(this.ruleForm.date1).unix() * 1000;
+          const end_time = moment(this.ruleForm.date2).unix() * 1000;
+          console.log(end_time)
+  
           // 将时间戳放入ruleForm数组
           const ruleForm = {
             ...this.ruleForm,
@@ -176,7 +178,7 @@ export default {
           // 将ruleForm传入
           const res = await this.createExam(ruleForm)
           // 跳转页面
-          this.$router.push({ path: '/examination/add' })
+          this.$router.push({ path: '/examination/add' }) 
         } else {
           return false
         }
