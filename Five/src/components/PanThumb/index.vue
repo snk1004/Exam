@@ -1,11 +1,14 @@
 <template>
   <div :style="{zIndex:zIndex,height:height,width:width}" class="pan-item">
-    <div v-if="image" class="pan-info">
+    <div class="pan-info">
       <div class="pan-info-roles-container">
         <slot />
       </div>
     </div>
-    <img :src="image" class="pan-thumb">
+
+    <template v-if="image">
+      <img :src="image" class="pan-thumb">
+    </template>
   </div>
 </template>
 
@@ -14,7 +17,6 @@ export default {
   name: 'PanThumb',
   props: {
     image: {
-      type: String,
       required: true
     },
     zIndex: {
