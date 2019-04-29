@@ -71,6 +71,10 @@ export default {
               message: res.msg,
               type: 'success'
             })
+            this.value = ''
+            this.user_name = ''
+            this.user_pwd = ''
+            this.values = ''
             if (res.code === 1) {
               this.$emit('finish', 'wancheng')
             }
@@ -85,6 +89,10 @@ export default {
               message: res.msg,
               type: 'success'
             })
+            this.value = ''
+            this.user_name = ''
+            this.user_pwd = ''
+            this.values = ''
             if (res.code === 1) {
               this.$emit('finish', 'wancheng')
             }
@@ -113,6 +121,10 @@ export default {
                     message: res.msg,
                     type: 'success'
                   })
+                  this.value = ''
+                  this.user_name = ''
+                  this.user_pwd = ''
+                  this.values = ''
                 })
               } else {
                 this.getreneval({
@@ -124,6 +136,10 @@ export default {
                     message: res.msg,
                     type: 'success'
                   })
+                  this.value = ''
+                  this.user_name = ''
+                  this.user_pwd = ''
+                  this.values = ''
                 })
               }
             }

@@ -133,7 +133,7 @@ export default {
       })
     },
     handleLogin() {
-      _hmt.push(['trackEvent','考试平台','tap','登录按钮点击'])
+      _hmt.push(['_trackEvent', '考试管理平台', 'tap', '登录按钮点击'])
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           this.loading = true

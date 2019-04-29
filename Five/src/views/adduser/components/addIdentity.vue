@@ -31,6 +31,7 @@ export default {
             message: res.msg,
             type: 'success'
           })
+          this.value = ''
           if (res.code === 1) {
             this.$emit('finish', 'wancheng')
           }

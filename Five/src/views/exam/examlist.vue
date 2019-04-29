@@ -89,7 +89,7 @@
           </el-table-column>
           <el-table-column label="结束时间">
             <template slot-scope="scope">
-              <span> {{ scope.row.start_time }}</span>
+              <span> {{ scope.row.end_time }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -222,10 +222,8 @@ export default {
       this.TimerIndex = index
       this.now = moment().unix()*1000;
       let nom=moment(this.now).format('YYYY-MM-DD HH:MM:SS')
-      // console.log(nom)
         //判断结束时间是否大于现在本地时间
-      if (this.TimerIndex == 2) {
-        console.log(this.now)
+      if (this.TimerIndex === 2) {
         this.listMist = this.examLists.filter(item => {
           const end_time = moment(item.end_time).unix() * 1000;
           if (end_time < this.now) {
@@ -238,9 +236,7 @@ export default {
         this.listMist = this.examLists.filter(item => {
           const end_time = moment(item.end_time).unix() * 1000;
           const start_time = moment(item.start_time).unix() * 1000;
-            console.log(end_time,this.now,start_time )
           if (start_time <= this.now && end_time >= this.now  ) {
-            console.log(item)
             return item
           }
         })
@@ -275,7 +271,7 @@ export default {
         if (res.code === 1) {
           res.exam.map(item => {
             item.start_time = moment(item.start_time * 1).format('YYYY-MM-DD HH:MM:SS')
-            item.end_time = moment(item.end_time * 1).format('YYYY-MM-DD HH:MM:SS')
+            item.end_time = moment(+ item.end_time).format('YYYY-MM-DD HH:MM:SS')
           })
           this.examLists = res.exam
           this.listMist = res.exam

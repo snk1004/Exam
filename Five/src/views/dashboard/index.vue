@@ -25,7 +25,7 @@ export default {
     })
   },
   created() {
-    if (this.identity_text === '管理员') {
+    if (this.identity_text !== '管理员') {
       this.currentRole = 'editorDashboard'
     }
     //首次进入页面显示引导页

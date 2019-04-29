@@ -35,7 +35,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import MarkdownEditor from '@/components/MarkdownEditor'
+import MarkdownEditor from '@/components/MarkdownEditor1'
 export default {
   components: {
     MarkdownEditor
