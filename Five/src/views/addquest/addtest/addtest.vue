@@ -108,6 +108,7 @@ export default {
         }
       })
     },
+
     open() {
       if (this.queststem !== '' && this.answer !== '' && this.theme !== '' && this.value !== '' && this.value2 !== '' && this.value3 !== '' && this.$route.query.id === undefined) {
         this.$confirm('真的要添加吗?', '你确定要添加这道试题吗？', {
@@ -124,21 +125,20 @@ export default {
             'user_id': 'w6l6n-cbvl6s',
             'questions_answer': this.answer,
             'title': this.queststem
-          }).then(res=>{
-            if(res.code===1){
+          }).then(res => {
+            if (res.code === 1) {
               this.$message({
                 type: 'success',
                 message: '添加成功!'
               })
-             this.value= ''
-              this.value2= ''
-              this.value3= ''
-              this.queststem= ''// 获取题干
-              this.themes= '' // 题目主题
-              this.answer='' // 答案
+              this.value = ''
+              this.value2 = ''
+              this.value3 = ''
+              this.queststem = ''// 获取题干
+              this.themes = '' // 题目主题
+              this.answer = '' // 答案
             }
           })
-          
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -173,7 +173,7 @@ export default {
         })
       }
     }
-  	}
+  }
 }
 </script>
 

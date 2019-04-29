@@ -62,6 +62,8 @@ export default {
             message: this.msg,
             type: 'success'
           })
+          this.value = ''
+          this.apiView = ''
         } else {
           this.$message.error(this.msg)
         }

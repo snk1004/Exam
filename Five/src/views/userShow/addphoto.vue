@@ -13,7 +13,7 @@
       :width="300"
       :height="300"
       lang-type="en"
-      url="http://123.206.55.50:11000/upload"
+      url="https://service.jasonandjay.com/upload"
       @close="close"
       @crop-upload-success="cropSuccess"
     />

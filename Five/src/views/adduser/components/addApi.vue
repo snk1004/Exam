@@ -38,6 +38,9 @@ export default {
             message: res.msg,
             type: 'success'
           })
+          this.apinames = ''
+          this.apiurl = ''
+          this.apimethods = ''
           if (res.code === 1) {
             this.$emit('finish', 'wancheng')
           }
