@@ -126,10 +126,11 @@ export default {
       padding: 0 30px;
     }
     .Awaitingclass{
-      margin-bottom: 0.5em;
-      color: rgba(0, 0, 0, 0.85);
+      height: 60px;
+      line-height: 60px;
       font-size: 20px;
-      padding: 10px 0;
+      margin: 0;
+      padding:0 20px; 
     }
     .tablebox{
       width:100%;

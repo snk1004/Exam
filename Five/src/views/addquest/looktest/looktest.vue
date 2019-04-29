@@ -49,7 +49,7 @@
         </li>
       </ul>
     </div>
-    <div class="block" v-if="allselect">
+    <div class="block">
       <el-pagination
         :current-page.sync="currentPage1"
         layout="prev, pager, next, jumper"
@@ -76,9 +76,8 @@ export default {
       listflag: false,
       listindex: -1,
       newlist: [],
-      limit: 5,
-      page:0,
-      allselect:true
+      limit:5,
+      page:0
     }
   },
   mounted() {
@@ -89,7 +88,8 @@ export default {
       subject: 'questionManagement/subject', // js上下
       testtype: 'questionManagement/examType', // 周考月考
       titletype: 'questionManagement/getQuestionsType', // 题的类型---简单题
-      condition: 'questionManagement/condition'// 所有的数据
+      condition: 'questionManagement/condition',// 所有的数据
+      filterDate:'questionManagement/filterDate'
     }),
     handleCurrentChange(val) {
         this.contentdata = this.alldata.slice(
@@ -115,10 +115,9 @@ export default {
       })
       this.condition().then(res => { // 所有的数据
         if (res.code === 1) {
-          this.alldata = res.data
-          this.page=Math.ceil(this.alldata.length/this.limit)*10
-          // this.contentdata = res.data
-          this.contentdata = this.alldata.slice(0, this.limit)
+          this.alldata=res.data
+          this.contentdata = res.data.slice(0,this.limit)
+          this.page=Math.ceil(res.data.length/this.limit)*10
         }
       })
     },
@@ -126,54 +125,41 @@ export default {
       this.allflag = !this.allflag
       if (this.allflag) {
         this.listflag = true
-        this.allselect=true
       } else {
         this.listflag = false
-        this.allselect=false
       }
     },
     selechecklist(index, id) { // 单选筛选对应数据
       this.listindex = index
-      this.newlist = this.alldata.filter(item => item.subject_id === id)// 通过对应的课程类型筛选对应的课程类型
       if (this.listflag) {
         this.listflag = !this.listflag
-      }
-      if (!this.listflag) {
+      }else{
         this.allflag = false
-        this.allselect=false
-      }
+      } 
     },
     search() { // 查询的时候渲染对应的列表
       if (this.allflag) { // 如果全选状态---渲染所有的数据
-        this.contentdata= this.alldata
-      }
-      if (this.listindex !== -1) {//通过课程类型渲染数据
-        this.contentdata= this.alldata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
-        console.log(this.contentdata,'15152')
-      }
-      if (this.value) {//通过周考月考渲染数据
-       this.contentdata= this.alldata.filter(item => item.exam_name === this.value)
-       this.allselect=false
-      }
-      if (this.value2) {//通过题目类型渲染数据
-        this.contentdata = this.alldata.filter(item => item.questions_type_text === this.value2)
-        this.allselect=false
-      }
-      if (this.listindex !== -1 && this.value) { // 判断---周考-月考 +  js上下
-        this.contentdata =this.contentdata.filter(item =>item.exam_name===this.value)
-      }
-      if (this.listindex !== -1 && this.value2) {//通过js上下  题目类型 判断
-        this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
-      }
-      if(this.value && this.value2){//通过考试类型+题目类型判断
-        this.contentdata=this.contentdata.filter(item=>item.exam_name===this.value)
-        this.allselect=false
-      }
-      if (this.listindex !== -1 && this.value && this.value2) {//三个一起判断
-        this.contentdata = this.contentdata.filter(item => item.subject_text === this.list[this.listindex].subject_text)
+        this.aaa=this.alldata
+        this.page=Math.ceil(this.contentdata.length/this.limit)*10
       } 
-      if (this.contentdata.length > 10) {
-        this.contentdata = this.contentdata.slice(0, this.limit)
+      let exam= this.testtypes.find(item=>item.exam_name===this.value)
+      let tittype=this.titletypes.find(item=>item.questions_type_text===this.value2)
+      let obj={}; 
+      var newobj={};
+      obj.questions_type_id=tittype?tittype.questions_type_id:null
+      obj.subject_id=this.listindex!==-1?this.list[this.listindex].subject_id:null
+      obj.exam_id=exam?exam.exam_id:null
+      for(var i in obj){
+        if(obj[i]!==null){
+          newobj[i]=obj[i];
+          this.filterDate(newobj).then(res=>{
+            if(res.code===1){
+              this.alldata=res.data
+              this.contentdata=res.data.slice(0,this.limit)
+              this.page=Math.ceil(this.alldata.length/this.limit)*10
+            }
+          })
+        }
       }
     },
     detail(e, id) {
@@ -211,7 +197,11 @@ li.active{
 	color: #fff!important;
 }
 .looktest{
+  height: 60px;
+  line-height: 60px;
   font-size: 20px;
+  margin: 0;
+  padding:0 20px;
 }
 .chart-container{
   position: relative;

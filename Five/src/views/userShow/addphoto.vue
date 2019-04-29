@@ -6,7 +6,6 @@
     <el-button class="sure" type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
       Change Avatar
     </el-button>
-
     <image-cropper
       v-show="imagecropperShow"
       :key="imagecropperKey"
@@ -17,7 +16,6 @@
       @close="close"
       @crop-upload-success="cropSuccess"
     />
-
   </div>
 </template>
 <script>
@@ -47,18 +45,14 @@ export default {
       getInfo: 'user/getInfo'
     }),
     cropSuccess(e) {
-      console.log(e)
       const path = e[0].path
-      console.log(path,'pathpath')
       this.getreneval({
         user_id: this.userInfo.user_id,
-        // user_name: this.userInfo.user_name,
-        // identity_id: this.userInfo.identity_id,
         avatar: path
       }).then(res => {
         if (res.code === 1) {
           this.$message({
-            message: '恭喜你上传头像成功',
+            message: res.msg,
             type: 'success'
           })
           this.getInfo()

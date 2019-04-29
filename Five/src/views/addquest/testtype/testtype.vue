@@ -124,7 +124,11 @@ export default {
 
 <style lang='scss'>
 .testtype{
+  height: 60px;
+  line-height: 60px;
   font-size: 20px;
+  margin: 0;
+  padding:0 20px;
 }
 .app-main{
   background: #f0f2f5;

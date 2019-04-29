@@ -54,14 +54,21 @@ export default {
   },
   methods: {
     sure() {
-        this.$alert('您的成绩是'+this.score+'分',  {
+        this.$confirm('分数值是'+this.score+'分', '确定提交阅卷结果？', {
           confirmButtonText: '确定',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${ action }`
-            });
-          }
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '提交成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消提交'
+          });
         });
     },
     ...mapActions({
@@ -72,7 +79,6 @@ export default {
       this.volumeDetail({
         id: this.$route.query.id
       }).then(res => {
-        console.log(res,'rsresddd')
         if (res.code === 1) {
           this.data = res.data
           this.answerlist = res.data.questions
@@ -80,7 +86,6 @@ export default {
       })
     }
   }
-
 }
 </script>
 <style lang="scss" scoped>

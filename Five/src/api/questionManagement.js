@@ -20,8 +20,18 @@ export const insertQuestionsType = params => { //  添加试题类型
     }
   })
 }
-export const condition = params => { //  获取所有试题
+export const condition = params => { //  获取所有试题--筛选试题
   return request.get('/exam/questions/condition', params)
+}
+
+export const filterDate = params => { // 筛选试题
+  return request.get('/exam/questions/condition', {
+    params: {
+      questions_type_id: params.questions_type_id,
+      subject_id: params.subject_id,
+      exam_id: params.exam_id
+    }
+  })
 }
 export const update = params => { //  更新试题
   return request.put('/exam/questions/update', params)
