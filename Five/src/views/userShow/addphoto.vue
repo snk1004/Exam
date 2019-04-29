@@ -13,7 +13,7 @@
       :width="300"
       :height="300"
       lang-type="en"
-      url="http://123.206.55.50:11000/upload"
+      url="https://service.jasonandjay.com/upload"
       @close="close"
       @crop-upload-success="cropSuccess"
     />
@@ -49,7 +49,10 @@ export default {
         avatar: path
       }).then(res => {
         if (res.code === 1) {
-          alert(res.msg)
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
           this.getInfo()
         }
       })

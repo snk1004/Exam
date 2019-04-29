@@ -42,6 +42,7 @@ export default {
             message: this.msg,
             type: 'success'
           })
+          this.viewvalue = ''
         } else {
           this.$message.error(this.msg)
         }
