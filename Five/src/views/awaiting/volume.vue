@@ -54,7 +54,15 @@ export default {
   },
   methods: {
     sure() {
-      alert('您的成绩是' + this.score + '分')
+        this.$alert('您的成绩是'+this.score+'分',  {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
     },
     ...mapActions({
       studentDetail: 'swaitingClass/studentDetail',
@@ -64,6 +72,7 @@ export default {
       this.volumeDetail({
         id: this.$route.query.id
       }).then(res => {
+        console.log(res,'rsresddd')
         if (res.code === 1) {
           this.data = res.data
           this.answerlist = res.data.questions

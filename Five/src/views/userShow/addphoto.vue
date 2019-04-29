@@ -17,6 +17,7 @@
       @close="close"
       @crop-upload-success="cropSuccess"
     />
+
   </div>
 </template>
 <script>
@@ -34,22 +35,32 @@ export default {
       imagecropperKey: 0
     }
   },
+  computed: {
+    ...mapGetters([
+      'avatar',
+      'userInfo'
+    ])
+  },
   methods: {
     ...mapActions({
       getreneval: 'usershow/getReneval',
       getInfo: 'user/getInfo'
     }),
     cropSuccess(e) {
+      console.log(e)
       const path = e[0].path
-      console.log(path, 'path...')
+      console.log(path,'pathpath')
       this.getreneval({
         user_id: this.userInfo.user_id,
-        user_name: this.userInfo.user_name,
-        identity_id: this.userInfo.identity_id,
+        // user_name: this.userInfo.user_name,
+        // identity_id: this.userInfo.identity_id,
         avatar: path
       }).then(res => {
         if (res.code === 1) {
-          alert(res.msg)
+          this.$message({
+            message: '恭喜你上传头像成功',
+            type: 'success'
+          })
           this.getInfo()
         }
       })
@@ -58,14 +69,8 @@ export default {
     close() {
       this.imagecropperShow = false
     }
-  },
-
-  computed: {
-    ...mapGetters([
-      'avatar',
-      'userInfo'
-    ])
   }
+
 }
 </script>
 

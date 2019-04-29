@@ -97,7 +97,6 @@ export default {
           this.alllist = res.data
           if (this.$route.query.id) {
             const obj = this.alllist.filter(item => item.questions_id === this.$route.query.id)[0]
-           console.log(obj.questions_stem,'lalalallal')
            this.queststem = obj.title
             this.answer = obj.questions_answer
             this.themes = obj.questions_stem
@@ -117,7 +116,6 @@ export default {
           type: 'warning',
           center: true
         }).then(() => {
-          console.log(this.queststem, '题干')
           this.addquestions({
             'questions_type_id': this.value3,
             'questions_stem': this.queststem,
@@ -126,11 +124,21 @@ export default {
             'user_id': 'w6l6n-cbvl6s',
             'questions_answer': this.answer,
             'title': this.queststem
+          }).then(res=>{
+            if(res.code===1){
+              this.$message({
+                type: 'success',
+                message: '添加成功!'
+              })
+             this.value= ''
+              this.value2= ''
+              this.value3= ''
+              this.queststem= ''// 获取题干
+              this.themes= '' // 题目主题
+              this.answer='' // 答案
+            }
           })
-          this.$message({
-            type: 'success',
-            message: '添加成功!'
-          })
+          
         }).catch(() => {
           this.$message({
             type: 'info',
