@@ -176,7 +176,7 @@ export default {
           // 将ruleForm传入
           const res = await this.createExam(ruleForm)
           // 跳转页面
-          this.$router.push({ path: '/examination/add' })
+          this.$router.push({ path: '/examination/add' }) 
         } else {
           return false
         }
