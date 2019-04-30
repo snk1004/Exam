@@ -1,7 +1,7 @@
 <template>
-  <div class="navbar">
+   <div class="navbar">
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -30,8 +30,10 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
+  left: 0;
+  top: 0;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-  background: #f0f2f5;
+  background: #fff;
 
   .hamburger-container {
     line-height: 46px;

@@ -3,6 +3,7 @@
     <h3>
       试卷列表
     </h3>
+
     <div class="ant-layout-top">
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="考试类型">
@@ -27,8 +28,9 @@
         </el-form-item>
         <el-form-item size="medium">
           <el-button type="primary" size="medium" @click="onSubmit">查询</el-button>
-          <el-button type="primary" size="medium" @click="ExportExcel">导出表格</el-button>
+           <el-button type="primary" size="medium" @click="ExportExcel">导出表格</el-button>       
         </el-form-item>
+        
       </el-form>
     </div>
     <div class="ant-layout-content">
@@ -303,11 +305,24 @@ export default {
       }
       .ant-layout-top{
         width: 100%;
-        height:80px;
+        height:100px;
+        background: #fff;
         box-sizing: border-box;
         padding: 20px;
-        background: #fff;
         border-radius: 8px;
+
+        .demo-form-inline{
+          width:100%;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          .el-form-item{
+            width: 30%;
+            display: flex;
+            align-items: center;
+          }
+          
+        }
       }
       .ant-layout-content{
         width: 100%;
@@ -337,9 +352,8 @@ export default {
                 :nth-child(2){
                   border-left:0 ;
                   border-right: 0;
-
-                }
-              }
+                };
+              };
               span.active{
                 background: #409EFF;
                 color: #fff;
@@ -357,16 +371,9 @@ export default {
         span{
           display: inline-block;
           padding: 3px 5px;
-          font-size: 12px;
-
+          font-size: 12px
         }
-
-      }
-    }
-    .el-button  {
-      width: 100px;
-      height: 30px;
-      text-align: center;
+      };
     }
 
   }

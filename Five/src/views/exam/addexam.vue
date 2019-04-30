@@ -167,8 +167,7 @@ export default {
           // 将时间对象转为时间戳
           const start_time = moment(this.ruleForm.date1).unix() * 1000;
           const end_time = moment(this.ruleForm.date2).unix() * 1000;
-          console.log(end_time)
-  
+          
           // 将时间戳放入ruleForm数组
           const ruleForm = {
             ...this.ruleForm,
@@ -253,7 +252,9 @@ export default {
             width: 80%;
             height: 40px;
         }
-
+      .el-date-editor.el-input{
+        width:150%;
+      };
     }
 </style>
 

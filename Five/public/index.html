@@ -10,6 +10,7 @@
     <title>
         <%= webpackConfig.name %>
     </title>
+    <!--百度统计  -->
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -19,6 +20,18 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+    <!--错误追踪  -->
+    <script src="https://browser.sentry-cdn.com/5.1.1/bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        Sentry.init({
+            dsn: 'https://e83ac9aecf05439291f58d3a8d9c672f@sentry.io/1449244'
+        });
+    </script>
+    <!-- <script>
+        setInterval(function() {
+            console.log(a)
+        }, 10000)
+    </script> -->
 </head>
 
 <body>
