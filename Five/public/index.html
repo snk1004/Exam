@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= webpackConfig.name %></title>
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-<<<<<<< HEAD
-        hm.src = "https://hm.baidu.com/hm.js?721005761a0193c767d14c0855514435";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-      </script>
-      
-=======
-        hm.src = "https://hm.baidu.com/hm.js?d1f65e03c46bc47a1d5ef372c082cf2d";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-      </script>      
->>>>>>> 8dc24ee501dc42766f714d3285dc7481b3bbc4ce
-  </head>
-  <body>
-    <script src="<%= BASE_URL %>static/tinymce4.7.5/tinymce.min.js"></script>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= webpackConfig.name %></title>
+  <!-- <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?721005761a0193c767d14c0855514435";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script> -->
+  <script src="<%= BASE_URL %>static/tinymce4.7.5/tinymce.min.js"></script>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <script src="https://browser.sentry-cdn.com/5.1.1/bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    Sentry.init({ dsn: 'https://4288439dc0544557a63028d53977f0ff@sentry.io/1449243' });
+  </script>
+</head>
+
+<body>
+  
+</body>
 </html>

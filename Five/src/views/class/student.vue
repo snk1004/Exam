@@ -203,8 +203,6 @@ export default {
     // 筛选
     Search() {
       const nameList = [] // 姓名暂存数组
-      // const newRoomList = [] // 教室号暂存数组
-      // const classList = [] // 班级暂存数组
       this.newRoomList = []
 
       this.newData.forEach(item => {
@@ -231,9 +229,6 @@ export default {
                 }
               })
             }
-            /* if (this.classValue !== '' && item.grade_id !== this.classValue) {
-              this.showNoData = true
-            } */
             this.newList = this.newRoomList
           }
           // 筛选 班级
